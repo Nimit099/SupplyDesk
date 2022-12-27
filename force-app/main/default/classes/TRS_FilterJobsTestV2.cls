@@ -250,6 +250,9 @@ public class TRS_FilterJobsTestV2 {
 
             fCandt.nextWeek();
             fCandt.previousWeek();
+            // Nimit
+            fCandt.updateWeek();
+            // Nimit
             List<String> strweek= fCandt.weekHeader;
             
             List<SelectOption> so = fCandt.whichVacancyOptions;
