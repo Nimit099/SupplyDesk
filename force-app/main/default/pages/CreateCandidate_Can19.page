@@ -1,0 +1,366 @@
+<apex:page showHeader="false" sidebar="false" controller="CreateCandidateCtrl" cache="false">
+    <html>
+        <head>
+            <title>Create Candidate</title>
+            <meta charset="utf-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <apex:stylesheet value="{!URLFOR($Resource.CandidateFormResource,'css/bootstrap.min.css')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.CandidateFormResource,'js/jquery-2.2.4.min.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.CandidateFormResource,'js/bootstrap.min.js')}"/>
+            <apex:styleSheet value="{!URLFOR($Resource.CandidateFormResource,'css/bootstrap-multiselect.css')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.CandidateFormResource,'js/bootstrap-multiselect.js')}"/>
+            <style>
+                .form-group{
+                padding:1% !important;
+                }
+                .scrollBar{
+                max-height: 18rem;
+                overflow-y: auto;
+                }
+                
+                .btn-default {
+                color: #333 !important;
+                background-color: #fff !important;
+                border-color: #ccc !important;
+                }
+                
+                .btn {
+                display: inline-block !important;
+                margin-bottom: 0!important;
+                font-weight: normal !important;
+                text-align: center !important;
+                vertical-align: middle !important;
+                touch-action: manipulation !important;
+                cursor: pointer !important;
+                background-image: none !important;
+                border: 1px solid transparent ;
+                white-space: nowrap !important;
+                padding: 6px 12px !important;
+                font-size: 14px !important;
+                line-height: 1.42857143 !important;
+                border-radius: 4px !important;
+                -webkit-user-select: none !important;
+                -moz-user-select: none !important;
+                -ms-user-select: none !important;
+                user-select: none !important;
+                }
+            </style>
+            
+            
+            
+        </head>
+        
+        <body >
+            <apex:form id="frm">
+                <div style="margin:40px;margin-top: 15px;background-color:white;">
+                    <apex:image value="{!URLFOR($Resource.TeachInLogo)}" width="250" height="100" alt="Teach In"/>
+                    <div style="border-top:2px solid red;"/> <br/>
+                    
+                    <apex:pageMessages />
+                    <apex:outputPanel rendered="{!showPanel==false}">
+                        <div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="fName">First Name:</label>
+                                <div class="col-sm-6">
+                                    <apex:inputField value="{!con.FirstName}" styleclass="form-control" html-placeholder="Enter First Name" required="true" id="fName"/>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="lName">Last Name:</label>
+                                <div class="col-sm-6">
+                                    <apex:inputField value="{!con.LastName}" styleclass="form-control" html-placeholder="Enter Last Name" required="true" id="lName"/>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="phone">Mobile:</label>
+                                <div class="col-sm-6">
+                                    <apex:inputField value="{!con.MobilePhone}" styleclass="form-control" html-placeholder="Enter Mobile Number" required="true" id="phone"/>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="email">Email:</label>
+                                <div class="col-sm-6">
+                                    <apex:inputField value="{!con.Email}" styleclass="form-control" html-placeholder="Enter Email" required="true" id="email"/>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="form-group" style="margin-bottom: 4.5% !important;">
+                                <label class="control-label col-sm-2" for="trainedas">Trained As <br/>(select as many as are applicable)</label>
+                                <div class="col-sm-6">
+                                    <apex:selectList value="{!lstTrainedBy}" id="demo" styleclass="demo" multiselect="true" size="5">
+                                        <apex:selectOptions value="{!lstTrainedOption}"/>
+                                    </apex:selectList>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group" style="margin-bottom: 4.5% !important;">
+                                <label class="control-label col-sm-2" for="trainedas">Subject</label>
+                                <div class="col-sm-6">
+                                    <apex:selectList value="{!lstSubject}" id="demonew" styleclass="demonew" multiselect="true" size="5">
+                                        <apex:selectOptions value="{!lstSubjectOption}"/>
+                                    </apex:selectList>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="yrOfGrad">Year of Graduation</label>
+                                <div class="col-sm-6">
+                                    <apex:inputField value="{!con.Year_of_Graduation__c}" styleclass="form-control" required="true" id="yrOfGrad"/>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="form-group">        
+                                </div>
+                 <div class="form-group">
+                                <label class="control-label col-sm-2" for="source">Source</label>
+                                <div class="col-sm-6">
+                                    <apex:inputField value="{!con.TR1__Source__c}" styleclass="form-control" required="true" id="source"/>
+                                </div>
+                                <div class="form-group">
+                            </div>
+                            <br/>
+                                <br/>
+                                <div class="col-sm-offset-2 col-sm-6">
+                                    <apex:commandButton id="creg" action="{!doSubmit}"  styleClass="btn btn-default" value="Submit" reRender="frm,scriptPanel" status="loadSubmitStatus" />
+                                    <apex:actionstatus id="loadSubmitStatus" dir="RTL"> 
+                                        <apex:facet name="start"> 
+                                            <apex:image url="/img/loading.gif" alt=" Loading.... "></apex:image>
+                                        </apex:facet>
+                                    </apex:actionstatus>
+                                </div>
+                            </div>
+                            <br/>
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!showPanel==true}">
+                        <br/><apex:commandButton id="cnew" action="{!createNewCandidate}" styleClass="btn btn-default" value="Create New Candidate"  reRender="frm"/>
+                    </apex:outputPanel>  
+                            </div>                
+            </apex:form>
+            <apex:outputPanel id="scriptPanel">
+                <script type="text/javascript">
+                $(document).ready(function() {
+                    $('.demo').multiselect({
+                        /**
+   * Create a label.
+   *
+   * @param {jQuery} element
+   * @returns {String}
+   */
+                        optionLabel: function(element){
+                            return $(element).attr('label') || $(element).text();
+                        },
+                        /**
+   * Triggered on change of the multiselect.
+   * 
+   * Not triggered when selecting/deselecting options manually.
+   * 
+   * @param {jQuery} option
+   * @param {Boolean} checked
+   */
+                        onChange : function(option, checked) {
+                            console.log("@console.log-->option:"+JSON.stringify(option));
+                            console.log("@console.log-->option:"+(option).val());
+                            console.log("@console.log-->checked:"+checked);
+                        },
+                        /**
+   * Triggered when the dropdown is shown.
+   *
+   * @param {jQuery} event
+   */
+                        onDropdownShow: function(event) {
+                            
+                        },
+                        /**
+   * Triggered when the dropdown is hidden.
+   *
+   * @param {jQuery} event
+   */
+                        onDropdownHide: function(event) {
+                            
+                        },
+                        /**
+   * Triggered after the dropdown is shown.
+   * 
+   * @param {jQuery} event
+   */
+                        onDropdownShown: function(event) {
+                            
+                        },
+                        /**
+   * Triggered after the dropdown is hidden.
+   * 
+   * @param {jQuery} event
+   */
+                        onDropdownHidden: function(event) {
+                            
+                        },
+                        /**
+   * Triggered on select all.
+   */
+                        onSelectAll: function() {
+                            
+                            console.log('@console.log-->ALlSelectedVales:'+($('[Id$=demo]').val()));
+                        },
+                        enableHTML: false,
+                        buttonClass: 'btn btn-default',
+                        inheritClass: false,
+                        buttonWidth: 'auto',
+                        buttonContainer: '<div class="btn-group" />',
+                        dropRight: false,
+                        selectedClass: 'active',
+                        // Maximum height of the dropdown menu.
+                        // If maximum height is exceeded a scrollbar will be displayed.
+                        maxHeight: false,
+                        //checkboxName: false,
+                        includeSelectAllOption: false,
+                        includeSelectAllIfMoreThan: 0,
+                        selectAllText: ' Select all',
+                        selectAllValue: 'multiselect-all',
+                        includeSelectAllOption:true,
+                        selectAllName: true,
+                        selectAllNumber: true,
+                        enableFiltering: true,
+                        enableCaseInsensitiveFiltering: false,
+                        enableClickableOptGroups: false,
+                        filterPlaceholder: 'Search',
+                        // possible options: 'text', 'value', 'both'
+                        filterBehavior: 'text',
+                        includeFilterClearBtn: true,
+                        preventInputChangeEvent: false,
+                        nonSelectedText: 'None selected',
+                        nSelectedText: 'selected',
+                        allSelectedText: 'All selected',
+                        numberDisplayed: 3,
+                        disableIfEmpty: false,
+                        delimiter: ', ',
+                        templates: {
+                            button: '<button type="button" class="multiselect dropdown-toggle" data-toggle="dropdown"><span class="multiselect-selected-text"></span> <b class="caret"></b></button>',
+                            ul: '<ul class="multiselect-container dropdown-menu scrollBar"></ul>',
+                            filter: '<li class="multiselect-item filter"><div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span><input class="form-control multiselect-search" type="text"></div></li>',
+                            filterClearBtn: '<span class="input-group-btn"><button class="btn btn-default multiselect-clear-filter" type="button"><i class="glyphicon glyphicon-remove-circle"></i></button></span>',
+                            li: '<li><a tabindex="0"><label></label></a></li>',
+                            divider: '<li class="multiselect-item divider"></li>',
+                            liGroup: '<li class="multiselect-item multiselect-group"><label></label></li>'
+                        }
+                    });
+                    
+                });
+                
+                $(document).ready(function() {
+                    $('.demonew').multiselect({
+                        /**
+   * Create a label.
+   *
+   * @param {jQuery} element
+   * @returns {String}
+   */
+                        optionLabel: function(element){
+                            return $(element).attr('label') || $(element).text();
+                        },
+                        /**
+   * Triggered on change of the multiselect.
+   * 
+   * Not triggered when selecting/deselecting options manually.
+   * 
+   * @param {jQuery} option
+   * @param {Boolean} checked
+   */
+                        onChange : function(option, checked) {
+                            console.log("@console.log-->option:"+JSON.stringify(option));
+                            console.log("@console.log-->option:"+(option).val());
+                            console.log("@console.log-->checked:"+checked);
+                        },
+                        /**
+   * Triggered when the dropdown is shown.
+   *
+   * @param {jQuery} event
+   */
+                        onDropdownShow: function(event) {
+                            
+                        },
+                        /**
+   * Triggered when the dropdown is hidden.
+   *
+   * @param {jQuery} event
+   */
+                        onDropdownHide: function(event) {
+                            
+                        },
+                        /**
+   * Triggered after the dropdown is shown.
+   * 
+   * @param {jQuery} event
+   */
+                        onDropdownShown: function(event) {
+                            
+                        },
+                        /**
+   * Triggered after the dropdown is hidden.
+   * 
+   * @param {jQuery} event
+   */
+                        onDropdownHidden: function(event) {
+                            
+                        },
+                        /**
+   * Triggered on select all.
+   */
+                        onSelectAll: function() {
+                            
+                            console.log('@console.log-->ALlSelectedVales:'+($('[Id$=demo]').val()));
+                        },
+                        enableHTML: false,
+                        buttonClass: 'btn btn-default',
+                        inheritClass: false,
+                        buttonWidth: 'auto',
+                        buttonContainer: '<div class="btn-group" />',
+                        dropRight: false,
+                        selectedClass: 'active',
+                        // Maximum height of the dropdown menu.
+                        // If maximum height is exceeded a scrollbar will be displayed.
+                        maxHeight: false,
+                        //checkboxName: false,
+                        includeSelectAllOption: false,
+                        includeSelectAllIfMoreThan: 0,
+                        selectAllText: ' Select all',
+                        selectAllValue: 'multiselect-all',
+                        includeSelectAllOption:true,
+                        selectAllName: true,
+                        selectAllNumber: true,
+                        enableFiltering: true,
+                        enableCaseInsensitiveFiltering: false,
+                        enableClickableOptGroups: false,
+                        filterPlaceholder: 'Search',
+                        // possible options: 'text', 'value', 'both'
+                        filterBehavior: 'text',
+                        includeFilterClearBtn: true,
+                        preventInputChangeEvent: false,
+                        nonSelectedText: 'None selected',
+                        nSelectedText: 'selected',
+                        allSelectedText: 'All selected',
+                        numberDisplayed: 3,
+                        disableIfEmpty: false,
+                        delimiter: ', ',
+                        templates: {
+                            button: '<button type="button" class="multiselect dropdown-toggle" data-toggle="dropdown"><span class="multiselect-selected-text"></span> <b class="caret"></b></button>',
+                            ul: '<ul class="multiselect-container dropdown-menu scrollBar"></ul>',
+                            filter: '<li class="multiselect-item filter"><div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span><input class="form-control multiselect-search" type="text"></div></li>',
+                            filterClearBtn: '<span class="input-group-btn"><button class="btn btn-default multiselect-clear-filter" type="button"><i class="glyphicon glyphicon-remove-circle"></i></button></span>',
+                            li: '<li><a tabindex="0"><label></label></a></li>',
+                            divider: '<li class="multiselect-item divider"></li>',
+                            liGroup: '<li class="multiselect-item multiselect-group"><label></label></li>'
+                        }
+                    });
+                    
+                });
+                
+                
+                </script>
+            </apex:outputPanel>
+        </body> 
+    </html>
+</apex:page>

@@ -1,0 +1,50 @@
+<apex:page showHeader="false" standardController="Contact">
+    <apex:includeScript value="{!URLFOR($Resource.smagicinteract__SMS_Insight_Reload, 'jquery_1_5_1.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.smagicinteract__SMS_Insight_Reload, 'cometd.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.smagicinteract__SMS_Insight_Reload, 'json2.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.smagicinteract__SMS_Insight_Reload, 'jquery_cometd.js')}"/>
+    
+    <apex:includeLightning rendered="true"/>
+    <div id="lightning" />
+
+    <script>
+        var recordId = "{!$CurrentPage.parameters.id}";
+        $Lightning.use(
+            "smagicinteract:smsInsight", 
+            function() {
+                $Lightning.createComponent(
+                    "smagicinteract:smsInsightComponent",
+                    {
+                         objectId : recordId,
+                         bubbleColors : "#d4d4d4;#f4f6f9",
+                         mobileFields : "SMS_Mobile__c",
+                         displayInboundNumber : true,
+                         displayOutboundNumber : true
+                    },
+                    "lightning",
+                    function(cmp) {
+                        // Connect to the CometD endpoint  
+                        $.cometd.init({  
+                            url: window.location.protocol+'//'+window.location.hostname+'/cometd/24.0/',  
+                            requestHeaders: { Authorization: 'OAuth {!$Api.Session_ID}'}  
+                        });  
+                          
+                        // Subscribe to a topic. JSON-encoded update will be returned in the callback  
+                        // In this example we are using this only to track the generated event  
+                        $.cometd.subscribe('/topic/IncomingSMSAlert', function(message)  
+                        {  
+                            //You can use message as it will return you many attributes  
+                            //I am just using to track that event is generated
+                            if (message.data.sobject.smagicinteract__Contact__c && !(message.data.sobject.smagicinteract__Contact__c != "{!$CurrentPage.parameters.id}" &&
+                            message.data.sobject.smagicinteract__Contact__c.slice(0,15) != "{!$CurrentPage.parameters.id}")) {
+                                var myExternalEvent = $A.get("e.smagicinteract:ConversationReload");
+                                myExternalEvent.setParams({recordId:message.data.sobject.smagicinteract__Contact__c});
+                                myExternalEvent.fire();
+                            }
+                        });  
+                    }
+                );
+            }
+        );
+    </script>
+</apex:page>

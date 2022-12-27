@@ -1,0 +1,521 @@
+.main {
+    height: 100vh;
+    width: 100%;
+    padding: 90px 30px 0 90px;
+}
+
+.timesheet-header-div {
+    display: flex;
+    background: rgba(246, 246, 246, 1);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    height: 50px;
+    align-items: center;
+}
+
+.timesheet_btn_text {
+    margin: 7px 0;
+}
+.currency ::before {
+    content: "£";
+}
+
+.active-timesheet-btn {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    min-width: 175px;
+    width: 10%;
+    height: 70%;
+    text-align: center;
+    font-size: initial;
+    margin-inline: 1%;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.table-icon {
+    cursor: pointer;
+}
+
+.historical-timesheet-btn {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    min-width: 175px;
+    width: 10%;
+    height: 70%;
+    text-align: center;
+    font-size: initial;
+    margin-inline: 1%;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.top-header {
+    height: 8%;
+    font-size: x-large;
+    display: flex;
+}
+
+.redHeader {
+    color: #D2232A;
+}
+
+.timesheet-table {
+    margin-top: 2%;
+    height: 70%;
+    background: rgba(246, 246, 246, 1);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    overflow: auto;
+}
+
+.table-row {
+    height: 8%;
+    min-height: 50px;
+    align-items: center;
+    border-bottom: 1px solid rgba(103, 104, 104, 0.6);
+    text-align: center;
+}
+
+.timesheet-btn-active {
+    background: #D2232A;
+    color: #FFFFFF;
+}
+
+.no-data-div {
+    background-image: url('/resource/no_timesheet_found_img');
+    height: 100%;
+    padding: 15%;
+}
+
+.no-data-txt {
+    font-style: normal;
+    font-weight: 700;
+    color: #000000;
+    font-size: larger;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =================== Spinner =================== */
+
+.spinner-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner-ts {
+    --size: 85px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    perspective: 800px;
+}
+
+.inner {
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid transparent;
+}
+
+.inner.one {
+    left: 0;
+    top: 0;
+    animation: rotate-one 1s linear infinite;
+    border-bottom: 3px solid #999999;
+}
+
+.inner.two {
+    right: 0;
+    top: 0;
+    animation: rotate-two 1s linear infinite;
+    border-right: 3px solid #000000;
+}
+
+.inner.three {
+    right: 0;
+    bottom: 0;
+    animation: rotate-three 1s linear infinite;
+    border-top: 3px solid #d90000;
+}
+
+@keyframes rotate-one {
+    0% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotate-two {
+    0% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotate-three {
+    0% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+    }
+}
+
+
+/* =================== Spinner =================== */
+
+
+/* ======= approved popup model ====== */
+
+.emg-excel {
+    box-shadow: 0px 4px 4px rgba(8, 171, 5, 0.68);
+    background: rgb(255, 255, 255);
+}
+
+.emg-very-good {
+    box-shadow: 0px 4px 4px rgba(133, 255, 75, 0.68);
+    background: rgb(255, 255, 255);
+}
+
+.emg-good {
+    box-shadow: 0px 4px 4px rgba(249, 200, 28, 0.68);
+    background: rgb(255, 255, 255);
+}
+
+.emg-ri {
+    box-shadow: 0px 4px 4px rgba(252, 93, 4, 0.68);
+    background: rgb(255, 255, 255);
+}
+
+.emg-unsetisfy {
+    box-shadow: 0px 4px 4px rgba(252, 0, 0, 0.68);
+    background: rgb(255, 255, 255);
+}
+
+.emoji_rating {
+    background: rgb(255, 255, 255);
+    cursor: pointer;
+}
+
+.rqst-call {
+    display: flex;
+    align-items: center;
+}
+
+.pop-apprv-rsn-div {
+    margin-top: 1%;
+    height: 15vh;
+    padding-top: 6%;
+}
+
+.pop-apprv-sbm-btn {
+    background-color: rgb(103, 104, 104);
+    color: rgb(255, 255, 255);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 20%;
+    cursor: pointer;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    margin-inline: 0% 5%;
+    padding-inline: 15px;
+    font-size: larger;
+}
+
+.pop-rjct-sbm-btn {
+    background-color: rgb(217, 0, 0);
+    color: rgb(255, 255, 255);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 20%;
+    cursor: pointer;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    padding-inline: 15px;
+    font-size: larger;
+}
+
+.pop-rjct-sbm-btn img {
+    width: 24px;
+}
+
+.pop-apprv-footer-btn {
+    display: flex;
+    margin-top: 15px;
+    height: 10vh;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.top-header-btn-icon {
+    margin-right: 5px;
+}
+
+.pop-apprv-ttl {
+    color: rgb(217, 0, 0);
+    font-size: x-large;
+    font-weight: 700;
+}
+
+.pop-apprv-header {
+    padding-top: 4%;
+}
+.w33{
+    width: 33.33% !important;
+}
+
+/* ======= Reject popup model start ====== */
+
+.popup-header {
+    background: rgb(217, 0, 0);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.modal-body {
+    text-align: center;
+}
+
+.reason-div {
+    background: rgb(246, 246, 246);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 5px 0px 0px 0px inset rgb(217, 0, 0);
+    padding: 12px 35px 15px 25px;
+    width: 80%;
+    margin: 1% auto;
+}
+
+.send-btn {
+    background: rgb(217, 0, 0);
+    color: white;
+    margin-top: 5%;
+    width: 20%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.send-btn img {
+    margin-bottom: -9px;
+}
+
+.clientRejectedHeader h1 {
+    font-size: large;
+    font-weight: 700;
+}
+
+.clientRejectedMessage p {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.messageIcon {
+    width: 4%;
+}
+
+.messageIconDiv {
+    display: flex;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.popup-header img {
+    width: 20px;
+}
+
+.colHead {
+    font-weight: bolder;
+}
+
+.txt-bld {
+    font-weight: bolder;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.tablefordesktop{
+    display: block;
+}
+.tableformobile{
+    display: none;
+}
+
+
+/* ======= Reject popup model end ====== */
+
+@media (max-width: 430px) {
+    .pop-apprv-sbm-btn {
+        background-color: rgb(103, 104, 104);
+        color: rgb(255, 255, 255);
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        cursor: pointer;
+        height: 28px;
+        width: 37%;
+        display: flex;
+        align-items: center;
+        margin-inline: 0% 5%;
+        padding-inline: 15px;
+    }
+
+    .pop-rjct-sbm-btn {
+        background-color: rgb(217, 0, 0);
+        color: rgb(255, 255, 255);
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        width: 37%;
+        cursor: pointer;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        padding-inline: 15px;
+    }
+
+    .pop-apprv-footer-btn {
+        justify-content: space-around;
+        margin-top: 15px;
+    }
+
+    .pop-apprv-footer-btn img {
+        height: 60%;
+        justify-content: space-around;
+    }
+}
+
+@media(max-width: 620px) {
+    .pop-apprv-sbm-btn {
+        background-color: rgb(103, 104, 104);
+        color: rgb(255, 255, 255);
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        cursor: pointer;
+        height: 28px;
+        width: 37%;
+        max-width: 100px;
+        display: flex;
+        align-items: center;
+        margin-inline: 0% 5%;
+        padding-inline: 15px;
+    }
+
+    .pop-rjct-sbm-btn {
+        background-color: rgb(217, 0, 0);
+        color: rgb(255, 255, 255);
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        width: 37%;
+        max-width: 100px;
+        cursor: pointer;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        padding-inline: 15px;
+    }
+
+    .pop-apprv-footer-btn {
+        justify-content: flex-end;
+        margin-top: 15px;
+    }
+
+    .pop-apprv-footer-btn img {
+        height: 60%;
+        justify-content: space-around;
+    }
+}
+
+@media (max-width:1024px) {
+    .pop-apprv-sbm-btn {
+        width: 110px;
+    }
+
+    .pop-rjct-sbm-btn {
+        width: 110px;
+    }
+
+    .pop-apprv-footer-btn {
+        margin-top: 15px;
+    }
+}
+
+
+/* ======= approved popup model ====== */
+
+@media (max-width: 1024px) {
+    .timesheet-header-div {
+        height: 4%;
+    }
+
+    .main {
+        padding: 90px 30px 30px 30px;
+    }
+
+    .timesheet_scroll {
+        overflow-x: scroll;
+    }
+
+    .timesheet-table {
+        width: 1375px;
+    }
+
+    .timesheet-header-div {
+        height: 50px;
+    }
+
+    .timesheet_btn_text {
+        margin: 7px 0;
+    }
+
+    .hdr_view{
+        display: flex !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .main {
+        padding: 90px 30px 30px 30px;
+    }
+
+    .timesheet-header-div {
+        height: 50px;
+        margin-top: 10px;
+    }
+
+    .timesheet_btn_text {
+        margin: 7px 0;
+    }
+    .tablefordesktop{
+        display: none;
+    }
+    .tableformobile{
+        display: block;
+    }
+}
+
+@media (max-width:430px) {
+    .main {
+        padding: 75px 15px 15px 15px;
+    }
+
+    .active-timesheet-btn {
+        min-width: 155px;
+    }
+
+    .historical-timesheet-btn {
+        min-width: 155px;
+    }
+}
+
+@media (max-width: 1500px) {
+    .hdr_view{
+        display: none;
+    }
+}

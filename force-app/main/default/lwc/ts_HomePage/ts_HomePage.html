@@ -1,0 +1,133 @@
+<template>
+
+     <!-- ======= Spinner ======= -->
+   <template if:true={isSpinner}>
+    <div class="slds-spinner_container spinner-center" style="overflow: hidden;">
+        <div class="spinner-ts">
+            <div class="inner one"></div>
+            <div class="inner two"></div>
+            <div class="inner three"></div>
+        </div>
+    </div>
+</template>
+<!-- ======= Spinner ======= -->
+
+
+<div onclick={check}>
+    <div>
+        <div class="content">
+            <div class="midBlock slds-grid slds-gutters ">
+                <div class=" welcomeText slds-col slds-small-size_1-of-1  slds-medium-size_8-of-12 slds-large-size_8-of-12">
+                    <h2>Welcome back, {uName}</h2>
+                    <p class="subtext slds-m-top_x-medium">Manage your account, contact us if you need assistance.</p>
+                </div>
+                <div class="slds-col slds-col slds-large-size_4-of-12 profileImgDiv slds-medium-size_4-of-12  slds-small-size_1-of-1 "><span style="display: inline-block;" class=""><img src={imgUrl} class="profileImg"  style="border-radius:50%"></span> </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="slds-align_absolute-center imageSection" style="display: flex;">
+        <div class="slds-m-right_small slds-m-around_small test img1"><img src={image}></div>
+        <div class="slds-m-right_small slds-m-top_xxx-small test img2"><img src={image1}></div>
+        <div class="slds-m-right_small  slds-m-top_xxx-small test img3"><img src={image2}></div>
+        <div class="slds-m-right_small slds-m-top_xxx-small test img4"><img src={image3}></div>
+        <div class="slds-m-right_small slds-m-top_xxx-small test img5"><img src={image4}></div>
+    </div>
+
+    <!-- Page Content-->
+    <div class="content">
+
+        <br />
+        <div class="subContent">
+            <div class="middleText">
+                <h3>Get Started By Updating Your Account Details</h3>
+            </div>
+            <div class="container slds-grid slds-align_absolute-center slds-wrap slds-m-top_xx-large">
+                <lightning-button-icon size="medium" onclick={Next} class='nextIcon' variant="bare" icon-name="utility:chevronright" alternative-text="Next" title='Next'></lightning-button-icon>
+
+                <div class="dbSection dbsection-reporting slds-small-size_1-of-1 slds-medium-size_1-of-1  slds-large-size_1-of-4  slds-col ">
+                    <div class="dbsection-main">
+                        <div class="dbsection-item" ontouchstart={handleTouchStart}>
+                            <span class="images myAccountSpan"><img src={myAccImg}></span>
+                            <p class="slds-p-top_xx-large boxHeading">My Account</p>
+                            <p class="textp slds-m-right_x-large" data-name="Profile" onclick={redirectpage}>Let's Start</p>
+                        </div>
+                    </div>
+                </div>
+
+                <template if:true={checkClient}>
+                        <div class="dbSection hide dbsection-scheduler slds-col slds-medium-size_1-of-1 slds-small-size_1-of-1  slds-large-size_1-of-4 "> 
+                            <div  class="dbsection-main">
+                       
+                            <div class="dbsection-item" ontouchstart={handleTouchStart}  >
+                                <i class="fa fa-calendar"></i>
+                                <span class="images schedularSpan"  ><img src={schedularImg}></span>
+                                <p class="slds-p-top_xx-large boxHeading" >My Availability</p>
+
+                                <p class="textp slds-m-right_x-large " data-name="Scheduler" onclick={redirectpage}>Let's Start</p>
+                            </div> 
+                            </div>                   
+                        </div>  
+                    </template>
+
+                <template if:false={checkClient}>
+                    <div class=" dbSection hide dbsection-compliance slds-small-size_1-of-1  slds-medium-size_1-of-1 slds-large-size_1-of-4 slds-col ">
+                        <div class="dbsection-main">
+                            <div class="dbsection-item" ontouchstart={handleTouchStart}  >
+                                <i class="fa fa-clock-o"></i>
+                                <span class="images complianceSpan" ><img src={cmpImg}></span>
+                                <p class="slds-p-top_xx-large boxHeading" >Compliance</p>
+
+                                <p class="textp textcompliance slds-m-right_large slds-m-top_small" data-name="Compliance" onclick={redirectpage}>Let's Start</p>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <template if:true={checkClient}>
+                    <div class=" dbSection hide dbsection-qualification slds-small-size_1-of-1  slds-medium-size_1-of-1 slds-large-size_1-of-4 slds-col ">
+                        <div class="dbsection-main">
+                            <div class="dbsection-item" ontouchstart={handleTouchStart}  >
+                                <i class="fa fa-clock-o"></i>
+                                <span class="images qualificationSpan" ><img src={myQualImg}></span>
+                                <p class="slds-p-top_xx-large boxHeading qualText" >My Qualifications</p>
+
+                                <p class="textp textcompliance slds-m-right_large slds-m-top_small" data-name="My Qualifications" onclick={redirectpage}>Let's Start</p>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <div class=" dbSection hide dbsection-timesheets slds-col slds-medium-size_1-of-1 slds-small-size_1-of-1 slds-large-size_1-of-4">
+                    <div class="dbsection-main">
+                        <div class="dbsection-item" ontouchstart={handleTouchStart}>
+                            <i class="fa fa-clock-o"></i>
+                            <span class="images timesheetSpan"><img src={tmSheetImg}></span>
+                            <p class="slds-p-top_xx-large boxHeading">Timesheets</p>
+
+                            <p class="textp textcompliance slds-m-right_large " data-name="Timesheets" onclick={redirectpage}>Let's Start</p>
+                        </div>
+                    </div>
+                </div>
+                <lightning-button-icon size="medium" onclick={previous} class='previousIcon' variant="bare" icon-name="utility:chevronleft" alternative-text="Next" title="Next"></lightning-button-icon>
+
+
+            </div>
+        </div>
+
+    </div>
+    <!-- Page Footer-->
+    <div class="footer">
+        <div class="footer-socials half-bottom">
+            <a href="#" class="footer-share show-share-bottom"><i class="fa fa-share-alt"></i></a>
+            <a href="#" class="footer-up"><i class="fa fa-angle-up"></i></a>
+        </div>
+        <p class="center-text"></p>
+    </div>
+</div>
+
+<c-ts_-error-component reloadpage={reloadpage}>
+</c-ts_-error-component>
+
+</template>

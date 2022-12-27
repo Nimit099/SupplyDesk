@@ -1,0 +1,817 @@
+.midBlock {
+    display: flex;
+    background-image: url('/resource/coverImgClient');
+    height: 47vh;
+    background-position: bottom;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin-right: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.welcomeText {
+    font-size: 27px;
+    color: #D90000;
+    text-align: center;
+    transform: translateY(50%);
+    overflow: hidden;
+    width: 50%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: auto;
+}
+
+.middleText {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.container {
+    width: 60%;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+.dbSection {
+    width: 15%;
+}
+
+.textp {
+    text-align: center;
+    font-size: 20px;
+    color: white;
+    background-color: #D90000;
+    padding: 5px 10px;
+    margin: auto;
+    cursor: pointer;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.images {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.qualText {
+    text-align: center;
+}
+
+.top {
+    height: 45px;
+    background-color: #D90000;
+    display: flex;
+}
+
+.helpDiv {
+    height: 30px;
+    background-color: white;
+    width: 100px;
+    margin-top: 5px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    font-family: Raleway;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.logOutDiv {
+    height: 30px;
+    background-color: white;
+    width: 100px;
+    margin-top: 5px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    font-family: Raleway;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.subtext {
+    font-size: 18px;
+    color: black;
+}
+
+.img1,
+.img2,
+.img3,
+.img4,
+.img5 {
+    height: 70px;
+}
+
+.img1 {
+    padding: 0.89%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.img2 {
+    padding: 0.8%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.img3 {
+    padding: 0.9%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.img4 {
+    padding: 1.1%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.img5 {
+    padding: 0.5% 1.5%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.subContent {
+    margin-top: 1%;
+}
+
+.profileImg {
+    position: relative;
+    top: 20px;
+    border-radius: 50%;
+    height: 8rem;
+    width: 8rem;
+}
+
+.myAccountSpan {
+    position: absolute;
+    top: -31px;
+    width: 35%;
+    height: 35%;
+    z-index: 10;
+}
+
+.schedularSpan {
+    position: absolute;
+    top: -35px;
+    width: 55%;
+    height: 45%;
+}
+
+.complianceSpan {
+    position: absolute;
+    top: -47px;
+    width: 50%;
+    height: 55%;
+}
+
+.qualificationSpan {
+    position: absolute;
+    top: -26px;
+    width: 40%;
+    height: 33%;
+}
+
+.timesheetSpan {
+    position: absolute;
+    top: -32px;
+    width: 50%;
+    height: 41%;
+}
+
+.dbSection {
+    position: relative;
+}
+
+
+/* =================== Spinner =================== */
+
+.spinner-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner-ts {
+    --size: 85px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    perspective: 800px;
+}
+
+.inner {
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid transparent;
+}
+
+.inner.one {
+    left: 0;
+    top: 0;
+    animation: rotate-one 1s linear infinite;
+    border-bottom: 3px solid #999999;
+}
+
+.inner.two {
+    right: 0;
+    top: 0;
+    animation: rotate-two 1s linear infinite;
+    border-right: 3px solid #000000;
+}
+
+.inner.three {
+    right: 0;
+    bottom: 0;
+    animation: rotate-three 1s linear infinite;
+    border-top: 3px solid #D90000;
+}
+
+.dbsection-item {
+    background-color: #F6F6F6;
+    height: 12rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+@keyframes rotate-one {
+    0% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+    }
+    100% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotate-two {
+    0% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+    }
+    100% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotate-three {
+    0% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+    }
+    100% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+    }
+}
+
+.nextIcon,
+.previousIcon {
+    display: none;
+}
+
+.boxHeading {
+    font-size: 16px;
+    padding-top: 4rem;
+    font-style: bold;
+    font-weight: 600;
+}
+
+
+/* =================== Spinner =================== */
+
+@media (max-width: 1669px) {
+    .img5,
+    .img1,
+    .img2,
+    .img3,
+    .img4 {
+        height: 60px;
+    }
+}
+
+@media (max-width: 1540px) {
+    .container {
+        width: 70%;
+        padding-bottom: 1rem;
+    }
+    .myAccountSpan {
+        position: absolute;
+        top: -26px;
+        width: 40%;
+        height: 35%;
+        z-index: 10;
+    }
+    .qualificationSpan {
+        position: absolute;
+        top: -26px;
+        width: 40%;
+        height: 30%;
+    }
+    .timesheetSpan {
+        position: absolute;
+        top: -32px;
+        width: 50%;
+        height: 40%;
+    }
+}
+
+@media (max-width: 1400px) {
+    .dbsection-item {
+        height: 11rem;
+    }
+    .dbSection {
+        width: 18%;
+    }
+    .nextIcon,
+    .previousIcon {
+        display: none;
+    }
+    .dbsection-main {
+        width: 70%;
+        margin: auto;
+    }
+    .midBlock {
+        height: 40vh;
+    }
+    .profileImg {
+        position: relative;
+        top: 30px;
+    }
+    .container {
+        width: 90%;
+        justify-content: center;
+    }
+    .subContent {
+        margin-top: 0%;
+    }
+    .welcomeText {
+        overflow: hidden;
+        width: 50%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin: auto;
+    }
+    .welcomeText h2 {
+        font-size: 23px;
+    }
+    .img1 {
+        padding: 0.98%;
+    }
+    .img2 {
+        padding: 0.78%;
+    }
+    .img3 {
+        padding: 1.2%;
+    }
+    .img4 {
+        padding: 1.3%;
+    }
+    .img5 {
+        padding: 0.5% 1.5%;
+    }
+}
+
+@media (max-width: 1450px) {
+    .img1,
+    .img2,
+    .img3,
+    .img4 {
+        height: 55px;
+    }
+    .img5 {
+        padding: 0.3% 1.5%;
+        height: 55px;
+    }
+}
+
+@media (max-width: 1224px) {
+    .dbsection-main {
+        width: 85%;
+    }
+    .container {
+        width: 100%;
+    }
+    .nextIcon,
+    .previousIcon {
+        display: none;
+    }
+}
+
+@media (max-width: 1024px) {
+    .dbsection-item {
+        height: 10rem;
+    }
+    .boxHeading {
+        padding-top: 3rem;
+    }
+    .img1 {
+        padding: 1.1%;
+    }
+    .img2 {
+        padding: 1%;
+    }
+    .img3 {
+        padding: 1.4%;
+    }
+    .img4 {
+        padding: 1.5%;
+    }
+    .img5 {
+        padding: 0.5% 1.5%;
+    }
+}
+
+@media (max-width: 1000px) {
+    .dbSection {
+        width: 22%;
+    }
+    .subtext {
+        font-size: 18px;
+    }
+    .midBlock {
+        padding: 0 0 0 6%;
+    }
+    .welcomeText {
+        width: 69%;
+    }
+    .nextIcon,
+    .previousIcon {
+        display: none;
+    }
+}
+
+@media (max-width: 940px) {
+    .img1,
+    .img2 {
+        padding: 1.2%;
+    }
+}
+
+@media (max-width: 912px) {
+    .midBlock {
+        height: 27vh;
+    }
+    .dbsection-main {
+        width: 85%;
+    }
+}
+
+@media (max-width: 820px) {
+    .midBlock {
+        padding: 0 0 0 9%;
+        height: 35vh;
+    }
+    .welcomeText h2 {
+        font-size: 23px;
+    }
+    .textp {
+        font-size: 16px;
+    }
+    .nextIcon,
+    .previousIcon {
+        display: none;
+    }
+    .img1 {
+        padding: 1.5%;
+    }
+    .img2 {
+        padding: 1.4%;
+    }
+    .img3 {
+        padding: 1.7%;
+    }
+    .img4 {
+        padding: 1.7%;
+    }
+    .img5 {
+        padding: 1% 2.5%;
+    }
+}
+
+@media (max-width: 768px) {
+    .img1,
+    .img2,
+    .img3,
+    .img4,
+    .img5 {
+        height: 50px;
+    }
+    .nextIcon {
+        display: block;
+        position: absolute;
+        z-index: 11;
+        right: 10%;
+        cursor: pointer;
+    }
+    .previousIcon {
+        display: none;
+        position: absolute;
+        left: 10%;
+        cursor: pointer;
+    }
+    .dbsection-main {
+        width: 100%;
+        margin: auto;
+    }
+    .hide {
+        display: none;
+    }
+    .show {
+        display: block;
+    }
+    .imageSection {
+        margin: 0 10%;
+    }
+    .welcomeText {
+        width: 100%;
+    }
+    .imageSection {
+        margin-top: 2%;
+    }
+    .profileImgDiv {
+        width: 90%;
+        position: relative;
+        display: contents;
+    }
+    .midBlock {
+        height: 40vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        padding: 5%;
+        margin-right: 0;
+    }
+    .welcomeText {
+        color: #D90000;
+        text-align: center;
+        transform: translateY(50%);
+    }
+    .welcomeText h2 {
+        font-size: 23px;
+        overflow: hidden;
+        width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin: auto;
+    }
+    .subtext {
+        font-size: 18px;
+        line-height: 2rem;
+    }
+    .profileImg {
+        position: relative;
+        top: 0px;
+        left: 0px;
+    }
+    .img1 {
+        padding: 2.3%;
+    }
+    .img2 {
+        padding: 2% 1%;
+    }
+    .img3,
+    .img4 {
+        padding: 2.5%;
+    }
+    .img5 {
+        padding: 1.5% 3%;
+    }
+    .middleText h3 {
+        font-size: 18px;
+        margin-top: 2%;
+    }
+    .container {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+    .myAccountSpan {
+        position: absolute;
+        top: -30px;
+        width: 40%;
+        height: 35%;
+    }
+    .dbsection-item {
+        height: 11rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .img1,
+    .img2,
+    .img3,
+    .img4,
+    .img5 {
+        height: 43px;
+    }
+    .img4 {
+        padding: 2.3%;
+    }
+    .profileImg {
+        width: 6rem;
+        position: relative;
+        top: 22px;
+        left: 15px;
+        height: 6rem;
+    }
+}
+
+@media (max-width: 540px) {
+    .profileImg {
+        width: 6rem;
+        position: relative;
+        top: 16px;
+        left: 15px;
+        height: 6rem;
+    }
+}
+
+@media (max-width: 580px) {
+    .dbSection {
+        width: 28%;
+    }
+}
+
+@media (max-width: 540px) {
+    .midBlock {
+        height: 37vh;
+    }
+    .welcomeText h2 {
+        font-size: 20px;
+    }
+    .subtext {
+        font-size: 16px;
+    }
+    .img1,
+    .img2 {
+        padding: 1.5%;
+    }
+    .img3 {
+        padding: 1.4%;
+    }
+    .img4 {
+        padding: 1.5%;
+    }
+    .img5 {
+        padding: 0.3% 1.5%;
+    }
+    .img1,
+    .img2,
+    .img3,
+    .img4,
+    .img5 {
+        height: 35px;
+    }
+}
+
+@media (max-width: 464px) {
+    .profileImg {
+        top: 18px;
+    }
+    .welcomeText h2 {
+        font-size: 16px;
+    }
+    .subtext {
+        font-size: 11px;
+    }
+    .dbsection-main {
+        width: 35%;
+    }
+}
+
+@media (max-width: 477px) {
+    .imageSection {
+        margin: 0;
+    }
+    .midBlock {
+        height: 35vh;   
+        margin-right: 0;
+    }
+    .dbsection-main {
+        width: 40%;
+    }
+    .middleText h3 {
+        font-size: 16px;
+    }
+    .welcomeText {
+        padding-top: 1%;
+    }
+    .welcomeText h2 {
+        font-size: 16px;
+    }
+    .subtext {
+        font-size: 12px;
+    }
+    .profileImg {
+        top: 0px;
+        left: 0px;
+    }
+    .img1 {
+        padding: 1.6%;
+    }
+    .img2 {
+        padding: 1.6%;
+    }
+    .img3 {
+        padding: 1.5%;
+    }
+    .img4 {
+        padding: 1.5%;
+    }
+    .img5 {
+        padding: 0.7% 1.9%;
+    }
+    .img1,
+    .img2,
+    .img3,
+    .img4,
+    .img5 {
+        height: 33px;
+    }
+}
+
+@media (max-width: 380px) {
+    .img1,
+    .img2,
+    .img3,
+    .img4,
+    .img5 {
+        height: 30px;
+    }
+    .middleText h3 {
+        font-size: 14px;
+    }
+    .midBlock {
+        height: 40vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        padding: 10%
+    }
+    .welcomeText {
+        color: #D90000;
+        text-align: center;
+        transform: translateY(50%);
+        padding: 0%;
+    }
+    .subtext {
+        line-height: 2rem;
+    }
+    .profileImg {
+        width: 5rem;
+        height: 5rem;
+        top: 12px;
+        left: 0px;
+    }
+    .middleText h3 {
+        font-size: 14px;
+    }
+    .container {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+    .dbsection-main {
+        width: 40%;
+        margin: auto;
+    }
+    .nextIcon {
+        display: block;
+        position: absolute;
+        z-index: 11;
+        right: 40px;
+        cursor: pointer;
+    }
+    .myAccountSpan {
+        position: absolute;
+        top: -37px;
+        width: 45%;
+        height: 45%;
+    }
+    .previousIcon {
+        display: none;
+        position: absolute;
+        left: 30px;
+        cursor: pointer;
+    }
+    .hide {
+        display: none;
+    }
+    .show {
+        display: block;
+    }
+    .img3,
+    .img4 {
+        padding: 1.3%;
+    }
+    .img2 {
+        padding: 1.4%;
+    }
+}

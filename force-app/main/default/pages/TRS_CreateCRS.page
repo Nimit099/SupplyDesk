@@ -1,0 +1,69 @@
+<apex:page title="Closing Report Schedule" sidebar="false"  standardController="TR1__Job__c" extensions="TRS_CreateCRSctrl" id="pageId"  tabStyle="TR1__Job__c">
+     <style>
+    input {
+        padding-top: 0;
+        
+    }
+    table.detailList {
+        width: 100% !important;
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    </style>
+  
+
+	<title>Create Booking  </title>
+	<TR1:Overlay style="processing" id="search" />
+            <apex:actionStatus id="searchOverlay" onStart="showOverlay();" onstop="hideOverlay();" />
+	<apex:form id="formId">
+	    <apex:pageMessages id="closingReportMsgId" />
+	<apex:pageBlock title="Create Closing Report Schedule">
+	    <apex:pageBlockSection title="Please select the date for which you want to create booking " columns="2" Id="PBS"> 
+	        <apex:pageBlockSectionItem >
+    	        <apex:outputLabel for="Candidate" value="Person Placed" ></apex:outputLabel>
+    	        <apex:inputField id="Candidate" value="{!objCR.TR1__Person_Placed__c}" styleClass="wide-input" label="Person Placed ">  </apex:inputField>   	       
+	        </apex:pageBlockSectionItem>
+	        <apex:pageBlockSectionItem >
+    	        <apex:outputLabel for="scheduledate" value="Schedule Date" ></apex:outputLabel>
+    	        <apex:inputField id="scheduledate" value="{!objCRS.Schedule_Date__c}" styleClass="wide-input" required="false" label="Schedule date " > </apex:inputField>
+	        </apex:pageBlockSectionItem>
+	        <apex:pageBlockSectionItem >
+    	        <apex:outputLabel for="MaximumDayPay" value="Day Pay Rate" ></apex:outputLabel>
+    	        <apex:inputField id="MaximumDayPay" value="{!objCR.Maximum_Day_Pay_Rate__c}" styleClass="wide-input" label="Person Placed " > </apex:inputField> 
+	        </apex:pageBlockSectionItem>
+	        <apex:pageBlockSectionItem >
+    	        <apex:outputLabel for="MAxDayCharge" value="Day Charge Rate" ></apex:outputLabel>
+    	        <apex:inputField id="MAxDayCharge" value="{!objCR.Maximum_Day_Charge_Rate__c}" styleClass="wide-input" label="Person Placed " > </apex:inputField> 
+	        </apex:pageBlockSectionItem><apex:pageBlockSectionItem >
+    	        <apex:outputLabel for="HalfDAypay" value="Half Day Pay Rate" ></apex:outputLabel>
+    	        <apex:inputField id="HalfDAypay" value="{!objCR.Maximum_Half_Day_Pay_Rate__c}" styleClass="wide-input" label="Person Placed " > </apex:inputField> 
+	        </apex:pageBlockSectionItem>
+	        <apex:pageBlockSectionItem >
+    	        <apex:outputLabel for="HalfDayCharge" value="Half Day Charge Rate" ></apex:outputLabel>
+    	        <apex:inputField id="HalfDayCharge" value="{!objCR.Maximum_Half_Day_Charge_Rate__c}" styleClass="wide-input" label="Person Placed " > </apex:inputField> 
+	        </apex:pageBlockSectionItem>
+	        <apex:pageBlockSectionItem >
+    	        <apex:outputLabel for="MHRPR" value="Hour Pay Rate" ></apex:outputLabel>
+    	        <apex:inputField id="MHRPR" value="{!objCR.Maximum_Hour_Pay_Rate__c}" styleClass="wide-input" label="Person Placed " > </apex:inputField> 
+	        </apex:pageBlockSectionItem>
+	        <apex:pageBlockSectionItem >
+    	        <apex:outputLabel for="MHRCR" value="Hour Charge Rate" ></apex:outputLabel>
+    	        <apex:inputField id="MHRCR" value="{!objCR.Maximum_Hour_Charge_Rate__c}" styleClass="wide-input" label="Person Placed " > </apex:inputField> 
+	        </apex:pageBlockSectionItem>
+	        
+	        <apex:pageBlockSectionItem >
+    	        <apex:commandButton value="Save" action="{!saveClosingReportSch}" />
+    	        <apex:commandButton value="Cancel" action="{!Cancel}" />
+	        </apex:pageBlockSectionItem>
+	        <apex:pageBlockSectionItem >
+	        <apex:Commandbutton action="{!RedirectTocalendar}" style="cursor:pointer;" value="Calendar"/>
+	        </apex:pageBlockSectionItem>
+	    </apex:pageBlockSection>    
+	    
+	</apex:pageBlock>
+		<!--<apex:actionFunction action="{!FetchCandidateId}" name="callContactMethod" rerender="formId" status="searchOverlay" >-->
+  <!--              <apex:param name="contact1" assignTo="{!contact1}" value="{!objCR.TR1__Person_Placed__c}"/>-->
+  <!--          </apex:actionFunction>-->
+    </apex:form>
+</apex:page>

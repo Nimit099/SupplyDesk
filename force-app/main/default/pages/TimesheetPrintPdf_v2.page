@@ -1,0 +1,235 @@
+<apex:page renderAs="PDF" showHeader="false" controller="TimesheetPrintController_v2">
+
+<head>
+
+<style> 
+            @page {
+                margin : 70pt .5in .5in .5in;
+                @top-center {
+                    content : element(header);
+                }
+            
+                @bottom-left {
+                    content : element(footer);
+                }
+            }
+            
+            div.header {
+                position : running(header) ;
+            }
+            
+            div.footer {
+                position : running(footer) ;
+            }
+        
+            .centerAlign {
+                text-align : center;
+            }
+            .leftAlign {
+                text-align : left;
+            }
+            
+            .table-Break {
+                page-break-inside: avoid;
+            }   
+    .pdfStyle { font:bold 14px; color: red; }
+    table.center {
+        margin-left:auto; 
+        margin-right:auto;
+    }
+
+</style>
+</head>
+
+<table class="center" width="100%" border="0" cellspacing="0" cellpadding="0">
+
+<tr>            
+           
+        <td valign="top" bgcolor="white" width="100%" >
+        <apex:form >
+        
+            <apex:variable value="{!0}" var="count"/>
+            <apex:repeat id="timesheetList" value="{!TimesheetPrintWrapperList}" var="wrapper"> 
+            <!--<apex:image url="{!URLFOR($Resource.EngageLogoForConstruction_new)}" height="100" width="200" rendered="{!IF(wrapper.timesheet.Timesheet_Account_RecordType__c == 'Construction', true, false)}"/>-->
+            <!--<apex:image url="{!URLFOR($Resource.EngageLogoForEducation_new)}" height="100" width="200" rendered="{!IF(wrapper.timesheet.Timesheet_Account_RecordType__c == 'Education', true, false)}" />-->
+                
+                <apex:pageBlock >
+                    <apex:pageMessage severity="error" strength="0" rendered="false" /><apex:pageMessages />
+                
+                    <apex:pageBlockSection title="Timesheet Details" columns="2" >
+                        
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Week Ending :" style="padding-right:20px"/>
+                            <apex:outputField value="{!wrapper.timesheet.TR1__Week_Ending__c}"/>
+                        </apex:pageBlockSectionItem>
+                        
+                        <apex:pageBlockSectionItem rendered="{!NOT(isClient)}">
+                            <apex:outputLabel value="Day Pay Rate :"   style="padding-left:20px"/>
+                            <apex:outputField value="{!wrapper.timesheet.Pay_Rate_1__c}" />
+                        </apex:pageBlockSectionItem>
+                        
+                         <apex:pageBlockSectionItem rendered="{!isClient}">
+                            <apex:outputLabel value="Day Charge Rate :"   style="padding-left:20px"></apex:outputLabel>
+                            <apex:outputField value="{!wrapper.timesheet.Charge_Rate_1__c}"  ></apex:OutputField>
+                        </apex:pageBlockSectionItem>
+                        
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Timesheet Week :"   style="padding-right:20px"/>
+                            <apex:outputField value="{!wrapper.timesheet.Timesheet_Week__c}"/>
+                        </apex:pageBlockSectionItem>
+                        
+                        <apex:pageBlockSectionItem rendered="{!NOT(isClient)}">
+                            <apex:outputLabel value="Half Day Pay Rate :" style="padding-left:20px"></apex:outputLabel>
+                            <apex:outputField value="{!wrapper.timesheet.Pay_Rate_2__c}" ></apex:OutputField>
+                        </apex:pageBlockSectionItem> 
+                        
+                         <apex:pageBlockSectionItem rendered="{!isClient}">
+                           <apex:outputLabel value="Half Day Charge Rate :" style="padding-left:20px"></apex:outputLabel>
+                            <apex:outputField value="{!wrapper.timesheet.Charge_Rate_2__c}"  ></apex:OutputField>
+                         </apex:pageBlockSectionItem>
+                        
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Status :"   />
+                            <apex:outputField value="{!wrapper.timesheet.TR1__Status__c}"/>
+                        </apex:pageBlockSectionItem>
+                        
+                        <apex:pageBlockSectionItem rendered="{!NOT(isClient)}">
+                            <apex:outputLabel value="Hour Pay Rate :"  style="padding-left:20px" ></apex:outputLabel>
+                            <apex:outputField value="{!wrapper.timesheet.Pay_Rate_3__c}" rendered="{!NOT(isClient)}"></apex:OutputField>
+                        </apex:pageBlockSectionItem>
+                        
+                        <apex:pageBlockSectionItem rendered="{!isClient}">
+                          <apex:outputLabel value="Hour Charge Rate :"  style="padding-left:20px"></apex:outputLabel>
+                            <apex:outputField value="{!wrapper.timesheet.Charge_Rate_3__c}" ></apex:OutputField>
+                             </apex:pageBlockSectionItem>
+                        
+                         <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Client Name :" ></apex:outputLabel>
+                            <apex:outputField value="{!wrapper.timesheet.TR1__Client_Name__c}" ></apex:OutputField>
+                        </apex:pageBlockSectionItem>
+                        
+                          <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Timesheet Approver :"   style="padding-left:20px"></apex:outputLabel>
+                            <apex:outputField value="{!wrapper.timesheet.TR1__Approver__r.Name}" ></apex:OutputField>
+                        </apex:pageBlockSectionItem> 
+                        
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Vacancy Name :"  ></apex:outputLabel>
+                            <apex:outputField value="{!wrapper.timesheet.TR1__Job_Order__r.TR1__Job_Title__c}" ></apex:OutputField>
+                        </apex:pageBlockSectionItem>
+                        
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Candidate Name :"   style="padding-left:20px"></apex:outputLabel>
+                            <apex:outputField value="{!wrapper.timesheet.TR1__Consultant_Name__c}" ></apex:OutputField>
+                        </apex:pageBlockSectionItem>
+                        
+                          <!-- <apex:pageBlockSectionItem >-->
+                        <!--    <apex:outputLabel value="Job Title" for="client"></apex:outputLabel>-->
+                        <!--    <apex:outputField value="{!wrapper.timesheet.TR1__Job_Order__r.TR1__Job_Title__c}" id="client"></apex:OutputField>-->
+                        <!--</apex:pageBlockSectionItem>-->
+                        
+                        <!--<apex:outputLabel value="" for="client"></apex:outputLabel>-->
+                        
+                        <!--<apex:pageBlockSectionItem >-->
+                        <!--    <apex:outputLabel value="Timesheet Number" style="margin-left:10px;margin-right:15px;" for="TimesheetNumber"></apex:outputLabel>-->
+                        <!--    <apex:outputField value="{!wrapper.timesheet.Name}" id="TimesheetNumber"></apex:OutputField>-->
+                        <!--</apex:pageBlockSectionItem>-->
+                        
+                        <!--<apex:pageBlockSectionItem >-->
+                        <!--    <apex:outputLabel value="Candidate Name" for="c" style="margin-right:5px;"></apex:outputLabel>-->
+                        <!--    <apex:outputField value="{!wrapper.timesheet.TR1__Consultant_Name__c}" id="c"></apex:OutputField>-->
+                        <!--</apex:pageBlockSectionItem>-->
+                        
+                        <!--<apex:pageBlockSectionItem >-->
+                        <!--    <apex:outputLabel value="Post Code" for="postcode"></apex:outputLabel>-->
+                        <!--    <apex:outputField value="{!wrapper.timesheet.TR1__Client__r.BillingPostalCode}" id="postcode"></apex:OutputField>-->
+                        <!--</apex:pageBlockSectionItem>-->
+                        <!--<apex:outputLabel value="" for="client"></apex:outputLabel>-->
+                        
+                        <!--<apex:pageBlockSectionItem >-->
+                        <!--    <apex:outputLabel value="Sales Consultant" for="SalesConsultant"></apex:outputLabel>-->
+                        <!--    <apex:outputField value="{!wrapper.timesheet.TR1__Closing_Report__r.TR1__Job_Credit__r.Name}" id="SalesConsultant"></apex:OutputField>-->
+                        <!--</apex:pageBlockSectionItem>-->
+                        <!--<apex:outputLabel value="" for="client"></apex:outputLabel>-->
+                        
+                        <!--<apex:pageBlockSectionItem rendered="{!IF(wrapper.timesheet.TR1__Closing_Report__r.TR1__Job__r.TR1__Account__r.RecordType.Name == 'Construction', true, false)}" >-->
+                        <!--    <apex:outputLabel value="PO Number" for="PONumber"></apex:outputLabel>-->
+                        <!--    <apex:outputField value="{!wrapper.timesheet.TR1__Closing_Report__r.TR1__PO_Number__c}" id="PONumber"></apex:OutputField>-->
+                        <!--</apex:pageBlockSectionItem>-->
+                    </apex:pageBlockSection>
+                    
+                    
+                    <p/><p/><p/><p/><p/><p/>
+                    <apex:pageBlockSection columns="1">
+                        <apex:pageBlockTable value="{!wrapper.timesheet.TR1__Timecards__r}" var="details" id="consultanttable" 
+                        border="1" cellpadding="3" cellspacing="6"  style="width:150%;border-collapse:collapse;font-family:Times New Roman, Times, serif; font-size:10pt" rowClasses="table-Break">
+                            
+                            <apex:column headerValue="Day" >
+                                <apex:outputField value="{!details.TR1__Day__c}"/>
+                            </apex:column>
+                            <apex:column headerValue="Date" >
+                                <apex:outputField value="{!details.TR1__Date__c}"/>
+                            </apex:column>
+                            
+                            <apex:column headerValue="Hours" >
+                                <apex:outputField value="{!details.TR1__Regular_Hours__c}" />
+                            </apex:column>  
+                            
+                            <apex:column headerValue="Half Days" >
+                                <apex:outputField value="{!details.Half_Day__c}" />
+                            </apex:column>
+                            
+                            <apex:column headerValue="Days" >
+                               <apex:outputField value="{!details.DayShift__c}" />
+                            </apex:column>  
+                          
+                            <!--<apex:column headerValue="OT Hours @ 1.5" rendered="{!IF(AND(wrapper.timesheet.Timesheet_Pay_Type__c == 'Hourly',wrapper.timesheet.TR1__Closing_Report__r.TR1__Job__r.TR1__Account__r.RecordType.Name == 'Construction'), true, false)}" >-->
+                            <!--    <apex:outputField value="{!details.TR1__Overtime_Hours__c}" />-->
+                            <!--</apex:column>    -->
+                            <!--<apex:column headerValue="OT Hours @ 2.0" rendered="{!IF(AND(wrapper.timesheet.Timesheet_Pay_Type__c == 'Hourly',wrapper.timesheet.TR1__Closing_Report__r.TR1__Job__r.TR1__Account__r.RecordType.Name == 'Construction'), true, false)}" >-->
+                            <!--    <apex:outputField value="{!details.TR1__Double_Time_Hours__c}" />-->
+                            <!--</apex:column>-->
+                            <!--<apex:column headerValue="SICK" >-->
+                            <!--    <apex:outputField value="{!details.TR1__Sick_Time_Hours__c}" />                  -->
+                            <!--</apex:column> -->
+                            <!--<apex:column headerValue="VACATION" >-->
+                            <!--    <apex:outputField value="{!details.TR1__Vacation_Hours__c}" />-->
+                            <!--</apex:column>                                    -->
+                        </apex:pageBlockTable>
+                        
+                        <br /><br/>
+                        
+                        <apex:outputPanel id="totaltable"> 
+                        <b>Total Hour(s): </b> <apex:outputText value="{!wrapper.timesheet.TR1__Total_Hours__c}" styleClass="pdfStyle" /><br/>
+                        <b>Total Half Day(s): </b>  <apex:outputText value="{!wrapper.timesheet.Total_Half_Days__c}" styleClass="pdfStyle" /><br/>
+                        <b>Total Day(s): </b>  <apex:outputText value="{!wrapper.timesheet.Total_Days__c}" styleClass="pdfStyle" /><br/>
+                        </apex:outputPanel>
+                        
+                    </apex:pageBlockSection>               
+                    <apex:pageBlockSection >
+                                 
+                        <!--<apex:pageBlockSectionItem >-->
+                        <!--    <apex:outputLabel value="Assignment Continuing: " style="margin-right:5px;" for="assignment" />-->
+                        <!--    <apex:outputField value="{!wrapper.timesheet.TR1__Assignment_Continuing__c}" id="assignment" />-->
+                        <!--</apex:pageBlockSectionItem>-->
+                        
+                        
+                    </apex:pageBlockSection>
+                    <br/><br/>
+                    <apex:pageBlockSection >
+                        <apex:pageBlockSectionItem rendered="{!IF(wrapper.timesheet.TR1__Status__c='Approved',true,false)}" >
+                            <apex:outputLabel value="Approved By: " style="margin-right:5px;" for="assignment" />
+                            <apex:outputText value="{!wrapper.timesheet.Timesheet_Approved_By__r.Name} {!wrapper.timesheet.Timesheet_Approved_Date_Time__c}" id="assignment" />
+                        </apex:pageBlockSectionItem>    
+                    </apex:pageBlockSection>
+                        
+                </apex:pageBlock>
+                
+                <apex:variable var="count" value="{!count+1}"/>
+                <DIV style="{!IF(count==LastPdf,'none','page-break-after:always')}"></DIV>
+        </apex:repeat>
+    </apex:form>
+        </td>
+        </tr>   
+</table>
+</apex:page>

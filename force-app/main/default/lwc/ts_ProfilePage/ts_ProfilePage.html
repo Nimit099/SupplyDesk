@@ -1,0 +1,258 @@
+<template>
+
+    <!-- modal start -->
+    <template if:true={isShowModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="confirmModal slds-modal__container">
+                <!-- modal header start -->
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Are you sure ? </h2>
+                </header>
+
+                <!-- modal body start -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p>You want to delete : {getCvName}</p>
+                </div>
+
+                <!-- modal footer start-->
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral boxYesButton" onclick={yesDelete}
+                        title="Yes">Yes</button>
+                    <button class="slds-button slds-button_neutral boxNoButton" onclick={hideModalBox}
+                        title="No">No</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <!-- modal end -->
+
+    <c-ts_-tost-notification></c-ts_-tost-notification>
+
+
+    <div class="mainDiv" onclick={check}>
+        <template if:true={isSpinner}>
+            <div class="slds-spinner_container spinner-center" style="overflow: hidden;">
+                <div class="spinner-ts">
+                    <div class="inner one"></div>
+                    <div class="inner two"></div>
+                    <div class="inner three"></div>
+                </div>
+            </div>
+        </template>
+        <div class="slds-grid slds-gutters profileTopDiv">
+            <div class="slds-col slds-size_7-of-12 slds-m-left_xx-large profileTitle" style="display:flex;">
+                <div class="slds-size_1-of-8 slds-m-left_xx-large prof-avtr-div">
+                    <span style="display: inline-block;">
+                        <div class="slds-col">
+                            <span class="imageUpload">
+                                <input type="file" class="slds-assistive-text" accept={acceptedFormats} id="pfpUpload"
+                                    onchange={savePfpHandle} />
+                                <label class="slds-file-selector__body" for="pfpUpload">
+                                    <img src={imgUrl} class="profImg slds-m-left_medium slds-m-top_medium"
+                                        data-id="pfpUploader">
+                                    <div class="centered"> Change Image </div>
+                                </label>
+                                <div class="top-right" onclick={deletePfpHandle}> <img src={deleteImg}> </div>
+                            </span>
+                        </div>
+                    </span>
+                </div>
+                <div>
+                    <p class="slds-m-top_x-large slds-m-left_large t1">{contype}</p>
+                    <p class="slds-m-left_large t2">My Profile</p>
+                    <p class="slds-m-left_large t3">Update your photo and personal details.</p>
+                </div>
+            </div>
+            <div
+                class="slds-p-horizontal--small slds-col slds-size_4-of-12 slds-m-bottom--medium btns slds-m-top_xx-large">
+                <div class="slds-size_1-of-5 slds-m-left_medium saveBtn" onclick={handleSave} title="Save">
+                    <img src={saveImg}> Save
+                </div>
+                <div class="slds-size_1-of-5 slds-m-left_medium cancelBtn" onclick={cancelChanges} title="Cancel">
+                    <img src={cancelImg}> Cancel
+                </div>
+            </div>
+        </div>
+
+        <div class="tabDiv">
+            <lightning-tabset>
+                <lightning-tab label="Details" value="tab1" onactive={handleActive}>
+                    <div class="detailDiv">
+                        <!-- FirstName -->
+                        <div class="slds-grid slds-gutters slds-m-left_xx-large">
+                            <div class="slds-col slds-size_2-of-12 slds-m-left_xx-large textp">
+                                First Name
+                            </div>
+                            <div
+                                class="slds-p-horizontal--small slds-col slds-size_9-of-12 slds-m-bottom--medium slds-form-element">
+                                <lightning-input class="input" readonly name="firstname" type="text" value={fname}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- LastName -->
+                        <div class="slds-grid slds-gutters slds-m-left_xx-large">
+                            <div class="slds-col slds-size_2-of-12 slds-m-left_xx-large textp">
+                                Last Name
+                            </div>
+                            <div
+                                class="slds-p-horizontal--small slds-col slds-size_9-of-12 slds-m-bottom--medium slds-form-element">
+                                <lightning-input class="input" readonly name="lastname" type="text" value={lname}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- Image Upload -->
+                        <div class="slds-grid slds-gutters slds-m-left_xx-large fileUplaodDiv">
+                            <div class="slds-col slds-size_2-of-12 slds-m-left_xx-large textp1">
+                                <p>Your photo</p>
+                                <p>This will displayed on your profile</p>
+                            </div>
+
+                            <div class="slds-grid slds-grid_align-spread">
+                                <div class="slds-col" style="display: flex; flex-direction:row; align-items:center">
+                                    <input type="file" class="slds-assistive-text" accept={acceptedFormats}
+                                        id="pfpUpload1" onchange={savePfpHandle} />
+                                    <label class="slds-file-selector__body" for="pfpUpload1">
+                                        <div class="fileUpload">
+                                            <div>
+                                                <img src={updateImg}>
+                                                <p> Update </p>
+                                            </div>
+                                        </div>
+                                    </label>
+                                    <div class="fileDelete" onclick={deletePfpHandle}>
+                                        <div>
+                                            <img src={deleteImg}>
+                                            <p> Delete </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="fileuploadhr">
+                        <!-- Email address -->
+                        <div class="slds-grid slds-gutters slds-m-left_xx-large">
+                            <div class="slds-col slds-size_2-of-12 slds-m-left_xx-large textp">
+                                Email Address
+                            </div>
+                            <div
+                                class="slds-p-horizontal--small slds-col slds-size_9-of-12 slds-m-bottom--medium slds-form-element">
+                                <lightning-input class="input" name="emailaddress" value={email} onchange={handleChange}
+                                    type="text" autocomplete="off"></lightning-input>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- Business Phone -->
+                        <div class="slds-grid slds-gutters slds-m-left_xx-large">
+                            <template if:true={checkClient}>
+
+                                <div class="slds-col slds-size_2-of-12 slds-m-left_xx-large textp">
+                                    Home Phone
+                                </div>
+                                <div
+                                    class="slds-p-horizontal--small slds-col slds-size_9-of-12 slds-m-bottom--medium slds-form-element businessphone">
+                                    <lightning-input class="input "
+                                        pattern="[0-9]{3}[0-9]{3}[0-9]{3}|[0-9]{3}[0-9]{3}[0-9]{4}|[0-9]{3}[0-9]{4}[0-9]{4}|[0-9]{4}[0-9]{4}[0-9]{4}"
+                                        message-when-pattern-mismatch="Please enter a valid phone number"
+                                        name="homephone" value={homephn} onchange={handleChange} type="tel"
+                                        autocomplete="off"></lightning-input>
+                                </div>
+                            </template>
+                            <template if:false={checkClient}>
+
+                                <div class="slds-col slds-size_2-of-12 slds-m-left_xx-large textp">
+                                    Business Phone
+                                </div>
+                                <div
+                                    class="slds-p-horizontal--small slds-col slds-size_9-of-12 slds-m-bottom--medium slds-form-element businessphone">
+                                    <lightning-input class="input "
+                                        pattern="[0-9]{3}[0-9]{3}[0-9]{3}|[0-9]{3}[0-9]{3}[0-9]{4}|[0-9]{3}[0-9]{4}[0-9]{4}|[0-9]{4}[0-9]{4}[0-9]{4}"
+                                        message-when-pattern-mismatch="Please enter a valid phone number"
+                                        name="businessphone" value={businessphn} onchange={handleChange} type="tel"
+                                        autocomplete="off"></lightning-input>
+                                </div>
+                            </template>
+
+
+                        </div>
+                        <hr>
+                        <!-- Mobile Phone -->
+                        <div class="slds-grid slds-gutters slds-m-left_xx-large">
+                            <div class="slds-col slds-size_2-of-12 slds-m-left_xx-large textp">
+                                Mobile Phone
+                            </div>
+                            <div
+                                class="slds-p-horizontal--small slds-col slds-size_9-of-12 slds-m-bottom--medium slds-form-element mobilephone">
+                                <lightning-input class="input " name="mobilephone" value={mobilephn}
+                                    onchange={handleChange}
+                                    pattern="[0-9]{3}[0-9]{3}[0-9]{3}|[0-9]{3}[0-9]{3}[0-9]{4}|[0-9]{3}[0-9]{4}[0-9]{4}|[0-9]{4}[0-9]{4}[0-9]{4}"
+                                    message-when-pattern-mismatch="Please enter a valid mobile number" type="tel"
+                                    autocomplete="off"></lightning-input>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- Add CV -->
+                        <template if:true={checkClient}>
+
+                            <div class="slds-m-left_xx-large">
+                                <div
+                                    class="slds-size_11-of-12 cvDiv slds-m-left_xx-large slds-m-top_x-large slds-p-around_medium">
+                                    <b>Add Your CV</b>
+                                </div>
+                                <div
+                                    class="dropzone slds-file-selector__body slds-file-selector__body_integrated fileInputBox slds-size_10-of-12 slds-m-top_x-large">
+                                    <div class="slds-text-heading_medium slds-text-align_center slds-m-top_x-large">
+                                        <img class="slds-m-right_medium cvImg" src={dragFileImg}> Drag file here or
+                                        click to add attachment
+                                    </div>
+                                    <input type="file" accept="image/*, application/pdf" onchange={handleFile}
+                                        data-id="cvUploader" />
+                                </div>
+                                <template for:each={cvList} for:item="cv">
+                                    <div key={cv.Id} class="cvData slds-size_10-of-12">
+                                        {cv.Title} <img src={deleteImg} name={cv.Id} title={cv.Title}
+                                            onclick={deleteCv}>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                        <template if:false={checkClient}>
+                            <!-- School Name -->
+                            <div class="slds-grid slds-gutters slds-m-left_xx-large">
+                                <div class="slds-col slds-size_2-of-12 slds-m-left_xx-large textp">
+                                    School Name
+                                </div>
+                                <div
+                                    class="slds-p-horizontal--small slds-col slds-size_9-of-12 slds-m-bottom--medium slds-form-element">
+                                    <lightning-input class="input" name="schoolName" value={schoolPostal}
+                                        onchange={handleChange} type="text" autocomplete="off"></lightning-input>
+                                </div>
+                            </div>
+                            <hr>
+                        </template>
+
+
+                    </div>
+                    <div class="iPadbtns">
+                        <div class="saveBtn" onclick={handleSave}>
+                            <img src={saveImg}> Save
+                        </div>
+                        <div class="cancelBtn" onclick={cancelChanges}>
+                            <img src={cancelImg}> Cancel
+                        </div>
+                    </div>
+                </lightning-tab>
+                <lightning-tab label="Password" value="tab2" title="Password" onactive={handleActive}>
+                    <c-ts_-Change-Password></c-ts_-Change-Password>
+                </lightning-tab>
+            </lightning-tabset>
+        </div>
+
+    </div>
+
+    <c-ts_-error-component reloadpage={reloadpage}>
+    </c-ts_-error-component>
+</template>

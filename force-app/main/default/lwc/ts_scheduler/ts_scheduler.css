@@ -1,0 +1,383 @@
+.slds-modal__content {
+    overflow: initial;
+}
+.showRangeDateDiv{
+     
+    display: flex;
+}
+.showRangeTimeDiv{
+    
+    display: flex;
+}
+.scheduler-main-div {
+    margin-top: 5%;
+    margin-left: 65px;
+    background: #FFFFFF;
+}
+
+.op-header {
+    background: #d90000;
+    color: white;
+}
+
+
+.top-div {
+    display: flex;
+    justify-content: space-around;
+    min-height: 100px;
+    height: 15vh;
+}
+
+.top-available-div {
+    background: rgb(250, 231, 202);
+}
+
+.top-not-wrkng-div {
+    background: rgb(237, 228, 246);
+}
+
+.top-wfa-div {
+    background: rgb(203, 227, 245);
+}
+
+.top-avl-icon-div {
+    height: 30px;
+    width: 30px;
+}
+
+.top-not-wrkng-icon-div {
+    height: 30px;
+    width: 30px;
+}
+
+.top-wfa-icon-div {
+    height: 30px;
+    width: 30px;
+}
+
+.wkly-tsk {
+    color: #D90000;
+    font-weight: 700;
+    font-size: 2em;
+    padding-left: 3%;
+}
+
+.right-ttl {
+    color: #D90000;
+    font-weight: 700;
+    font-size: 2em;
+    margin-top: 5%;
+    margin-left: 2%;
+}
+
+.avl-count {
+    margin-left: 6px;
+    margin-top: 2px;
+}
+
+.tpd {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    width: 22%;
+    height: 71%;
+    min-height: 90px;
+    font-size: 1em;
+    color: #000000;
+    font-weight: 500;
+    font-style: normal;
+    padding: 1%;
+}
+
+.icon-help-text-div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.top-txt {
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+
+
+.eventDiv {
+    height: 5%;
+    background-color: antiquewhite;
+    min-width: 15%;
+    min-height: 50px;
+    text-align: center;
+}
+
+.left-div {
+    border-right: 1px solid rgba(103, 104, 104, 0.6);
+}
+
+.calender-div {
+    border-top: 1px solid rgba(103, 104, 104, 0.6);
+    padding: 3%;
+}
+
+.right-div {
+    background: #F6F6F6;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 10px;
+    height: 119vh;
+    overflow: auto;
+}
+
+.date-div {
+    display: flex;
+    align-items: center;
+    height: 7vh;
+}
+
+.date-show {
+    font-size: x-large;
+    font-weight: 700;
+    font-style: normal;
+    margin-left: 2%;
+}
+
+.event-count {
+    color: #5d5f5f;
+    font-weight: 400;
+    font-style: normal;
+    font-size: x-large;
+    margin-left: 1%;
+
+}
+
+.evnt-title-dur {
+    background: #D9D9D9;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    display: flex;
+    height: 5vh;
+    width: 25vw;
+    margin-left: 2%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 10px;
+    margin: 5px 0;
+}
+
+.evnt-ttl {
+    font-weight: 400;
+    font-style: normal;
+    font-size: large;
+    color: #000000;
+}
+
+.evnt-dur {
+    font-weight: 400;
+    font-style: normal;
+    font-size: large;
+    color: rgba(103, 104, 104, 0.78);
+}
+
+.evnt-strt-time {
+    font-weight: 600;
+    font-style: normal;
+    font-size: large;
+    color: #000000;
+}
+
+.evnt-dot {
+    background: rgba(197, 14, 27, 1);
+    width: 7px;
+    height: 7px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.evnt-time {
+    display: flex;
+    align-items: center;
+    height: 5vh;
+    margin-left: 2%;
+}
+
+.evnt-block {
+    padding-top: 2%;
+}
+
+.slds-popover_tooltip ::before {
+    background: #7C7B7B !important;
+}
+
+.slds-popover_tooltip .slds-popover__body {
+    color: #000000 !important;
+}
+
+/* Small Mobile */
+@media only screen and (min-width: 300px) and (max-width: 380px) {}
+
+/* Mobile View */
+@media screen and (max-width: 767px) {
+    .right-div {
+        display: none;
+    }
+
+    .scheduler-main-div {
+        margin-top: 50px;
+        margin-left: 2px;
+        background: #FFFFFF;
+    }
+
+    .top-div {
+        display: flex;
+        justify-content: space-around;
+        min-height: 100px;
+        height: 15vh;
+        margin-top: 3%;
+    }
+
+    .tpd {
+        font-size: 10px;
+        min-height: 90px;
+    }
+
+    .tp-icn {
+        height: 1.5rem;
+    }
+
+}
+
+/* IPAD VIEW */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+
+    .right-div {
+        display: none;
+    }
+
+    .scheduler-main-div {
+        margin-top: 50px;
+        margin-left: 2px;
+        background: #FFFFFF;
+    }
+
+    .top-div {
+        display: flex;
+        justify-content: space-around;
+        min-height: 100px;
+        height: 15vh;
+        margin-top: 3%;
+    }
+
+    .tpd {
+        min-height: 90px;
+    }
+
+    .fc-toolbar .fc-center {
+        margin-left: 17vh !important;
+    }
+
+}
+@media only screen and (min-width: 1024px) and (max-width: 1260px){
+    .evnt-ttl {
+        font-size: 14px;
+    }
+    
+    .evnt-dur {
+        font-size: 14px;
+    }
+}
+
+/* =================== Spinner =================== */
+
+.spinner-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner-ts {
+    --size: 85px;
+
+    width: var(--size);
+    height: var(--size);
+
+    border-radius: 50%;
+    perspective: 800px;
+}
+
+.inner {
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid transparent;
+}
+
+.inner.one {
+    left: 0;
+    top: 0;
+    animation: rotate-one 1s linear infinite;
+    border-bottom: 3px solid #999999;
+}
+
+.inner.two {
+    right: 0;
+    top: 0;
+    animation: rotate-two 1s linear infinite;
+    border-right: 3px solid #000000;
+}
+
+.inner.three {
+    right: 0;
+    bottom: 0;
+    animation: rotate-three 1s linear infinite;
+    border-top: 3px solid #d90000;
+}
+
+@keyframes rotate-one {
+    0% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotate-two {
+    0% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotate-three {
+    0% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+    }
+}
+
+/* =================== Spinner =================== */
+
+.fc-event:hover{
+    background-color: #D90000;
+    width: 100px;
+}
+.fc-view-container{
+    color: #d90000 !important;
+}
+.deletemodel_text{
+    text-align: center;
+}
+.deletemodel footer{
+    width: 100%;
+    text-align-last: center;
+}
+.deletemodel_text h1{
+    margin: 15px 0;
+    font-size: 18px;
+}

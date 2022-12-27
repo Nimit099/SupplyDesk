@@ -1,0 +1,204 @@
+<apex:page controller="ts_TimesheetPrintPdfController" renderAs="pdf" applyHtmlTag="false" showHeader="false" sidebar="false"
+    standardStylesheets="false">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <style>
+            .head_tag {
+                font-weight: 700;
+                font-size: 16px;
+            }
+
+            .val_cls {
+                padding: 10px 20px;
+                width: 125px;
+                font-size: 16px;
+            }
+
+            .day_table {
+                width: 100%;
+                margin: 40px 0;
+                border-collapse: collapse;
+            }
+
+            .border_cls {
+                border: 1px solid black;
+                padding: 10px 20px;
+            }
+        </style>
+    </head>
+
+    <div class="main">
+        <apex:form >
+            <apex:variable value="{!0}" var="count" />
+            <apex:repeat id="timesheetList" value="{!TimesheetPrintWrapperList}" var="wrapper">
+                <apex:pageBlock >
+                    <div style="width:100%; height: 100%;">
+                        <apex:image value="{!URLFOR($Resource.communityicons, 'communityicons/supplydesk_logo.png')}" style="width:100%; height: 100%;"
+                        />
+                    </div>
+                    <h1>Timesheet Details</h1>
+
+
+                    <table>
+                        <apex:pageMessage severity="error" strength="0" rendered="false" />
+                        <apex:pageMessages />
+                        <tr>
+                            <td class="head_tag">Week Ending :</td>
+                            <td class="val_cls">
+                                <apex:outputField value="{!wrapper.timesheet.TR1__Week_Ending__c}" />
+                            </td>
+                            <td class="head_tag">
+                                <apex:outputpanel rendered="{!isClient}">
+                                    Day Charge Rate :
+                                </apex:outputpanel>
+                                <apex:outputpanel rendered="{!!isClient}">
+                                    Day Pay Rate :
+                                </apex:outputpanel>
+                            </td>
+                            <td class="val_cls">
+                                <apex:pageBlockSection >
+                                    <apex:pageBlockSectionItem rendered="{!isClient}">
+                                        <apex:outputfield value="{!wrapper.timesheet.Charge_Rate_1__c}" />
+
+                                    </apex:pageBlockSectionItem>
+                                    <apex:pageBlockSectionItem rendered="{!!isClient}">
+                                        <apex:outputfield value="{!wrapper.timesheet.Pay_Rate_1__c}" />
+
+                                    </apex:pageBlockSectionItem>
+
+                                </apex:pageBlockSection>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="head_tag">Timesheet Week :</td>
+                            <td class="val_cls">
+                                <apex:outputField value="{!wrapper.timesheet.Timesheet_Week__c}" />
+                            </td>
+                            <td class="head_tag">
+                                <apex:outputpanel rendered="{!isClient}">
+                                    Half Day Charge Rate :
+                                </apex:outputpanel>
+                                <apex:outputpanel rendered="{!!isClient}">
+                                    Half Day Pay Rate :
+                                </apex:outputpanel>
+                            </td>
+                            <td class="val_cls">
+                                <apex:pageBlockSection >
+                                    <apex:pageBlockSectionItem rendered="{!isClient}">
+                                        <apex:outputfield value="{!wrapper.timesheet.Charge_Rate_2__c}" />
+
+                                    </apex:pageBlockSectionItem>
+                                    <apex:pageBlockSectionItem rendered="{!!isClient}">
+                                        <apex:outputfield value="{!wrapper.timesheet.Pay_Rate_2__c}" />
+
+                                    </apex:pageBlockSectionItem>
+
+                                </apex:pageBlockSection>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="head_tag">Status :</td>
+                            <td class="val_cls">
+                                <apex:outputField value="{!wrapper.timesheet.TR1__Status__c}" />
+                            </td>
+                            <td class="head_tag">
+                                <apex:outputpanel rendered="{!isClient}">
+                                    Hour Charge Rate :
+                                </apex:outputpanel>
+                                <apex:outputpanel rendered="{!!isClient}">
+                                    Hour Pay Rate :
+                                </apex:outputpanel>
+                            </td>
+                            <td class="val_cls">
+                                <apex:pageBlockSection >
+                                    <apex:pageBlockSectionItem rendered="{!isClient}">
+                                        <apex:outputfield value="{!wrapper.timesheet.Charge_Rate_3__c}" />
+
+                                    </apex:pageBlockSectionItem>
+                                    <apex:pageBlockSectionItem rendered="{!!isClient}">
+                                        <apex:outputfield value="{!wrapper.timesheet.Pay_Rate_3__c}" />
+
+                                    </apex:pageBlockSectionItem>
+                                </apex:pageBlockSection>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="head_tag">Client Name :</td>
+                            <td class="val_cls">
+                                <apex:outputField value="{!wrapper.timesheet.TR1__Client_Name__c}"></apex:OutputField>
+                            </td>
+                            <td class="head_tag">Timesheet Approver :</td>
+                            <td class="val_cls">
+                                <apex:outputField value="{!wrapper.timesheet.TR1__Approver__r.Name}"></apex:OutputField>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="head_tag">Vacancy Name :</td>
+                            <td class="val_cls">
+                                <apex:outputField value="{!wrapper.timesheet.TR1__Job_Order__r.TR1__Job_Title__c}"></apex:OutputField>
+                            </td>
+                            <td class="head_tag">Candidate Name :</td>
+                            <td class="val_cls">
+                                <apex:outputField value="{!wrapper.timesheet.TR1__Consultant_Name__c}"></apex:OutputField>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <apex:pageBlockTable value="{!wrapper.timesheet.TR1__Timecards__r}" var="details" id="consultanttable" border="1" cellpadding="3"
+                        cellspacing="6" style="width:80%; text-align: center; margin-top: 2%; margin-bottom: 2%; border-collapse: collapse;"
+                        rowClasses="table-Break">
+
+                        <apex:column headerValue="Day">
+                            <apex:outputField value="{!details.TR1__Day__c}" />
+                        </apex:column>
+                        <apex:column headerValue="Date">
+                            <apex:outputField value="{!details.TR1__Date__c}" />
+                        </apex:column>
+
+                        <apex:column headerValue="Hours">
+                            <apex:outputField value="{!details.TR1__Regular_Hours__c}" />
+                        </apex:column>
+
+                        <apex:column headerValue="Half Days">
+                            <apex:outputField value="{!details.Half_Day__c}" />
+                        </apex:column>
+
+                        <apex:column headerValue="Days">
+                            <apex:outputField value="{!details.DayShift__c}" />
+                        </apex:column>
+
+                    </apex:pageBlockTable>
+
+                    <table>
+                        <tr>
+                            <td class="head_tag">Total hours(s) :</td>
+                            <td class="val_cls">{!wrapper.timesheet.TR1__Total_Hours__c}</td>
+                        </tr>
+                        <tr>
+                            <td class="head_tag">Total Half Day(s) :</td>
+                            <td class="val_cls">{!wrapper.timesheet.Total_Half_Days__c}</td>
+                        </tr>
+                        <tr>
+                            <td class="head_tag">Total Days(s) ;</td>
+                            <td class="val_cls">{!wrapper.timesheet.Total_Days__c}</td>
+                        </tr>
+                    </table>
+
+                    <apex:pageBlockSection >
+                        <apex:pageBlockSectionItem rendered="{!IF(wrapper.timesheet.TR1__Status__c='Approved',true,false)}">
+                            <apex:outputLabel value="Approved By: " style="margin-right:5px;" for="assignment" />
+                            <apex:outputText value="{!wrapper.timesheet.Timesheet_Approved_By__r.Name} {!wrapper.timesheet.Timesheet_Approved_Date_Time__c}"
+                                id="assignment" />
+                        </apex:pageBlockSectionItem>
+                    </apex:pageBlockSection>
+
+                </apex:pageBlock>
+                <apex:variable var="count" value="{!count+1}" />
+                <DIV style="{!IF(count==LastPdf,'none','page-break-after:always')}"></DIV>
+            </apex:repeat>
+        </apex:form>
+    </div>
+
+</apex:page>

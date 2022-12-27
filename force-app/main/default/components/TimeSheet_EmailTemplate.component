@@ -1,0 +1,191 @@
+<apex:component allowDML="true" access="global">
+    
+    <apex:attribute name="timesheet" type="TR1__Timesheet__c" description="Timesheet" />
+   
+     <br/>
+   
+    <div  style="width:100%;display:inline-block;"><apex:image url="https://c.eu6.content.force.com/servlet/servlet.ImageServer?id=01558000000pjW2&oid=00D58000000aSFH&lastMod=1472545146000" styleClass="header" style="float:right"/></div><br/>
+    <div style="width:100%;font-size:17px;font-family:arial, sans-serif">
+    Hi {!timesheet.TR1__Approver__r.Name},<br/><br/>
+        Please approve or reject the below timesheet for {!timesheet.TR1__Consultant_Name__c}<br/><br/>
+         <a href="{!$Setup.TR1__TalentRoverProperties__c.Community_Base_URL__c}/ApproveOrRejectTimesheet?id={!timesheet.Id}&action=Approved" >Approve</a>&nbsp;&nbsp;<a href="{!$Setup.TR1__TalentRoverProperties__c.Community_Base_URL__c}/ApproveOrRejectTimesheet?id={!timesheet.Id}&action=Rejected" >Reject</a>&nbsp;&nbsp;<a href="{!$Setup.TR1__TalentRoverProperties__c.Community_Base_URL__c}/TimesheetDetails?tsId={!timesheet.Id}">Review Timesheet</a><br/> 
+    </div>
+    <br/><br/>
+    <table >
+        <tr>
+            <td colspan="2">
+                <div id="InvoiceSection" style="Align">
+                    <br/>
+                    <apex:variable value="{!0}" var="fieldsetsize"/>
+                    <apex:repeat value="{!$ObjectType.TR1__Timesheet__c.FieldSets.EmailTimesheet}" var="field">
+                        <apex:variable value="{!fieldsetsize+1}" var="fieldsetsize"/>
+                    </apex:repeat> 
+                    <span style="text-transform:uppercase!important;font-size:20px;font-family:arial, sans-serif"><strong>Timesheet Information</strong></span>
+                    <br/>
+                    <br/>
+                    
+                    
+                    <table style="border-collapse: collapse;font-family:arial, sans-serif;table-layout: fixed;font-size:14px" width="100%">
+                        <!--<thead>-->
+                            <tr>
+                                <apex:repeat value="{!$ObjectType.TR1__Timesheet__c.FieldSets.EmailTimesheet}" var="field" rows="3">
+                                    <td style="color: #000;border-bottom:1px solid #ccc!important;border-top:1px solid #ccc!important;padding:8px 8px 8px 4px!important;">
+                                        <apex:outputText style="font-weight:bold;" value="{!IF(field =='TR1__Consultant_Name__c','Worker',field.Label)}" /><br/>
+                                        
+                                        <apex:outputText value="{!timesheet[field]}" rendered="{!IF(field.Type=='date',FALSE,TRUE)}"/>
+                                        <apex:outputText value="{0,date,dd/MM/yy}" rendered="{!IF(field.Type=='date',TRUE,FALSE)}">
+                                            <apex:param value="{!timesheet[field]}" />
+                                        </apex:outputText>
+                                    </td>
+                                </apex:repeat>
+                            </tr>
+                            <apex:outputpanel rendered="{!fieldsetsize>3}" layout="none">
+                                <tr>
+                                    <apex:repeat value="{!$ObjectType.TR1__Timesheet__c.FieldSets.EmailTimesheet}" var="field" rows="3" first="3">
+                                        <td style="color: #000;border-bottom:1px solid #ccc!important;padding:8px 8px 8px 4px!important;">
+                                            <apex:outputText style="font-weight:bold;" value="{!field.Label}" /><br/>
+                                            
+                                            <apex:outputText value="{!timesheet[field]}" rendered="{!IF(field.Type=='date',FALSE,TRUE)}"/>
+                                            <apex:outputText value="{0,date,dd/MM/yy}" rendered="{!IF(field.Type=='date',TRUE,FALSE)}">
+                                                <apex:param value="{!timesheet[field]}" />
+                                            </apex:outputText>
+                                        </td>
+                                    </apex:repeat>
+                                </tr>
+                            </apex:outputpanel>
+                             <apex:outputpanel rendered="{!fieldsetsize>6}" layout="none">
+                                <tr>
+                                    <apex:repeat value="{!$ObjectType.TR1__Timesheet__c.FieldSets.EmailTimesheet}" var="field" rows="3" first="6">
+                                        <td style="color: #000;border-bottom:1px solid #ccc!important;padding:8px 8px 8px 4px!important;">
+                                            <apex:outputText style="font-weight:bold;" value="{!field.Label}" /><br/>
+                                            
+                                            <apex:outputText value="{!timesheet[field]}" rendered="{!IF(field.Type=='date',FALSE,TRUE)}"/>
+                                            <apex:outputText value="{0,date,dd/MM/yy}" rendered="{!IF(field.Type=='date',TRUE,FALSE)}">
+                                                <apex:param value="{!timesheet[field]}" />
+                                            </apex:outputText>
+                                        </td>
+                                    </apex:repeat>
+                                </tr>
+                            </apex:outputpanel>
+                            <apex:outputpanel rendered="{!fieldsetsize>9}" layout="none">
+                                <tr>
+                                    <apex:repeat value="{!$ObjectType.TR1__Timesheet__c.FieldSets.EmailTimesheet}" var="field" rows="3" first="9">
+                                        <td style="color: #000;border-bottom:1px solid #ccc!important;padding:8px 8px 8px 4px!important;">
+                                            <apex:outputText style="font-weight:bold;" value="{!field.Label}" /><br/>
+                                            
+                                            <apex:outputText value="{!timesheet[field]}" rendered="{!IF(field.Type=='date',FALSE,TRUE)}"/>
+                                            <apex:outputText value="{0,date,dd/MM/yy}" rendered="{!IF(field.Type=='date',TRUE,FALSE)}">
+                                                <apex:param value="{!timesheet[field]}" />
+                                            </apex:outputText>
+                                        </td>
+                                    </apex:repeat>
+                                </tr>
+                            </apex:outputpanel>
+                        <!--</thead>-->
+                        
+                    </table>
+                    <br/><br/>
+                </div>
+            </td>
+        </tr>  
+         
+       
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        
+        <apex:outputPanel rendered="{!timesheet.TR1__Timesheet_Type__c=='Start/Lunch/Finish'}" layout="none">
+            <tr>
+                <td colspan="2">
+                    <div>
+                        <br/>
+                        <span style="text-transform:uppercase!important;font-size:20px;font-family:arial, sans-serif"><strong>Timesheet Detail Information</strong></span>
+                        <br/>
+                        <br/>                    
+                        <table style="border-collapse: collapse;font-family:arial, sans-serif;table-layout: fixed;font-size:14px" width="100%">
+                            <thead>
+                                <apex:repeat value="{!$ObjectType.TR1__Timesheet_Detail__c.FieldSets.EmailTSD}" var="field">
+                                    <apex:outputPanel rendered="{!AND(field.FieldPath != 'Finish_minutes__c', field.FieldPath != 'Start_Minutes__c') }"  layout="none">
+                                        <td style="color: #000;background-color: #e5e5e5;padding:5px 8px 5px 4px!important;height:30px;line-height:30px;border-bottom:1px solid #ccc!important;"> <apex:outputText value="{!IF(field =='Start_Hours__c','Start Time',IF(field == 'Finish_Hours__c','Finish Time',field.Label))}" /></td>
+                                    </apex:outputPanel>
+                                </apex:repeat>                            
+                            </thead>
+                            <tbody>
+                            <apex:repeat value="{!timesheet.TR1__Timecards__r}" var="td">
+                                <tr>
+                                    <apex:repeat value="{!$ObjectType.TR1__Timesheet_Detail__c.FieldSets.EmailTSD}" var="field">
+                                        <apex:outputPanel rendered="{!AND(field.FieldPath != 'Finish_minutes__c', field.FieldPath != 'Start_Minutes__c') }"  layout="none">
+                                            
+                                            <td style="padding:8px 8px 8px 4px!important;border-bottom:1px solid #ccc!important"> 
+                                                <apex:outputText rendered="{!IF(OR(field.Type=='date',field == 'TR1__Day__c'),FALSE,TRUE)}"
+                                                    value="{!IF(field =='Start_Hours__c',td['Start_Hours__c']+':'+td['Start_Minutes__c'],IF(field == 'Finish_Hours__c',td['Finish_Hours__c']+':'+td['Finish_minutes__c'],td[field]))}" />
+                                                <apex:outputText value="{0,date,dd/MM/yy}" rendered="{!IF(field.Type=='date',TRUE,FALSE)}">
+                                                    <apex:param value="{!td[field]}" />
+                                                </apex:outputText>
+                                                                  
+                                                <apex:outputText value="{!UPPER(LEFT(td[field],3))}" rendered="{!IF(field == 'TR1__Day__c',TRUE,FALSE)}"/>
+                                                
+                                            </td>
+                                        </apex:outputPanel>
+                                    </apex:repeat>
+                                </tr>
+                            </apex:repeat>                                 
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!timesheet.TR1__Timesheet_Type__c=='Online'}" layout="none">
+            <tr >
+                <td colspan="2">
+                    <div>
+                        <br/>
+                        <span style="text-transform:uppercase!important;font-size:20px;font-family:arial, sans-serif"><strong>Timesheet Detail Information</strong></span>
+                        <br/>
+                        <br/>                    
+                        <table style="border-collapse: collapse;font-family:arial, sans-serif;table-layout: fixed;font-size:14px" width="100%">
+                            <thead>
+                                <apex:repeat value="{!$ObjectType.TR1__Timesheet_Detail__c.FieldSets.EmailTSD_Online}" var="field">
+                                    <apex:outputPanel rendered="{!AND(field.FieldPath != 'Finish_minutes__c', field.FieldPath != 'Start_Minutes__c') }"  layout="none">
+                                        <td style="color: #000;background-color: #e5e5e5;padding:5px 8px 5px 4px!important;height:30px;line-height:30px;border-bottom:1px solid #ccc!important;"> <apex:outputText value="{!IF(field =='Start_Hours__c','Start Time',IF(field == 'Finish_Hours__c','Finish Time',field.Label))}" /></td>
+                                    </apex:outputPanel>
+                                </apex:repeat>                            
+                            </thead>
+                            <tbody>
+                            <apex:repeat value="{!timesheet.TR1__Timecards__r}" var="td">
+                                <tr>
+                                    <apex:repeat value="{!$ObjectType.TR1__Timesheet_Detail__c.FieldSets.EmailTSD_Online}" var="field">
+                                        <apex:outputPanel rendered="{!AND(field.FieldPath != 'Finish_minutes__c', field.FieldPath != 'Start_Minutes__c') }"  layout="none">
+                                            
+                                            <td style="padding:8px 8px 8px 4px!important;border-bottom:1px solid #ccc!important"> 
+                                                <apex:outputText rendered="{!IF(OR(field.Type=='date',field == 'TR1__Day__c'),FALSE,TRUE)}"
+                                                    value="{!IF(field =='Start_Hours__c',td['Start_Hours__c']+':'+td['Start_Minutes__c'],IF(field == 'Finish_Hours__c',td['Finish_Hours__c']+':'+td['Finish_minutes__c'],td[field]))}" />
+                                                <apex:outputText value="{0,date,dd/MM/yy}" rendered="{!IF(field.Type=='date',TRUE,FALSE)}">
+                                                    <apex:param value="{!td[field]}" />
+                                                </apex:outputText>
+                                                                  
+                                                <apex:outputText value="{!UPPER(LEFT(td[field],3))}" rendered="{!IF(field == 'TR1__Day__c',TRUE,FALSE)}"/>
+                                                
+                                            </td>
+                                        </apex:outputPanel>
+                                    </apex:repeat>
+                                </tr>
+                            </apex:repeat>                                 
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </apex:outputPanel>
+        <tr>
+            <td colspan="2">
+                <div>
+                    &nbsp;
+                </div>
+            </td>
+        </tr>
+        
+        
+    </table>
+</apex:component>

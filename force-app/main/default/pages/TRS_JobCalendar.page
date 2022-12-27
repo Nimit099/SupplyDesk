@@ -1,0 +1,507 @@
+<apex:page title="Vacancy Calendar" sidebar="false"  controller="TRS_JobCalendar" id="pageId"  tabStyle="TR1__Job__c">
+
+	<title>Vacancy Calendar</title>
+	<!-- Include Style sheets -->
+    <apex:stylesheet value="{!URLFOR($Resource.FullCalendar, 'fullcalendar/fullcalendar.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.FullCalendar, 'demos/cupertino/theme.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.FullCalendar, 'qTip/jquery.qtip.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.FullCalendar, 'jQuery/css/cupertino/jquery-ui-1.9.1.custom.css')}"/>
+    
+    <!-- Include JS files -->
+    <apex:includeScript value="{!URLFOR($Resource.FullCalendar, 'jQuery/js/jquery-1.8.2.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.FullCalendar, 'fullcalendar/fullcalendar.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.FullCalendar, 'jQuery/js/jquery-ui-1.9.1.custom.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.FullCalendar, 'qTip/jquery.qtip.js')}"/>
+    
+    <!--  Viewmore  -->
+    <apex:includeScript value="{!URLFOR($Resource.FullCalendar, 'ViewMore/fullcalendar.viewmore.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.FullCalendar, 'ViewMore/date.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.FullCalendar, 'ViewMore/jquery.formbubble.js')}"/>
+		    
+    <script type='text/javascript'>
+    	var j$ = jQuery.noConflict();
+    	
+    	// Initialize Calendar
+        j$(document).ready(function() {
+        	initializeCalendar();
+        }); 
+        
+        var scrHeight = screen.height*1.00;
+        console.log({!vacancyEventString});
+        var candidateEventArray = JSON.parse('{!JSENCODE(vacancyEventString)}');
+        function initializeCalendar() {
+        	
+        	// page is now ready, initialize the calendar...
+            var date = new Date();
+            var d = date.getDate();
+            var m = date.getMonth();
+            var y = date.getFullYear();
+            
+            j$('#calendar').fullCalendar({
+                theme   : true,
+                header  : {
+                    left    : 'month,agendaWeek',
+                    center  : 'title',
+                    right   : 'prev,next today'
+                },
+                defaultView: 'agendaWeek',
+                editable    : false,
+                height		: scrHeight,
+                weekMode    : 'variable',
+                firstDay	: 1,
+                /*columnFormat: 'ddd dd/MM',*/
+                columnFormat: {
+                    month: 'ddd',
+                    week: 'ddd dd/MM',
+                    day: 'dddd dd/MM'
+                },
+                eventSources: [ candidateEventArray ],
+                eventRender : function(event, element) {
+                    if (event.description) { 
+                    	element.find('.fc-event-title').after("<span class=\"myClass\">" + event.description + "</span>");
+                    }
+                    
+                   if(event.status == 'Booked'){ 
+                    // Add qTip for each event.
+                    element.qtip({
+                        content: {
+                            text    : event.tooltip,
+                            title   : {
+                                text    : event.tooltipTitle,
+                            }
+                        },
+                        
+                        position: {
+                            
+                            my : 'bottom center',
+                            at : 'top center',
+
+                            target : getMouseTarget(),
+                            viewport : j$(window),
+                            adjust: {
+                            	mouse: true,
+                            	x : getPositionAdjust(event.start),
+                            }
+                        },
+                        style: {
+                            classes : event.tooltipStyleClass,
+                            //width   : (scrWidth/7)-20
+                            width   : 350
+                        },
+                        hide: { 
+                            fixed: true,
+                        }
+                        
+                    }); // end of element.qtip({
+                    }
+                    //element.tooltip();
+                },
+                eventMouseover: function(calEvent, domEvent) {
+                	
+                	var today = getformattedDate(new Date());
+                    var calEventDate = getformattedDate(calEvent.start);
+                    var todayDate = j$.fullCalendar.parseDate(new Date());
+                    todayDate.setHours(0);
+                    todayDate.setMinutes(0);
+                    todayDate.setSeconds(0);
+                    todayDate.setMilliseconds(0);
+                    var calEventStartDate = j$.fullCalendar.parseDate(calEvent.start);
+                    
+                    /*if(!(calEventStartDate < todayDate)) {
+                        if(calEvent.status == 'Booked'){ 
+                            var eventId = calEvent.id;
+                            var today = new Date();                                
+                            var layer = '<div id=\"events-layer\" class=\"fc-transparent\" style=\"position:absolute; width:100%; height:100%; top:-1px; text-align:right; z-index:100\"> <a> <img border=\"0\" style=\"padding-right:5px;cursor:pointer;\" src=\"{!$Resource.DeleteIcon}\" height=\"20\" width=\"20\" onClick=\"deleteCalEvent(\'' + eventId + '\');\"></a></div>';
+                            j$(this).append(layer);
+                        }
+                   }  */    
+                    if(calEvent.status == 'Open' || calEvent.status == 'Booked') {
+                        var eventId = calEvent.id;
+                        var today = new Date();                                
+                        var layer = '<div id=\"events-layer\" class=\"fc-transparent\" style=\"position:absolute; width:100%; height:100%; top:-1px; text-align:right; z-index:100\"> <a> <img border=\"0\" style=\"padding-right:5px;cursor:pointer;\" src=\"{!$Resource.DeleteIcon}\" height=\"20\" width=\"20\" onClick=\"deleteCalEvent(\'' + eventId + '\');\"></a></div>';
+                        j$(this).append(layer);                                
+                    }
+                    
+				},   
+				eventMouseout: function(calEvent, domEvent) {
+                    if(calEvent.status == 'Sick' || calEvent.status == 'Open' || calEvent.status == 'Available' || calEvent.status == 'Holiday' || calEvent.status == 'Unavailable'){ 
+                        j$("#events-layer").remove();
+                    }				    
+					if(calEvent.status == 'Booked'){
+						j$("#events-layer").remove();
+					}
+				},
+				//To enable creation of vacancy schedule from calendar : Start
+				dayClick: function(date, jsEvent, view) {
+                    var today = new Date().setHours(0,0,0,0);
+                    var dateStr = getformattedDate(date);
+                //    if(!(date < today)) {
+                        createAvailReord(dateStr);
+                  //  }
+                    
+                },
+                eventClick: function(calEvent, jsEvent, view) {},
+                //To enable creation of vacancy schedule from calendar : End
+            });
+        }
+        
+        function getformattedDate(dateStr) {
+            var dateVar             = j$.fullCalendar.parseDate(dateStr);
+            var formattedDateStr    = j$.fullCalendar.formatDate(dateVar, 'dd/MM/yyyy');
+            return formattedDateStr; 
+        }
+        
+        // Gets the Date from the Cell which is clicked.
+        function getDateFromCell(td, calInstance){
+		  	var cellPos = {
+		      	row: td.parents('tbody').children().index(td.parent()),
+		      	col: td.parent().children().index(td)
+		  	};
+		
+		  	return calInstance.fullCalendar('getView').cellDate(cellPos);
+		}
+		
+        function getMouseTarget() {
+        	if(j$('#calendar').fullCalendar('getView').name == 'basicDay')
+        		return 'mouse';
+        	return '';
+        }
+        
+        function getPositionAdjust(eventDateStr) {
+        	if(j$('#calendar').fullCalendar('getView').name != 'basicDay') {
+	        	var eventDate = j$.fullCalendar.parseDate(eventDateStr);
+	        	if(eventDate.getDay() == 0)
+	        		return 65;
+	        	else if(eventDate.getDay() == 6)
+	        		return -65;
+        	}
+        	return 0;
+        }
+        
+        function getPosition(eventDateStr, forWhat) {
+        	var isBottom = false;
+        	// Check required only if the view is the month view.
+        	if(j$('#calendar').fullCalendar('getView').name == 'month') {
+        		var eventDate = j$.fullCalendar.parseDate(eventDateStr);
+        		// Get the Current Month and Current Year.
+        		var currentMonth = j$('#calendar').fullCalendar('getDate').getMonth();
+        		var currentYear = j$('#calendar').fullCalendar('getDate').getFullYear();
+        		// If the current year or current month is less than events year/month, it is a bottom row event.
+        		if(eventDate.getFullYear() > currentYear) 
+        			isBottom = true;
+        		// If the current year or current month is greater than events year/month, it is not a bottom row event.
+        		else if(eventDate.getFullYear() < currentYear) 
+        			isBottom = false;
+        		else if(eventDate.getMonth() > currentMonth)
+        			isBottom = true;
+        		else if(eventDate.getMonth() < currentMonth)
+        			isBottom = false;
+        		else if(eventDate.getMonth() == currentMonth) {
+        			var noOfDaysofMonth = new Date(j$('#calendar').fullCalendar('getDate').getFullYear(), currentMonth+1, 0).getDate();
+        			var lastDateOfMonth = new Date(j$('#calendar').fullCalendar('getDate').getFullYear(), currentMonth, noOfDaysofMonth);
+        			var lastDayOfWeek = lastDateOfMonth.getDay();
+        			if((lastDateOfMonth.getDate() - eventDate.getDate()) <= (lastDayOfWeek + 7))
+        				isBottom = true;
+        		}
+        	}
+        	if(isBottom) {
+        		if(forWhat == 'my')
+   					return 'bottom center';
+   				else 
+   					return 'top center';
+        	}
+        	
+        	if(forWhat == 'my')
+        		return 'top center';
+        	else 
+        		return 'bottom center';
+        }
+        function deleteEvent(eventId) {
+        	if(confirm('This action cannot be undone. Are you sure you want to cancel the assignment?')) {
+        		deleteCalEvent(eventId);
+        	}
+        }
+        
+    </script>
+    
+    <style>
+        #calendar {
+            width   : 100%;
+            margin  : 0 0;
+        }
+    
+        body {
+            font-family : Arial,Helvetica,sans-serif;
+            color       : #222;
+            font-size   : 12px;
+            margin-left : 10px;
+            margin-right: 10px;
+        }
+        
+        .fc-event.fc-event-skin.fc-event-hori.fc-corner-left.fc-corner-right {
+            height: 75px; 
+        }
+    
+        .fc-transparent,
+        .fc-agenda .fc-transparent .fc-event-time,
+        .fc-transparent a {         
+            padding-left: 1px;                                               
+            border-color: transparent;
+            background-color: transparent;
+            color: #fff; 
+        }
+         .datePicker {
+            z-index : 1000;
+        }
+        .confirmM2 {
+            border-color: #39f !important;
+        }
+        
+        .errorM3 {
+            border-color: #c00 !important;
+        }
+        
+        .messageText {
+            color: black !important;
+        }		        
+    </style>
+    
+    <apex:form styleClass="CalendarForm" Id="formid">
+		    
+        <TR1:Overlay style="processing" />
+		<apex:actionStatus id="searchOverlay" onStart="showOverlay();" onstop="hideOverlay();"></apex:actionstatus>
+		<div id="overlay" ></div> 
+    
+        <apex:actionFunction name="deleteCalEvent" action="{!deleteCalEvent}" rerender="dummyPanel,msgId,vacDetailId" status="searchOverlay" oncomplete="updateCalendar();">
+            <apex:param name="eventId" value="" assignTo="{!eventId}" />
+        </apex:actionFunction>
+        
+        <apex:pageMessages id="msgId" />
+        <apex:pageBlock rendered="{!isInternalUser == true}" id="vacDetailId">
+            <apex:pageBlockSection columns="2" title="Vacancy Details">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Name" />
+                    <apex:outputLink value="/{!vacancy.id}" id="theLink">{!vacancy.Name}</apex:outputLink> 
+                </apex:pageBlockSectionItem>    
+                <apex:outputField value="{!vacancy.TR1__Estimated_Start_Date__c}" />
+                <apex:outputField value="{!vacancy.RecordTypeId}" />
+                <apex:outputField value="{!vacancy.TR1__Estimated_End_Date__c}" />
+                <apex:outputField value="{!vacancy.Timesheet_Approver__c}" />
+                <apex:outputField value="{!vacancy.TR1__Contact__c}" />
+                <apex:outputField value="{!vacancy.Notes__c}" />
+                <apex:outputField value="{!vacancy.CreatedById}" />
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockButtons location="bottom" rendered="{!isInternalUser == true}">
+                <apex:commandButton value="Scheduler" action="{!calenderSchedule}" immediate="true"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+        <apex:outputPanel rendered="true" id="CalendarPanel">
+            <div id="calendar"></div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel id="dummyPanel" >
+            <script>
+                function updateCalendar() {
+                    j$("#calendar").fullCalendar('removeEventSource', candidateEventArray);
+                    candidateEventArray = JSON.parse('{!JSENCODE(vacancyEventString)}');
+                    j$("#calendar").fullCalendar('addEventSource', candidateEventArray);
+                    console.log('Processing for new slots');
+                }
+            </script>
+        </apex:outputPanel>
+        
+        <apex:actionFunction name="createAvailReord" action="{!openCreateAvailRecordDialog}" status="searchOverlay" rerender="dialogBox" >
+            <apex:param name="dateStr" value="" />
+        </apex:actionFunction> 
+         
+         <!-- Create Candidate Availablity Popup-->
+        <apex:outputPanel id="dialogBox">
+            <apex:outputPanel rendered="{!showCreateAvailRecord}">
+                <style type="text/css">
+                    .col1 {width:135px!important; text-align:right;color:#4A4A56!important;font-weight:bold;}
+                    .col2 { text-align:left;}
+                    .ui-dialog-titlebar-close { visibility: hidden; }
+                </style>
+
+                <script>
+                    j$('#createClosingReportDiv').dialog({
+                        title           : 'Create Availability',
+                        resizable       : false,
+                        modal           : true,
+                        closeOnEscape   : false,
+                        width           : 700,
+                        position        : { 
+                            my  : "center", 
+                            at  : "center"
+                        },
+                        zIndex : 990,
+                        buttons: {
+                            "Save": function() {
+                                //event.preventDefault();
+                                if(true) {
+                                    saveCreateAvailRecord();
+                                    j$( this ).dialog( "destroy" );
+                                }
+                            }, 
+                            Cancel: function() { 
+                                //cancelEditEvent();
+                                
+                                j$( this ).dialog( "destroy" );
+                            }
+                        },
+                   }).parent().appendTo(j$('.CalendarForm')); 
+                    
+                    j$( "#selectDaysDiv" ).buttonset();
+                    
+                    function showMultiBlock(val){
+                       
+                        if(val){
+                              document.getElementById('pageId:formid:dialogBoxPageBlock:singleBlock').style.display = 'none';
+                              document.getElementById('pageId:formid:dialogBoxPageBlock:multiBlock').style.display = 'block';
+                        }
+                        else{
+                              document.getElementById('pageId:formid:dialogBoxPageBlock:singleBlock').style.display = 'block';
+                              document.getElementById('pageId:formid:dialogBoxPageBlock:multiBlock').style.display = 'none';
+                        }
+                    }
+                    
+                    var dateRangeCheck = document.getElementById('pageId:formid:dialogBoxPageBlock:dateRangeChk').checked;
+                    if(dateRangeCheck){
+                        document.getElementById('pageId:formid:dialogBoxPageBlock:singleBlock').style.display = 'none';
+                        document.getElementById('pageId:formid:dialogBoxPageBlock:multiBlock').style.display = 'block';
+                    }
+                    
+                </script>
+                
+                <apex:actionFunction name="saveCreateAvailRecord" action="{!saveCreateAvailRecord}" status="searchOverlay" rerender="dialogBox,dummyPanel,msgId,vacDetailId" oncomplete="updateCalendar();" />
+                
+                <div id="createClosingReportDiv" style="display:none">
+                    <apex:pageBlock id="dialogBoxPageBlock">
+                        <apex:pageMessages id="availMsgId" />
+
+                            <apex:panelGrid columns="1" width="100%" cellspacing="0" cellpadding="0">
+                                <apex:panelGrid columns="2" width="45%" columnClasses="col1,col2" cellspacing="3" cellpadding="3">
+                                    <apex:outputLabel value="Apply for Date Range?" for="dateRangeChk"/>
+                                    <apex:inputCheckbox value="{!isWeekSelected}" id="dateRangeChk" onclick="showMultiBlock(this.checked);" >
+                                     <!--  <apex:actionSupport event="onclick" rerender="dialogBoxPageBlock" status="searchOverlay" /> onclick2323="showMultipleAvailabilityCreationBlcok(this.value);" -->
+                                    </apex:inputCheckbox>
+                                    
+                                    <apex:outputLabel value="Overnight Shift" /> 
+		                                <apex:inputCheckbox value="{!isMidNight}">   
+		                            </apex:inputCheckbox>
+                                    
+                                    <apex:outputLabel value="Delete old Schedules?" for="deleteOldSch"/>
+                                    <apex:inputCheckbox value="{!deleteOldschedules}" id="deleteOldSch"/>
+                                    
+                                    <apex:outputLabel value="Shift" for="shift__type" />
+                                    <apex:inputField value="{!vacancy.Shift__c}" id="shift__type">
+                                        <apex:actionSupport event="onchange" rerender="startTimeEndTime1,startTimeEndTime2,startTimeEndTime3,startTimeEndTime4" status="actStatusId" action="{!dummyFunction}" /> 
+                                        <apex:actionStatus id="actStatusId" style="padding-left:5px;" >
+                                        <apex:facet name="start" >
+                                          <img src="/img/loading.gif" />                    
+                                        </apex:facet>
+                                    </apex:actionStatus>
+                                    </apex:inputField>
+                                </apex:panelGrid>
+                                <!-- Single Day Availablity Creation Logic : Start-->
+                                 <apex:panelGrid columns="2" id="singleBlock" style="display:block;" width="100%" cellspacing="3" cellpadding="3" columnClasses="col1,col2">
+                                    <apex:outputLabel value="Selected Date" for="selDateId" />
+                                    <apex:outputText value="{!selectedDateStr}" id="selDateId" />
+                                    
+                                    <apex:outputLabel value="Start Time" for="start__time"/>
+                                    <apex:outputPanel id="startTimeEndTime1">
+                                    <apex:inputField value="{!vacancy.Start_Time__c}" id="start__time"/>
+                                    </apex:outputPanel>
+                                    
+                                    <apex:outputLabel value="End Time" for="end__time"/>
+                                    <apex:outputPanel id="startTimeEndTime2">
+                                    <apex:inputField value="{!vacancy.End_Time__c}" id="end__time"/>
+                                    </apex:outputPanel>
+                                  </apex:panelGrid>   
+                                  <!-- Single Day Availablity Creation Logic : End-->
+                                    <!-- Multiple Day Availablity Creation Logic : Start-->
+                                  <apex:panelGrid columns="2" id="multiBlock" style="display:none;" width="100%" cellspacing="3" cellpadding="3" columnClasses="col1,col2">
+                                      <apex:outputLabel value="Select Start Date" for="select__start__date"/>
+                                      <apex:inputField value="{!vacancy.TR1__Estimated_Start_Date__c}" id="select__start__date"/>
+                                      
+                                      <apex:outputLabel value="Select End Date" for="end__start__date"/>
+                                      <apex:inputField value="{!vacancy.TR1__Estimated_End_Date__c}" id="end__start__date"/>
+                                     
+                                      <apex:outputLabel value="" />
+                                      <apex:outputPanel id="daysSelectionPanel"  >
+                                         <table width="100%" style="text-align:center !important">
+                                        <thead>
+                                            <tr>
+                                                <td style="font-weight:bold;color: #4a4a56;font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;">Start Time</td>
+                                                <td style="font-weight:bold;color: #4a4a56;font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;">End Time</td>
+                                                <td style="font-weight:bold;color: #4a4a56;font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;">Mon</td>
+                                                <td style="font-weight:bold;color: #4a4a56;font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;">Tue</td>
+                                                <td style="font-weight:bold;color: #4a4a56;font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;">Wed</td>
+                                                <td style="font-weight:bold;color: #4a4a56;font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;">Thu</td>
+                                                <td style="font-weight:bold;color: #4a4a56;font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;">Fri</td>
+                                                <td style="font-weight:bold;color: #4a4a56;font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;">Sat</td>
+                                                <td style="font-weight:bold;color: #4a4a56;font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;">Sun</td>
+                                                <td style="font-weight:bold;color: #4a4a56;font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;"></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputPanel id="startTimeEndTime3">
+                                                        <apex:inputField value="{!vacancy1.Start_Time__c}"/>
+                                                    </apex:outputPanel>
+                                                </td>
+                                                <td>
+                                                    <apex:outputPanel id="startTimeEndTime4">
+                                                        <apex:inputField value="{!vacancy1.End_Time__c}"/>
+                                                    </apex:outputPanel>
+                                                </td>
+                                                <td>
+                                                    <apex:inputCheckbox value="{!tsw.isMon}"/>
+                                                </td>
+                                                <td>
+                                                    <apex:inputCheckbox value="{!tsw.isTue}"/>
+                                                </td>
+                                                <td>
+                                                    <apex:inputCheckbox value="{!tsw.isWed}"/>
+                                                </td>
+                                                <td>
+                                                    <apex:inputCheckbox value="{!tsw.isThu}"/>
+                                                </td>
+                                                <td>
+                                                    <apex:inputCheckbox value="{!tsw.isFri}"/>
+                                                </td>
+                                                <td>
+                                                    <apex:inputCheckbox value="{!tsw.isSat}"/>
+                                                </td>
+                                                <td>
+                                                    <apex:inputCheckbox value="{!tsw.isSun}"/>
+                                                </td>
+                                                <td>
+                                                    
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                        <apex:outputPanel >
+                                        <input type="button" value="Clear" style="float:right;">
+                                        <apex:actionSupport event="onclick" rerender="daysSelectionPanel" status="searchOverlay" action="{!resetDaySelection}" /> 
+                                        </input>
+                                        </apex:outputPanel> 
+                                      </apex:outputPanel>
+                                 </apex:panelGrid> 
+                                  
+                                  <!-- Multiple Day Availablity Creation Logic : End-->
+                                  
+                            </apex:panelGrid>
+
+                          
+                    </apex:pageBlock>
+                </div>
+            </apex:outputPanel>
+         </apex:outputPanel>
+         
+  	</apex:form>
+</apex:page>

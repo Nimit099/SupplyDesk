@@ -1,0 +1,140 @@
+.qualifyDiv{
+    margin-top: 61px;
+    margin-left: 60px;
+    height: calc(100vh - 61px);
+}
+
+.mainDiv{
+    padding: 18px 50px;
+}
+
+.qualifyDiv .slds-m-left_xx-large{
+    margin-left: 0;
+}
+
+.theadClass {
+    padding: 20px;
+}
+
+.headeRow {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background-color: #F6F6F6;
+    padding-bottom: 10px;
+}
+
+.text1 {
+    font-weight: 900;
+    font-size: 15px;
+}
+
+.edit {
+    font-size: 18px;
+    height: 2rem;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    width: 105px;
+    text-align: center;
+    background: #F6F6F6;
+    padding: 2px 0;
+}
+
+.edit:hover {
+    cursor: pointer;
+}
+
+.textd {
+    font-weight: 300;
+    font-size: 15px;
+}
+
+h1 {
+    color: #D90000;
+}
+
+.contentDiv {
+    padding-left: 0;
+    background-color: white;
+}
+.contentDiv{
+    color: #D90000;
+}
+
+.Qualificationlist p {
+    display: initial;
+}
+
+.actionDiv .text1 {
+    margin-left: 1rem;
+}
+
+.actionDiv img {
+    width: 19px;
+    height: 20px;
+}
+.dataRow{
+    align-items: center;
+}
+.textcenter{
+    text-align: center;
+}
+.textcenterm{
+    margin: 0 auto;
+}
+
+
+@media(max-width: 1024px) {
+    .qualifyDiv .slds-page-header {
+        padding-left: 0;
+    }
+    .qualifyDiv {
+        margin-top: 50px;
+        margin-left: 0px;
+    }
+    .textd {
+        font-size: 13px;
+    }
+    .text1 {
+        font-size: 13px;
+    }
+    .Qualificationlist p {
+        display: none;
+    }
+    .Qualificationlist .slds-size_11-of-12{
+        width: 95%;
+    }
+    .actionDiv {
+        display: flex;
+        justify-content: center;
+    }
+    .edit {
+        width: 30px;
+        
+    }
+    .edit .slds-m-right_small {
+        margin-right: 0;
+    }
+    .statusText {
+        width: 18%;
+    }
+    .actionDiv .text1 {
+        margin-left: 0;
+    }
+}
+
+@media(max-width: 767px) {
+    .mainDiv{
+        padding: 12px 15px;
+    }
+    .textd {
+        font-size: 11px;
+    }
+    .text1 {
+        font-size: 11px;
+    }
+    .actionDiv {
+        min-width: 50px;
+    }
+    .qualifyDiv{
+        margin-top: 61px;
+        height: calc(100vh - 61px);
+    }
+}

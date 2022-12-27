@@ -1,0 +1,121 @@
+<template>
+
+    <!-- ======= Spinner ======= -->
+
+    <template if:true={isSpinner}>
+        <div class="slds-spinner_container spinner-center" style="overflow: hidden;">
+            <div class="spinner-ts">
+                <div class="inner one"></div>
+                <div class="inner two"></div>
+                <div class="inner three"></div>
+            </div>
+        </div>
+    </template>
+
+<!-- ======= Spinner ======= -->
+
+<div class="maincls closed-menu" onclick={check}>
+    <nav class="vertical-menu-wrapper" id="someElementID">
+        <div class="vertical-menu-logo open_menu_cls">
+            <div class="home_cls" id="menubutton1">
+                <div class="home_img" data-name="Home" onclick={redirectpage}>
+                    <img src={home_icon} data-name="Home" onclick={redirectpage} class="menu_img" />
+                    <span class="hide_cls show_cls menu_text">Home</span>
+                </div>
+                <img src={menu_icon} class="open-menu-btn" name="menuname" id="menubutton" onclick={buttonclick}>
+            </div>
+            <div class="navbar_cls slds-grid slds-wrap slds-align_absolute-center">
+                <a href="https://www.facebook.com/thesupplydesk" target="_blank"><img src={fb_icon} class="fbin_icon fbin1" /></a>
+                <a href="https://www.linkedin.com/company/730943" target="_blank"><img src={in_icon} class="fbin_icon fbin2" /></a>
+                <button class="btn_cls" data-name="Help" onclick={redirectpage}>
+                        <img src={help_icon}/>
+                        <span class="help">Help</span>
+                    </button>
+                <button class="btn_cls" data-name="Logout" onclick={redirectpage}>
+                        <img src={logout_icon}/>
+                        <span class="logout">Logout</span>
+                    </button>
+                <div class="mob_icon " data-name="Help" onclick={redirectpage}>
+                    <img src={help_icon2} class="fbin_icon " />
+                </div>
+                <div class="mob_icon " data-name="Logout" onclick={redirectpage}>
+                    <img src={logout_icon2} class="fbin_icon " />
+                </div>
+            </div>
+        </div>
+        <ul class="vertical-menu" id="menuinside">
+            <div class="margin_cls">
+                <div class="icon_cls slds-grid slds-grid_align-spread" data-name="profile" onclick={redirectpage}>
+                    <img src={account_icon} onclick={redirectpage} class="menu_img" />
+                    <span onclick={redirectpage} class="menu_text">My Account</span>
+                    <span class="menu_icon">></span>
+                </div>
+                <template if:true={checkClient}>
+                        <div class="icon_cls slds-grid slds-grid_align-spread" data-name="scheduler" onclick={redirectpage}>
+                            <img src={scheduler_icon} onclick={redirectpage} class="menu_img"/>
+                            <span onclick={redirectpage} class="menu_text">My Availability</span>
+                            <span class="menu_icon">></span>
+                        </div>
+                    </template>
+                <template if:false={checkClient}>
+                        <div class="icon_cls slds-grid slds-grid_align-spread" data-name="compliance" onclick={redirectpage}>
+                            <img src={compliance_icon} onclick={redirectpage} class="menu_img"/>
+                            <span onclick={redirectpage} class="menu_text">Compliance</span>
+                            <span class="menu_icon">></span>
+                        </div>
+                    </template>
+                <template if:true={checkClient}>
+                        <div class="icon_cls slds-grid slds-grid_align-spread" data-name="myqualifications" onclick={redirectpage}>
+                            <img src={qualification_icon} onclick={redirectpage} class="menu_img"/>
+                            <span onclick={redirectpage} class="menu_text">My Qualifications</span>
+                            <span class="menu_icon">></span>
+                        </div>
+                    </template>
+                <div class="icon_cls slds-grid slds-grid_align-spread" data-name="timesheet" onclick={redirectpage}>
+                    <img src={timesheet_icon} onclick={redirectpage} class="menu_img" />
+                    <span onclick={redirectpage} class="menu_text">TimeSheet</span>
+                    <span class="menu_icon">></span>
+                </div>
+            </div>
+        </ul>
+    </nav>
+    <!-- Hide For Mobile View -->
+    <div class="navicon_cls">
+        <div class="nav_btn slds-p-top_small">
+            <div class="home_icon slds-p-bottom_xx-large slds-align_absolute-center">
+                <img src={home_icon} data-name="Home" onclick={redirectpage} />
+            </div>
+            <div class="slds-p-top_xx-large">
+                <div class="icon_cls" data-name="profile" onclick={redirectpage}>
+                    <img src={account_icon} />
+                </div>
+                <template if:true={checkClient}>
+                        <div class="icon_cls" data-name="scheduler" onclick={redirectpage}/>
+                            <img src={scheduler_icon} />
+                        </div>
+                    </template>
+                <template if:false={checkClient}>
+                        <div class="icon_cls" data-name="compliance" onclick={redirectpage}/>
+                            <img src={compliance_icon} />
+                        </div>
+                    </template>
+                <template if:true={checkClient}>
+                        <div class="icon_cls" data-name="myqualifications" onclick={redirectpage}/>
+                            <img src={qualification_icon} />
+                        </div>
+                    </template>
+                <div class="icon_cls" data-name="timesheet" onclick={redirectpage}/>
+                <img src={timesheet_icon} />
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END Hide For Mobile View -->
+</div>
+
+<!-- ERROR Component -->
+<c-ts_-error-component reloadpage={reloadpage}>
+</c-ts_-error-component>
+<!-- ERROR Component -->
+
+</template>

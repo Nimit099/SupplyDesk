@@ -1,0 +1,306 @@
+<apex:page standardStyleSheets="false" showHeader="false" sidebar="false" action="{!redirectUnAuthenticatedUser}" controller="RC_ContactUsController">
+
+
+<apex:composition template="RC_CommunityTemplate">
+        
+        <apex:define name="body">
+            
+            <style>
+                .errorMsg{
+                    color:red;
+                }   
+                
+                .SelectEmail{
+                    background-color: rgba(255,255,255,0.4);
+                    font-size: 12px;
+                    color: #666;
+                    border: solid 1px #cacaca;
+                    min-width: 100%;
+                    display: block;
+                    box-sizing: border-box;
+                    height: 40px;
+                    padding-left: 10px;
+                    padding-right: 10px;
+                    margin-bottom: 10px;
+                }
+                
+                .foneLabel{float:left; width:200px;}
+                .foneNumber{float:left; width:180px;}
+                
+                .selectBox{position:relative;}
+                .arrowFix{position:absolute; right:2%; top:25%;}
+                option{height:55px; line-height:55px; background:none; border-bottom:1px solid #d9d9d9;}
+                            
+            </style>  
+            <script>
+                function formValidation()
+                {
+                    document.getElementById('idNameError').style.display = 'none';
+                    document.getElementById('idEmailError').style.display = 'none';
+                    document.getElementById('idMsgError').style.display = 'none';
+                    document.getElementById('idSuccess').style.display = 'none';
+                    
+                    if(document.getElementById('{!$Component.contactForm.contactNameField}').value.trim() == '')
+                    {
+                        document.getElementById('idNameError').style.display = 'inline-block';
+                        return false;
+                    }
+                    else if(document.getElementById('{!$Component.contactForm.idEmail}').value == 'Select')
+                    {
+                        document.getElementById('idEmailError').style.display = 'inline-block';
+                        return false;
+                    }
+                    else if(document.getElementById('{!$Component.contactForm.contactMessageTextarea}').value.trim() == '')
+                    {
+                        document.getElementById('idMsgError').style.display = 'inline-block';
+                        return false;
+                    }
+                        sendEmail();
+                    return true;
+                }
+                
+                //To show the successfull message for sending email
+                function SuccessEmail()
+                {
+                    document.getElementById('idSuccess').style.display = '';
+                    document.getElementById('{!$Component.contactForm.idEmail}').value = 'Select';
+                    document.getElementById('{!$Component.contactForm.contactMessageTextarea}').value = '';                     
+                }
+                
+            </script>           
+            <apex:actionstatus id="processingImg">
+                 <apex:facet name="start">
+                    <div id="preloader" style="background-color: #dcdcdc; opacity: 0.7;">
+                        <div id="status">
+                            <p class="center-text">
+                                Sending an Email...                             
+                            </p>
+                        </div>
+                    </div>
+                </apex:facet>
+            </apex:actionstatus>
+            
+            
+            <div style="height:60px;">&nbsp;</div>
+            <div class="nonslds all-elements">
+            <div id="content" class="snap-content" style="z-index:100">
+                <!-- Content Heding -->
+                <div class="content-heading">
+                    <h4>Contact Us</h4>
+                    <p></p>
+                    <i class="fa fa-home"></i>
+                    <div class="overlay"></div>
+                    <apex:image url="{!URLFOR($Resource.RC_Resources, 'images/pictures/standardw.jpg')}" />
+                </div>
+                
+                <div style="width: 50%;left: 22%;right: 22%;">                  
+                    <div id="idSuccess" style="display:none; text-align:center;"><h2 style="color:#27ae60;">Your email has been sent successfully!</h2></div>
+                </div>      
+                <br/>
+        
+                <div class="content">       
+                    <div class="one-half-responsive">
+                        <div class="container no-bottom">
+                            <h4>Contact Us Today</h4>
+                            <p>
+                                <div class="foneLabel">Supply Desk Brighton Secondary:</div>
+                                <a href="#" class="contact-call foneNumber">01273 022222</a><br clear="all" />
+                                <div class="foneLabel">Supply Desk Brighton Primary:</div>
+                                <a href="#" class="contact-call foneNumber">01273 609993</a><br clear="all" />
+                                <div class="foneLabel">Supply Desk Cardiff: </div>
+                                <a href="#" class="contact-call foneNumber">02920 601860</a><br clear="all" />
+                                <div class="foneLabel">Supply Desk Chelmsford: </div>
+                                <a href="#" class="contact-call foneNumber">01245 768 119</a><br clear="all" />
+                                <div class="foneLabel">Supply Desk East Midlands: </div>
+                                <a href="#" class="contact-call foneNumber">0115 941 8100</a><br clear="all" />
+                                <div class="foneLabel">Supply Desk Kent: </div>
+                                <a href="#" class="contact-call foneNumber">01227 450 995</a><br clear="all" />
+                                
+                                <div class="foneLabel">Supply Desk Leeds &amp; Huddersfield: </div>
+                                <a href="#" class="contact-call foneNumber">01227 450 995</a><br clear="all" />
+                                <div class="foneLabel">Supply Desk Lincolnshire: </div>
+                                <a href="#" class="contact-call foneNumber">01724 843 443</a><br clear="all" />
+                                <div class="foneLabel">Supply Desk London: </div>
+                                <a href="#" class="contact-call foneNumber">0330 333 4330</a><br clear="all" />
+                                <div class="foneLabel">Supply Desk Manchester: </div>
+                                <a href="#" class="contact-call foneNumber">0161 832 8092</a><br clear="all" />
+                                <div class="foneLabel">Supply Desk North East: </div>
+                                <a href="#" class="contact-call foneNumber">0191 556 1081</a><br clear="all" />
+                                <div class="foneLabel">Supply Desk Sheffield: </div>
+                                <a href="#" class="contact-call foneNumber">0114 2725535</a><br clear="all" />
+                                <div class="foneLabel">Supply Desk Southampton: </div>
+                                <a href="#" class="contact-call foneNumber">02380 230340</a><br clear="all" />
+                                
+                                 <div class="foneLabel">Supply Desk Watford: </div>
+                                <a href="#" class="contact-call foneNumber">01923 295 300</a><br clear="all" />
+                                 <div class="foneLabel">Supply Desk Wokingham: </div>
+                                <a href="#" class="contact-call foneNumber">01189 115 381</a><br clear="all" />
+                                 <div class="foneLabel">Supply Desk Australia: </div>
+                                <a href="#" class="contact-call foneNumber">Gemma.Yates@supplydesk.co.uk</a><br clear="all" />
+                                <div class="foneLabel">Supply Desk Canada: </div>
+                                <a href="#" class="contact-call foneNumber">001 855 284 4900</a><br clear="all" />
+                                <div class="foneLabel">Supply Desk Payroll Timesheet Fax: </div>
+                                <a href="#" class="contact-call foneNumber">0800 0935 870</a><br clear="all" />
+        
+                            </p>
+                            <h4>Our Locations</h4>
+                            <div>
+                                <strong>Brighton Secondary</strong><br />
+                                East Suite, 2nd Floor, Lorna House, Lorna Road, Hove, East Sussex, BN3 3EL
+                            </div>
+                            <div style="margin-top:10px;">
+                                <strong>Brighton Primary</strong><br />
+                                East Suite, 2nd Floor, Lorna House, Lorna Road, Hove, East Sussex, BN3 3EL
+                            </div>
+                            <div style="margin-top:10px;">
+                                <strong>Cardiff</strong><br />
+                                3rd Floor, Capital Tower, Greyfriars Road, Cardiff, CF10 3AG
+                            </div>
+                           <div style="margin-top:10px;">
+                                <strong>Chelmsford</strong><br />
+                                Suite 63, Waterhouse Business Centre, Cromar Way, Chelmsford, Essex  CM1 2QE
+                            </div>
+                            <div style="margin-top:10px;">
+                                <strong>East Midlands</strong><br />
+                                Supply Desk, Merchants Court, 21-23 Castle Gate, Nottingham NG1 7AQ
+                            </div>
+                           <div style="margin-top:10px;">
+                                <strong>Kent</strong><br />
+                                Suite 1 River House, 27-29 Stour Street, Canterbury, Kent, CT1 2NZ
+                            </div>
+                           <div style="margin-top:10px;">
+                                <strong>Leeds &amp; Huddersfield</strong><br />
+                                Wellington Park House, 4th Floor, Thirsk Row, Leeds LS1 4DP
+                           </div>
+                           <div style="margin-top:10px;">
+                                <strong>Lincolnshire</strong><br />
+                                1st Floor Princess House, Queensway Court Business Park, Arkwright Way, Scunthorpe DN16 1AD
+                            </div>
+                            <div style="margin-top:10px;">
+                                <strong>London</strong><br />
+                                East Suite, 2nd Floor, Lorna House, Lorna Road, Hove, East Sussex, BN3 3EL
+                            </div>
+                            
+                            <div style="margin-top:10px;">
+                                <strong>Manchester</strong><br />
+                                Fifth Floor, Church House, 90 Deansgate, Manchester, M3 2GP
+                            </div>
+                            
+                            <div style="margin-top:10px;">
+                                <strong>Sheffield</strong><br />
+                               2nd Floor, Sir Wilfrid Newton House, Thorncliffe Park, Chapeltown, Sheffield S35 2PH
+                            </div>   
+                            
+                            <div style="margin-top:10px;">
+                                <strong>Southampton</strong><br />
+                                Unit 11, Basepoint Business &amp; Enterprise Centre, Anderson Road, Southampton SO14 5FE
+                            </div>
+                            
+                            <div style="margin-top:10px;">
+                                <strong>Watford</strong><br />
+                                Suite 2.2, 34 Clarendon Road, Watford, Herts WD17 1JJ
+                            </div>
+                            <div style="margin-top:10px;">
+                                <strong>Wokingham</strong><br />
+                                Innovation House, 4 Molly Millars Close, Wokingham, Berkshire RG41 2WY
+                            </div>
+                             <div style="margin-top:10px;">
+                                <strong>Australia</strong><br />
+                                114 William Street, Vic 3000, Melbourne,  Australia
+                            </div>
+                             <div style="margin-top:10px;margin-bottom:10px;">
+                                <strong>Canada</strong><br />
+                                4 Robert Speck Parkway, 15th Floor, Mississauga, ON L4Z 1S1, Canada
+                            </div>
+                            
+                        </div>   
+                    </div>
+                    <div class="decoration hide-if-responsive"></div>
+                    <div class="one-half-responsive last-column">
+                        <h4>Need assistance? Send us an email.</h4>
+                        <div class="container no-bottom">
+                            <div class="contact-form no-bottom"> 
+                                <div class="formSuccessMessageWrap" id="formSuccessMessageWrap">
+                                    <div class="big-notification green-notification">
+                                        <h3 class="uppercase">Message Sent </h3>
+                                        <a href="#" class="close-big-notification">x</a>
+                                        <p>Your message has been successfuly sent. Please allow up to 48 hours for a reply! Thank you!</p>
+                                    </div>
+                                </div>
+        
+                                <apex:form id="contactForm">
+                                        <apex:actionFunction name="sendEmail" action="{!sendEmail}" rerender="contactForm" status="processingImg" onComplete="SuccessEmail();"/>
+                                        
+                                        <div class="formFieldWrap">
+                                            <label class="field-title contactNameField" for="contactNameField">Name:</label>
+                                            <apex:inputText value="{!strName}" styleClass="contactField requiredField" id="contactNameField" />
+                                            <span id="idNameError" style="display:none;margin-top: -11px;color: red;font-weight: bold;">Please enter a Name </span>
+                                        </div>
+                                        
+                                        <div class="formFieldWrap">
+                                            <label class="field-title contactNameField" for="contactNameField">Subject:</label>
+                                            <apex:inputText value="{!strSubject}" styleClass="contactField requiredField" id="contactSubjectField" disabled="true" />
+                                        </div>
+                                        
+                                        <div class="formFieldWrap">
+                                            <label class="field-title contactEmailField" for="contactEmailField">Email:</label>
+                                            <div class="selectBox">
+                                                <i class="fa fa-caret-down arrowFix"></i>
+                                                <apex:selectList id="idEmail" value="{!strEmail}" multiselect="false" size="1" styleClass="contactField requiredField">
+                                                    <!--<apex:selectOption itemValue="Select" itemLabel=" - SELECT - "/> 
+                                                    <apex:selectOption itemValue="talentrover@mailinator.com" itemLabel="AWI Engineering"/> !---- itemValue="community@awiengineering.com " --
+                                                    <apex:selectOption itemValue="talentrover@mailinator.com" itemLabel="AWI Technology"/> !-- itemValue="community@awitechnology.com" ---
+                                                    <apex:selectOption itemValue="talentrover@mailinator.com" itemLabel="TalentRover"/>
+                                                    <!-- itemValue="community@talentrover.com" --->
+                                                    <apex:selectOption itemValue="ravi.m@mvclouds.com" itemLabel="ravi.m@mvclouds.com"/>
+                                                    <apex:selectOption itemValue="Brightonprimary@supplydesk.co.uk" itemLabel="Brightonprimary@supplydesk.co.uk"/>
+                                                    <apex:selectOption itemValue="Brightonsecondary@supplydesk.co.uk" itemLabel="Brightonsecondary@supplydesk.co.uk"/>
+                                                    <apex:selectOption itemValue="Watford@supplydesk.co.uk" itemLabel="Watford@supplydesk.co.uk"/>
+                                                    <apex:selectOption itemValue="Chelmsford@supplydesk.co.uk" itemLabel="Chelmsford@supplydesk.co.uk"/>
+                                                    <apex:selectOption itemValue="Kent@supplydesk.co.uk" itemLabel="Kent@supplydesk.co.uk"/>
+                                                    <apex:selectOption itemValue="Cardiff@supplydesk.co.uk" itemLabel="Cardiff@supplydesk.co.uk"/>
+                                                    <apex:selectOption itemValue="Southampton@supplydesk.co.uk" itemLabel="Southampton@supplydesk.co.uk"/>
+                                                    <apex:selectOption itemValue="Wokingham@supplydesk.co.uk" itemLabel="Wokingham@supplydesk.co.uk"/>
+                                                    <apex:selectOption itemValue="Eastmidlands@supplydesk.co.uk" itemLabel="Eastmidlands@supplydesk.co.uk"/>
+                                                    <apex:selectOption itemValue="Leeds@supplydesk.co.uk" itemLabel="Leeds@supplydesk.co.uk"/>
+                                                    <apex:selectOption itemValue="Lincolnshire@supplydesk.co.uk" itemLabel="Lincolnshire@supplydesk.co.uk"/>
+                                                    <apex:selectOption itemValue="Manchester@supplydesk.co.uk" itemLabel="Manchester@supplydesk.co.uk"/>
+                                                    <apex:selectOption itemValue="Sheffield@supplydesk.co.uk" itemLabel="Sheffield@supplydesk.co.uk"/>
+                                                    <apex:selectOption itemValue="North.east@supplydesk.co.uk" itemLabel="North.east@supplydesk.co.uk"/>
+                                                    
+                                                </apex:selectList> 
+                                            </div>
+                                            <span id="idEmailError" style="display:none;margin-top: -11px;color: red;font-weight: bold;">Please select an Email</span>
+                                        </div>
+                                        <div class="formTextareaWrap">
+                                            <label class="field-title contactMessageTextarea" for="contactMessageTextarea">Message:</label>
+                                            <apex:inputTextarea value="{!strDescription}" styleClass="contactTextarea" id="contactMessageTextarea" />
+                                            <span id="idMsgError" style="display:none;margin-top: -23px;color: red;font-weight: bold;">Please enter the Message</span>
+                                        </div>
+                                        <div class="formSubmitButtonErrorsWrap">
+                                                <input type="button" class="buttonWrap button button-green contactSubmitButton" value="SUBMIT" onClick="formValidation();"/>
+<!--                                            <apex:commandbutton action="{!sendEmail}" styleClass="buttonWrap button button-green contactSubmitButton" value="SUBMIT" rerender="contactForm" status="processingImg" onClick="return formValidation();"/> -->
+                                        </div>
+                                </apex:form>       
+                            </div>
+                        </div>                                 
+                    </div>
+                </div>
+        
+                <div class="decoration container"></div>  
+                    
+                <!-- Page Footer-->
+                <div class="footer">
+                    <div class="footer-socials half-bottom">
+                        <a href="#" class="footer-share show-share-bottom"><i class="fa fa-share-alt"></i></a>
+                        <a href="#" class="footer-up"><i class="fa fa-angle-up"></i></a>
+                    </div>
+                    <p class="center-text">&copy; 2015 Talent Rover. All rights reserved.</p>
+                </div>       
+            </div>
+        </div>    
+        </apex:define> 
+        
+        
+    </apex:composition>
+</apex:page>

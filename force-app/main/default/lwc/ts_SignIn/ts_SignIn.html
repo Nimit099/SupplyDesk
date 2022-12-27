@@ -1,0 +1,63 @@
+<template>
+    <!-- ===== Toast ====== -->
+
+    <c-ts_-tost-notification></c-ts_-tost-notification>
+
+    <!-- ==== Toast ====== -->
+
+    <!-- ======= Spinner ======= -->
+
+    <template if:true={isSpinner}>
+        <div class="slds-spinner_container spinner-center" style="overflow: hidden;">
+            <div class="spinner-ts">
+                <div class="inner one"></div>
+                <div class="inner two"></div>
+                <div class="inner three"></div>
+            </div>
+        </div>
+    </template>
+
+    <!-- ======= Spinner ======= -->
+
+    <div class="container" style={backgroundImage}>
+        <div class="forms-container">
+            <div class="logo_cls">
+                <img src={bglogo} />
+            </div>
+            <div class="signin-signup">
+                <div class="sign-in-form">
+                    <div class="sign_in">
+
+                        <h2 class="title">Login</h2>
+                        <p class="subtitle">Please enter your login credentials below</p>
+                        <div class="input-field">
+                            <img src={userimg} />
+                            <lightning-input name="username" class="input_cls" value={username} data-id="user-sgn-fld"
+                                placeholder="client.u@foxmail.com">
+                            </lightning-input>
+                        </div>
+                        <div class="input-field">
+                            <img src={passwordimg} />
+                            <lightning-input type="Password" name="password" class="input_cls" value={password}
+                                placeholder="********" onchange={enterPassword}></lightning-input>
+                            <lightning-button-icon id='hideicon'
+                                class="previewIcon slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default"
+                                icon-name="utility:hide" onclick={showPassword}></lightning-button-icon>
+                        </div>
+                        <div>
+                            <a class="pass" href="/s/forgotpasswordpage">Forgot your password?</a>
+                        </div>
+                        <div class="slds-p-top_medium slds-wrap slds-grid btn_slds">
+                            <input type="submit" value="LOGIN"
+                                class="btn_cls loginbtn slds-col slds-m-horizontal_medium" onclick={login}>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <c-ts_-error-component reloadpage={reloadpage}>
+    </c-ts_-error-component>
+
+</template>

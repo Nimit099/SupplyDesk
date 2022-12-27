@@ -1,0 +1,25 @@
+<apex:page showHeader="false" sidebar="false" Controller="TRS_MyCalendar">
+     <apex:composition template="RC_CommunityTemplate">
+         <apex:define name="body"> 
+             <apex:form >
+                 <!-- Content Heding -->
+                 <div style="height:60px;">&nbsp;</div>
+                <div class="slds-all-elements">
+                    <div id="content" class="slds-snap-content" style="z-index:100">
+                        <div class="slds-content">
+                        <div class = "slds" style="min-height:500px;">
+                            <br/><br/>
+                        <apex:outputPanel rendered="{!IF(loggedInUser.ContactId != null,true,false)}">
+                            <apex:iframe height="1000"  src="{!$Site.Prefix}/TRS_CandidateCalendarCommunity?contactId={!loggedInUser.ContactId}" />
+                        </apex:outputPanel> 
+                        <apex:outputPanel rendered="{!IF(loggedInUser.ContactId == null,true,false)}">
+                            Contact  not found ..
+                        </apex:outputPanel> 
+                    </div>
+               </div> 
+               </div> 
+               </div>
+           </apex:form>
+        </apex:define>
+     </apex:composition>
+</apex:page>

@@ -1,0 +1,115 @@
+<apex:page controller="ComplianceCtrl3" showHeader="true" >
+  <apex:form id="formid">
+  <style>
+        .standardHeight{
+            Height:22px;
+        }       
+    .red{
+      background-color:#CC0000;
+      color:#000000;
+    }
+    .POP_LAYER {
+      width: 100%;
+      height: 100%;
+      min-height:100%;
+      position: absolute;
+      z-index: 1;
+      overflow: hidden;
+      left: 0px;
+      top: 0px;
+      opacity: .4;
+      filter: alpha(opacity=40);
+      background-color: #CCCCCC;
+    }
+
+    .POP_LAYER_NONE {
+      display:none;
+    } 
+    
+    .imgStatusIE{
+       height: 20%;
+       margin-left:38.5%;
+       margin-top: 13.5%;
+       margin-bottom: 15%;
+       text-align: center;
+       width: auto; vertical-align: bottom;
+    }
+    
+    .imgStatus{
+       height: 20%;
+       margin-top: 30%;
+       margin-bottom: 45%;
+       text-align: center;
+       width: auto; vertical-align: middle;
+    }
+    
+    
+    </style>
+  <script>
+      function reloadPage(status){
+          if(status!=null && status=='Success'){
+              location.reload();    
+          }
+      }
+      
+      function redirectPage(status,conid){
+          if(status!=null && status=='Success' && conid!=null){
+              window.top.location = '/'+conid;
+          }
+          if(status=='null' && conid!=null){
+              window.top.location = '/'+conid;
+          }
+      }
+  </script>
+      <apex:pageBlock >
+      <apex:actionStatus id="ajaxstatus" >
+       <apex:facet name="start">
+           <div id="hiddenLayer" class="POP_LAYER" style="height: 800px;">
+            <div id="statusImage" class="imgStatus">
+            <img src="/img/loading.gif" /><span style="color:red;"><b>&nbsp;Loading...</b></span>
+            </div>
+            </div>
+       </apex:facet>
+      </apex:actionStatus>
+      <center><p style="display:{!if(status=='Fail','inline','none')}"><b style="color:red">Error in Inserting/Updating</b></p></center>
+      <apex:pageBlockSection >
+              <apex:pageBlockSectionItem >
+               <apex:outputLabel >Contact Name :</apex:outputLabel>
+               <apex:outputText value="{!contactname}"></apex:outputText>
+              </apex:pageBlockSectionItem>
+          </apex:pageBlockSection>
+          <apex:pageBlockButtons >
+           <apex:commandButton value="Save"  action="{!updateAsscQualfns}" disabled="{!IF(conid==null , true,false)}" oncomplete="reloadPage('{!status}');" status="ajaxstatus" rendered="{!IF($User.MassEditCompliance__c==true,true,false)}"/>
+           <apex:commandButton value="{!IF($User.MassEditCompliance__c==true,'Save & Close','Close')}" action="{!updateAsscQualfns}" disabled="{!IF(conid==null , true,false)}" oncomplete="redirectPage('{!status}','{!conid}');" status="ajaxstatus"/>
+          </apex:pageBlockButtons>
+          <apex:pageBlockTable id="table" value="{!listqualifications}" var="eachqualn">
+           <apex:column rendered="{!IF($User.MassEditCompliance__c==true,true,false)}">
+            <apex:inputCheckbox value="{!eachqualn.ischeck}" disabled="{!IF(eachqualn.ischeck==true && eachqualn.asscqualfcn.Id!=null,true,false)}" >
+            <apex:actionSupport event="onchange"  reRender="formid" status="ajaxstatus">
+            </apex:actionSupport>
+            </apex:inputCheckbox>
+            </apex:column>
+           <apex:column headerValue="Qualification" value="{!eachqualn.qualfcn.Name}"/>
+           <apex:column headerValue="Qualification Description" value="{!eachqualn.qualfcn.Description__c}"/>
+           <apex:column headerValue="Associated Qualification" >
+             <apex:outPutLink value="/{!eachqualn.asscqualfcn.id}" >
+               {!eachqualn.asscqualfcn.name}
+             </apex:outPutLink>
+           </apex:column>
+           <apex:column headerValue="Status"  >
+           <apex:inputField value="{!eachqualn.asscqualfcn.TR1__Status__c}" rendered="{!IF(eachqualn.ischeck==true && $User.MassEditCompliance__c==true,true,false)}"/>
+           <apex:outputField value="{!eachqualn.asscqualfcn.TR1__Status__c}" rendered="{!IF((eachqualn.ischeck==true || eachqualn.ischeck==false)&& $User.MassEditCompliance__c==false,true,false)}"/>
+           </apex:column>
+           <apex:column headerValue="Compliance Status" value="{!eachqualn.asscqualfcn.ComplianceStatus__c}">
+           
+            <!--<apex:image value="{!IF(eachqualn.asscqualfcn.Compliance_Status__c==Null, URLFOR($Resource.ComplianceImages, '/No.png'),
+                                         IF(eachqualn.asscqualfcn.Compliance_Status__c=="No", URLFOR($Resource.ComplianceImages, '/No.png'), 
+                                         IF(eachqualn.asscqualfcn.Compliance_Status__c=="Approved", URLFOR($Resource.ComplianceImages, '/Yes.png'),
+                                         IF(eachqualn.asscqualfcn.Compliance_Status__c=="Candidate Submission (Requires Verification)", URLFOR($Resource.ComplianceImages,'/RV.png'),
+                                         IF(eachqualn.asscqualfcn.Compliance_Status__c=="More Required", URLFOR($Resource.ComplianceImages,'/MR.png'),
+                                         IF(eachqualn.asscqualfcn.Compliance_Status__c=="Rejected", URLFOR($Resource.ComplianceImages,'/NA.png'),NULL))))))}" width="70" height="20"/>-->
+           </apex:column>
+          </apex:pageBlockTable>
+      </apex:pageBlock>
+  </apex:form>
+</apex:page>

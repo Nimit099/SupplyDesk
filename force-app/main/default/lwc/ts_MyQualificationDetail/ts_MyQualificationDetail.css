@@ -1,0 +1,509 @@
+.mainDiv{
+    margin-left: 60px;
+    margin-top: 61px;
+    padding: 18px 50px;
+}
+
+.textp{
+    display: flex;
+    align-items: center;
+}
+.datediv{
+    width: 52rem;
+}
+.cvDiv{
+    background-color: #F6F6F6;
+    color: black;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.input{
+    display: flex;
+}
+
+.combox{
+    display: flex;
+    font-size:12px;
+}
+
+.btns{
+    display: flex;
+    height: 25%;
+    align-content: center;
+    text-align: center;
+    display: flex;    
+    font-weight: 600;
+    font-size: 17px;
+    color: white;
+    justify-content: inherit;
+    align-items: center;
+    margin-left: auto;
+}
+.iPadbtns{
+    display: none;
+}
+.t1{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+}
+.t2{
+    
+    font-style: normal;
+    font-weight: 700;
+    font-size: 31.5px;
+    line-height: 37px;
+    color: #D90000;
+}
+
+.saveBtn{
+    font-weight: 500;
+    background: #676868;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    margin-left: auto !important;
+    padding: 5px 0;
+    max-width: 160px;
+}
+.saveBtn img{
+    width: 17px;
+    height: 18px;
+    margin: -2px 10px 0 0px;
+}
+.saveBtn:hover{
+    cursor: pointer;
+}
+.cancelBtn:hover{
+    cursor: pointer;
+}
+.cancelBtn{
+    font-weight: 500;
+    background: #D90000;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 5px 0;
+    max-width: 160px;
+}
+.cancelBtn img {
+    width: 18px;
+    height: 18px;
+    margin: 0px 3px 3px 2px;
+}
+
+.fileInputBox{
+    display: block;
+    border: 1px dashed black;
+    height: 6rem;
+}
+.dropzone {
+    position: relative;
+    margin: 0 auto;
+}
+
+.dropzone.hover {
+    border: 10px solid #FE5;
+    color: #FE5;
+}
+
+.dropzone.dropped {
+    background: #222;
+    border: 10px solid #444;
+}
+
+.dropzone div {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.dropzone img {
+    border-radius: 10px;
+    vertical-align: middle;
+    max-width: 95%;
+    max-height: 95%;
+}
+
+.dropzone [type="file"] {
+    cursor: pointer;
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.cvData {
+    display: flex;
+    height: 3rem;
+    margin: 1rem auto;
+    box-shadow: 0 0 5px rgb(0 0 0 / 30%);
+    padding: 0.5rem;
+    font-size: 20px;
+}
+
+.cvData img {
+    height: 24px;
+    margin: 4px 0 4px auto;
+    float: right;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+/* =================== Spinner =================== */
+ 
+.spinner-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+  
+ .spinner-ts {
+    --size: 85px;
+  
+    width: var(--size);
+    height: var(--size);
+  
+    border-radius: 50%;
+    perspective: 800px;
+ }
+  
+ .inner {
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid transparent;
+ }
+  
+ .inner.one {
+    left: 0;
+    top: 0;
+    animation: rotate-one 1s linear infinite;
+    border-bottom: 3px solid #999999;
+ }
+  
+ .inner.two {
+    right: 0;
+    top: 0;
+    animation: rotate-two 1s linear infinite;
+    border-right: 3px solid #000000;
+ }
+  
+ .inner.three {
+    right: 0;
+    bottom: 0;
+    animation: rotate-three 1s linear infinite;
+    border-top: 3px solid #d90000;
+ }
+ .filetext{
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+ }
+  
+ @keyframes rotate-one {
+    0% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+    }
+  
+    100% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+    }
+ }
+  
+ @keyframes rotate-two {
+    0% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+    }
+  
+    100% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+    }
+ }
+  
+ @keyframes rotate-three {
+    0% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+    }
+  
+    100% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+    }
+ }
+  
+ /* =================== Spinner =================== */
+
+
+ /* confirm box start */
+
+.confirmModal.slds-modal__container {
+    width: 30%;
+}
+
+.confirmModal .slds-modal__header {
+    background: #D90000 !important;
+    font-size: 2rem !important;
+    font-weight: 500 !important;
+    color: white !important;
+    font-family: Raleway;
+}
+
+.confirmModal .slds-modal__content {
+    font-family: Raleway;
+    font-size: medium;
+    font-weight: 400;
+    text-align: center;
+}
+
+.confirmModal .slds-modal__footer {
+    background-color: #fff !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-style: none;
+}
+
+.confirmModal .boxYesButton,
+.confirmModal .boxNoButton {
+    border-radius: 7px;
+    border: none;
+    width: 6rem;
+    height: 1.7rem;
+    font-size: medium;
+    font-weight: 400;
+    font-family: Raleway;
+}
+
+.confirmModal .boxYesButton {
+    background: #D90000;
+    color: white;
+}
+
+.confirmModal .boxNoButton {
+    background-color: #E6E7E9;
+    color: black;
+}
+
+/* confirm box end */
+
+.mainDiv .dropDiv{
+    margin-left: 0;
+}
+
+.helpIcon{
+    position:relative; 
+    top:-3px; 
+    left:3px
+}
+
+.mobWid{
+    margin-left: 1rem;
+}
+.detail_text{
+    padding-left: 1.5rem;
+}
+.m_left{
+    margin-left: 1.5rem;
+}
+.detail_cls{
+    margin: auto !important;
+}
+.detail_cls_reference{
+    padding: 0 4.5rem;
+}
+.cv_detail_cls{
+    margin: 0 auto;
+}
+.bold_text{
+    font-weight: 700;
+}
+
+ @media(min-width: 1222px) AND (max-width: 1500px) {
+    .detail_cls_reference{
+        padding: 0 2.5rem;
+    }
+ }
+ @media(min-width: 1025px) AND (max-width: 1222px) {
+
+    .cancelBtn{
+        width: 29% !important;
+    }
+    .detail_cls_reference{
+        padding: 0 3rem;
+    }
+ }
+
+ @media(max-width: 1024px) {
+    .btns {
+        display: none !important;
+    }
+    .iPadbtns {
+        display: flex;
+        justify-content: center;
+        font-weight: 500;
+        font-size: 17px;
+        align-items: center;
+        color: white;
+        margin-left: auto !important;
+    }
+    .saveBtn{
+        width: 35px;
+        height: 35px;
+        padding: 3px 7px;
+    }
+    .cancelBtn{
+        width: 35px;
+        height: 35px;
+        padding: 3px 7px;
+    }
+    .cancelBtn img{
+        width: 20px;
+        height: 22px;
+        margin: 0px 0px 0 0px;
+    }
+    .saveBtn img{
+                
+        width: 20px;
+        height: 22px;
+    }
+    .cancelBtn {
+        margin-left: 20px;
+    }
+    .tabDiv hr {
+        margin: 1rem 4rem 1rem 0rem;
+    }
+    .profileTitle {
+        width: 100%;
+    }
+    .tabDiv .slds-size_9-of-12 {
+        width: 66%;
+    }
+    .slds-file-selector__body_integrated {
+        margin-left: 2rem;
+    } 
+
+    .seekDiv{
+        width: 33%;
+    }
+
+    .docDiv{
+        width: 66%;
+    }
+
+    .idDiv{        
+        display: block;
+    }
+    .group2adiv{
+        width: 75%;
+    }
+    .group2bdiv{
+        width: 75%;
+    }
+    .mainDiv{
+        margin-left: 0;
+    }
+    .mainDiv .slds-m-left_xx-large {
+        margin-left: 0;
+    }
+    .detail_cls_reference{
+        padding: 0 2rem;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    
+    .mainDiv{
+        margin-top: 30px !important;
+        margin-left: 0px !important;
+    }
+    .t2{
+        font-size: 21.5px;
+    }
+    .mbCv{
+        width: 95% !important;
+    }
+    .mnDiv{
+        margin-left: 1rem !important;
+    }
+    .textp{
+        width: 45% !important;
+    }
+    .docDiv{
+        width: 90%;
+    }
+    .wpdate{
+        margin-left: 1rem !important;
+    }
+    .combox{
+        margin-left: 1rem !important;
+        width: 85% !important;
+    }
+    .mobWid{
+        width: 85% !important;
+    }
+    .l-input{
+        margin-left: 2rem !important;
+    }
+    .seekDiv{
+        width: 60% !important;
+    }
+    .duelSize{
+        width: 90% !important;
+    }
+    .group2adiv{
+        width: 100%;
+    }
+    .group2bdiv{
+        width: 100%;
+    }
+    .prfdiv{
+        margin-left: 0.5rem !important;
+    }
+    .cvImg{
+        margin-right: 0 !important;
+    }
+    .confirmModal.slds-modal__container {
+        width: auto;
+    }
+    .dropDiv{
+        margin-left: 1rem;
+    }
+}
+
+@media screen and (max-width: 578px) {
+    .mainDiv{
+        padding: 10px 25px;
+    }
+    .docDiv{
+        margin-left: 0 !important;
+        width: 100%;
+    }
+    .dual_cls{
+        margin-left: 0 !important;
+    }
+    .wpdate{
+        margin-left: 0 !important;
+    }
+    .mobWid{
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+    .slds-file-selector__body_integrated {
+        margin-left: 1rem;
+    } 
+    .detail_text{
+        padding-left: 0;
+    }
+    .m_left{
+        margin-left: 0 !important;
+    }
+    .detail_cls_reference{
+        padding: 0 1rem;
+    }
+    .l-input{
+        margin-left: 2rem !important;
+    }
+}

@@ -1,0 +1,140 @@
+<template>
+
+    <!-- Notification toast -->
+    <c-ts_-tost-notification></c-ts_-tost-notification>
+
+
+    <!-- ======= Spinner ======= -->
+
+    <template if:true={isSpinner}>
+        <div class="slds-spinner_container spinner-center" style="overflow: hidden;">
+            <div class="spinner-ts">
+                <div class="inner one"></div>
+                <div class="inner two"></div>
+                <div class="inner three"></div>
+            </div>
+        </div>
+    </template>
+
+<!-- ======= Spinner ======= -->
+
+<div class="main-contact" onclick={check}>
+    <div class="main_div">
+        <div class="map_img">
+            <div class="con_touch">
+                <div>
+                    <h1>Get in touch</h1>
+                    <p class="subtext">We'd love to hear from you. Our friendly team is always here to help.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="con_info">
+            <div class="con_info_div">
+                <div class="con_info_div2">
+                    <h5>Need assistance? Send us an email</h5>
+                    <div class="message">
+                        <div class="con-label">
+                            <p>Name</p>
+                        </div>
+                        <div>
+                            <lightning-input class="input_border" variant="label-hidden" value={fullName} name="user_name" type="text"></lightning-input>
+                        </div>
+                        <div></div>
+                    </div>
+                    <div class="message">
+                        <div class="con-label">
+                            <p>Subject</p>
+                        </div>
+                        <div>
+                            <lightning-input disabled class="input_border" variant="label-hidden" value="Portal Help" name="subject" type="text">
+                            </lightning-input>
+                        </div>
+                        <div></div>
+                    </div>
+                    <div class="message">
+                        <div class="con-label">
+                            <p>Email</p>
+                        </div>
+                        <div>
+                            <select class="slds-select" name="optionSelect">
+                                    <option value="Brightonsecondary@supplydesk.co.uk">
+                                        Brightonsecondary@supplydesk.co.uk</option>
+                                    <option value="Watford@supplydesk.co.uk">Watford@supplydesk.co.uk
+                                    </option>
+                                    <option value="Chelmsford@supplydesk.co.uk">
+                                        Chelmsford@supplydesk.co.uk</option>
+                                    <option value="Kent@supplydesk.co.uk">Kent@supplydesk.co.uk
+                                    </option>
+                                    <option value="Cardiff@supplydesk.co.uk">Cardiff@supplydesk.co.uk
+                                    </option>
+                                    <option value="Southampton@supplydesk.co.uk">
+                                        Southampton@supplydesk.co.uk</option>
+                                    <option value="Wokingham@supplydesk.co.uk">
+                                        Wokingham@supplydesk.co.uk</option>
+                                    <option value="Eastmidlands@supplydesk.co.uk">
+                                        Eastmidlands@supplydesk.co.uk</option>
+                                    <option value="Leeds@supplydesk.co.uk">Leeds@supplydesk.co.uk
+                                    </option>
+                                    <option value="Lincolnshire@supplydesk.co.uk">
+                                        Lincolnshire@supplydesk.co.uk</option>
+                                    <option value="Manchester@supplydesk.co.uk">
+                                        Manchester@supplydesk.co.uk</option>
+                                    <option value="Sheffield@supplydesk.co.uk">
+                                        Sheffield@supplydesk.co.uk</option>
+                                    <option value="North.east@supplydesk.co.uk">
+                                        North.east@supplydesk.co.uk</option>
+                                </select>
+                        </div>
+                        <div></div>
+                    </div>
+                    <div class="message">
+                        <div class="con-label">
+                            <p>Message</p>
+                        </div>
+                        <div>
+                            <lightning-textarea variant="label-hidden" name="input1">
+                            </lightning-textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="send-button">
+                    <button class="button" data-name="Help" onclick={handleSendClick} style="display: flex;">
+                            <img src={send_icon} />
+                            <span class="slds-p-left_medium">Send</span>
+                        </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contact-footer slds-align_absolute-center">
+        <div class="contact-location">
+            <h1>Our Address</h1>
+            <div class="con_add">
+                <div>
+                    <img class="icon_img" src={location_icon} alt="">
+                </div>
+                <div>
+                    <p class="con_p">Unit 4</p>
+                    <p class="con_p">Hove Business Centre</p>
+                    <p class="con_p">Fonthill Road</p>
+                    <p class="con_p">Hove</p>
+                    <p class="con_p">BN3 6HA</p>
+                </div>
+            </div>
+        </div>
+        <div class="contact-address">
+            <h1>Our Contacts</h1>
+            <p><img class="icon_img" src={contactus_icon}> 44 (0)1273 609 993</p>
+            <p><img class="icon_img" src={redmail_icon}> @supplydesk.co.uk</p>
+        </div>
+        <div class="contact-no">
+            <img src={sdlogo_icon} alt="ContactUS_user">
+        </div>
+    </div>
+</div>
+
+<c-ts_-error-component reloadpage={reloadpage}>
+</c-ts_-error-component>
+
+</template>

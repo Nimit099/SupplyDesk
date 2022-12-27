@@ -1,0 +1,109 @@
+.saveBtn{
+        
+    background: #676868;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.cancelBtn{
+    
+    background: #D90000;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.t1{
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+}
+.t2{
+    
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 31.5px;
+    line-height: 37px;
+    color: #D90000;
+}   
+.t3{
+    color: black;
+}
+.btns{
+    display: flex;
+    height: 25%;
+    align-content: center;
+    text-align: center;
+    display: flex;
+    font-family: Raleway;
+    font-weight: 600;
+    font-size: 17px;
+    color: white;
+    justify-content: inherit;
+    align-items: center;
+}
+
+.slds-box{
+    margin-left: 4.8em;
+    margin-right: 4.8em;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.qualify{
+    background: #F6F6F6;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.combox{
+    background: #FFFFFF;
+    margin-left: 7em;
+    margin-right: 7em; 
+    /* margin-left: 163px; */
+}
+.dueling{
+    margin-left: 7em;
+}
+.bottom-styling{
+    box-sizing: border-box;
+    
+    position: absolute;
+    width: 1154px;
+    height: 126px;
+    
+    background: #FFFFFF;
+    border: 1px dashed #000000;
+}
+/* .slds-m-right_xx-large{
+    margin-right: 50em;
+} */
+
+.float-child {
+    width: 50%;
+    float: left;
+    padding: 20px;
+}  
+
+.leftbox{
+    padding-left: 6em;
+}
+.main{ 
+    width: 800px;
+    margin: 0 auto;
+}
+.checkbox{
+    margin-left: 7em;
+}
+
+.l-input{
+    margin-left: 6em;
+    margin-right: 10em; 
+}
+
+/* .dateside{
+    display: inline-block;
+    margin-right: 5em;
+} */
+
+lightning-dual-listbox{
+    margin-left: 7em;
+    margin-right: 7em;
+}

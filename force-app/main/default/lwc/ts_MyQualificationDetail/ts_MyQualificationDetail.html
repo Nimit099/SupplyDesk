@@ -1,0 +1,876 @@
+<template>
+    <div class="mainDiv">
+
+        <c-ts_-Tost-Notification></c-ts_-Tost-Notification>
+        <!-- ======= Spinner ======= -->
+
+        <template if:true={isSpinner}>
+            <div class="slds-spinner_container spinner-center" style="overflow: hidden;">
+                <div class="spinner-ts">
+                    <div class="inner one"></div>
+                    <div class="inner two"></div>
+                    <div class="inner three"></div>
+                </div>
+            </div>
+        </template>
+
+        <!-- ======= Spinner ======= -->
+
+        <!-- Error Component -->
+        <c-ts_-error-component reloadpage={reloadpage}>
+        </c-ts_-error-component>
+        <!-- Error Component -->
+
+
+        <!-- modal start -->
+        <template if:true={isShowModal}>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="confirmModal slds-modal__container">
+                    <!-- modal header start -->
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Are you sure ? </h2>
+                    </header>
+
+                    <!-- modal body start -->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p>You want to delete : {getCvName}</p>
+                    </div>
+
+                    <!-- modal footer start-->
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral boxYesButton" onclick={yesDelete}
+                            title="Yes">Yes</button>
+                        <button class="slds-button slds-button_neutral boxNoButton" onclick={hideModalBox}
+                            title="No">No</button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+        <!-- modal end -->
+
+
+        <div class="slds-grid ">
+            <div class="slds-col slds-size_6-of-12  mainTextDiv" style="display:flex;">
+                <div>
+                    <p class="slds-m-top_x-large  t1">CANDIDATE</p>
+                    <p class=" t2">My Qualification</p>
+                </div>
+            </div>
+            <div class="slds-col slds-size_6-of-12 slds-m-bottom--medium slds-m-top_xx-large btns">
+                <div class="slds-size_1-of-4 slds-m-left_medium saveBtn" onclick={saveQualification}><img
+                        src={saveImg}>Save</div>
+                <div class="slds-size_1-of-4 slds-m-left_medium cancelBtn" onclick={onPrevious}><img
+                        src={cancelImg}>Cancel</div>
+            </div>
+
+            <div class="slds-col slds-size_6-of-12 slds-m-bottom--medium slds-m-top_xx-large iPadbtns">
+                <div class="slds-size_1-of-4  saveBtn" onclick={saveQualification}>
+                    <img src={saveImg}>
+                </div>
+                <div class="slds-size_1-of-4  cancelBtn" onclick={onPrevious}>
+                    <img src={cancelImg}>
+                </div>
+            </div>
+        </div>
+        <!-- CV Qualification Start-->
+        <template if:true={checkCv}>
+            <div>
+                <div
+                    class="slds-size_12-of-12 cvDiv slds-m-top_x-large slds-p-around_medium slds-m-bottom_large bold_text">
+                    CV</div>
+                <div class="detail_cls_cv cv_detail_cls slds-size_11-of-12 ">
+                    <div class=" ">
+                        <span class=" slds-m-bottom_small slds-size_8-of-12 bold_text">Upload CV</span>
+                        <div
+                            class=" slds-col slds-size_8-of-12 slds-m-top_x-small slds-m-bottom_large slds-form-element mbCv">
+                            <lightning-input class="input" name="uploadcv" type="text" variant="label-hidden"
+                                value="Please upload your CV using the document upload section on the 'My Profile' page"
+                                onchange={handleChange} autocomplete="off"></lightning-input>
+                        </div>
+                    </div>
+                    <div class=" ">
+                        <span class=" slds-m-bottom_small bold_text">
+                            Gaps Explanation<span class="helpIcon">
+                                <lightning-helptext
+                                    content="Please ensure there are no time period gaps in your CV.  If you were not working or studying for a period of time, then please use the box to explain what you did during this time period?">
+                                </lightning-helptext>
+                            </span>
+
+                        </span>
+                        <div
+                            class=" slds-col slds-size_8-of-12 slds-m-top_x-small slds-m-bottom_large slds-form-element mbCv">
+                            <lightning-textarea name="gapsExp" class="input" variant="label-hidden"
+                                value={gapsExplanation} onchange={handleChange}></lightning-textarea>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-m-top_medium ">
+                        <div class="slds-col slds-size_2-of-12 textp bold_text">CV Submitted</div>
+                        <div class="mbCv">
+                            <lightning-input name="cvSub" class="" type="checkbox" onchange={handleChange}
+                                checked={cvSubmitted} variant="label-hidden"></lightning-input>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-m-top_large ">
+                        <div class="slds-col slds-size_2-of-12 textp bold_text">CV Received</div>
+                        <div class="mbCv">
+                            <lightning-input name="cvrec" class="" type="checkbox" onchange={handleChange}
+                                checked={cvReceived} variant="label-hidden"></lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="slds-size_12-of-12 cvDiv slds-m-top_x-large slds-p-around_medium slds-m-bottom_large bold_text">
+                    Add Proof</div>
+                <div class=" slds-m-bottom_large dropDiv">
+                    <div class="dropzone slds-file-selector__body  fileInputBox slds-size_11-of-12 slds-m-top_x-large">
+                        <div class="slds-text-heading_medium slds-text-align_center slds-m-top_x-large">
+                            <img class="slds-m-right_medium cvImg" src={dragFileImg}> Drag file here or click to add
+                            attachment
+                        </div>
+                        <input type="file" name="CV" accept="image/*, application/pdf" onchange={handleFile}
+                            class="fileUploader" />
+                    </div>
+                    <template for:each={cvList} for:item="cv">
+                        <div key={cv.Id} class="cvData slds-size_11-of-12">
+                            <p class="filetext" title={cv.Title}>{cv.Title} </p><img src={deleteImg} name={cv.Id}
+                                title={cv.Title} onclick={deleteCv}>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </template>
+        <!-- CV Qualification End-->
+
+        <!-- Overseas Police check -->
+        <template if:true={checkoverPc}>
+            <div>
+                <div
+                    class="slds-size_12-of-12 cvDiv slds-m-top_x-large slds-p-around_medium slds-m-bottom_large bold_text">
+                    Overseas Police Check</div>
+                <div class="detail_cls slds-size_11-of-12">
+                    <div class=" ">
+                        <span class=" slds-m-bottom_small slds-m-top_medium slds-size_8-of-12 ">Overseas Police
+                            Check</span>
+                        <lightning-combobox name="overseasname" label=""
+                            class="slds-combobox_container slds-combobox  slds-m-top_xx-small slds-m-bottom_medium slds-combobox__form-element slds-form-element__label slds-size_6-of-12 "
+                            value={overseasVal} options={overseasPoliceOps} placeholder="Select" onchange={handleChange}
+                            variant="label-hidden">
+                        </lightning-combobox>
+                    </div>
+                    <div class="slds-m-top_medium  ">
+                        <span class=" slds-m-bottom_small slds-m-top_medium slds-size_8-of-12 ">
+                            Date Lived/Worked Overseas - Start<span class="helpIcon">
+                                <lightning-helptext
+                                    content="This refers to any place you have lived other than the UK.  So if you live outside of the UK then please enter how long you have lived in your own country eg.  If you have lived in Australia for your whole life put your DOB in the first box and then put the day before your intended arrival in the UK. If you don’t know it yet just put a date close to when you think you will arrive in the UK">
+                                </lightning-helptext>
+                            </span>
+                        </span>
+                        <lightning-input type="date" name="opcStdate" class=" slds-m-top_xx-small slds-size_6-of-12 "
+                            placeholder="Start Date" onchange={handleChange} value={opcStdate} variant="label-hidden">
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-m-top_medium ">
+                        <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12 ">
+                            Date Lived/Worked Overseas - End<span class="helpIcon">
+                                <lightning-helptext
+                                    content="This refers to any place you have lived other than the UK.  So if you live outside of the UK then please enter how long you have lived in your own country eg.  If you have lived in Australia for your whole life put your DOB in the first box and then put the day before your intended arrival in the UK. If you don’t know it yet just put a date close to when you think you will arrive in the UK">
+                                </lightning-helptext>
+                            </span>
+                        </span>
+                        <lightning-input type="date" name="opcEddate" class=" slds-m-top_xx-small slds-size_6-of-12"
+                            placeholder="End Date" onchange={handleChange} value={opcEddate} variant="label-hidden">
+                        </lightning-input>
+                    </div>
+                </div>
+                <div
+                    class="slds-size_12-of-12 cvDiv  slds-m-top_x-large slds-p-around_medium slds-m-bottom_large bold_text">
+                    Add Proof</div>
+                <div class=" slds-m-bottom_large dropDiv">
+                    <div class="dropzone slds-file-selector__body fileInputBox slds-size_11-of-12 slds-m-top_x-large">
+                        <div class="slds-text-heading_medium slds-text-align_center slds-m-top_x-large">
+                            <img class="slds-m-right_medium cvImg" src={dragFileImg}> Drag file here or click to add
+                            attachment
+                        </div>
+                        <input type="file" name="Overseas Police Check" accept="image/*, application/pdf"
+                            onchange={handleFile} class="fileUploader" />
+                    </div>
+                    <template for:each={cvList} for:item="cv">
+                        <div key={cv.Id} class="cvData slds-size_11-of-12">
+                            <p class="filetext" title={cv.Title}>{cv.Title} </p><img src={deleteImg} name={cv.Id}
+                                title={cv.Title} onclick={deleteCv}>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </template>
+        <!-- Overseas Police check -->
+
+        <!-- Emergency Contact -->
+        <template if:true={checkEme}>
+            <div>
+                <div
+                    class="slds-size_12-of-12 cvDiv slds-m-top_x-large slds-p-around_medium slds-m-bottom_large bold_text">
+                    Emergency Contact
+                </div>
+                <div class="detail_cls slds-size_11-of-12">
+                    <div class="slds-m-top_x-small ">
+                        <span class=" slds-size_8-of-12">Emergency Contact Name</span>
+                        <div class=" slds-size_8-of-12 slds-m-top_xx-small slds-m-bottom_large slds-form-element">
+                            <lightning-input type="text" onchange={handleChange} label="" name=EconName
+                                variant="label-hidden" placeholder="Name" class="slds-m-top_small" value={eContactName}>
+                            </lightning-input>
+                        </div>
+                    </div>
+
+                    <div class=" slds-m-top_x-small ">
+                        <span class=" slds-size_8-of-12">Emergency Contact Mobile No.</span>
+                        <div class=" slds-size_8-of-12 slds-m-top_xx-small slds-m-bottom_large slds-form-element">
+                            <lightning-input type="tel" onchange={handleChange} label="" variant="label-hidden"
+                                name="EconMobile" placeholder="Number" class="slds-m-top_small" value={eConMobile}>
+                            </lightning-input>
+                        </div>
+                    </div>
+                    <div class=" slds-m-top_x-small ">
+                        <span class=" slds-size_8-of-12">Emergency Contact Work No.</span>
+                        <div class=" slds-size_8-of-12 slds-m-top_xx-small slds-m-bottom_large slds-form-element">
+                            <lightning-input type="tel" onchange={handleChange} label="" name="EconWork"
+                                variant="label-hidden" placeholder="Number" class="slds-m-top_small" value={eConWork}>
+                            </lightning-input>
+                        </div>
+                    </div>
+
+                    <div class=" slds-m-top_x-small  ">
+                        <span class=" slds-size_8-of-12">Relationship to You</span>
+                        <div class=" slds-size_8-of-12 slds-m-top_xx-small slds-m-bottom_large slds-form-element">
+                            <lightning-input type="text" onchange={handleChange} name="Relation" label=""
+                                variant="label-hidden" placeholder="Relation" class="slds-m-top_small" value={Relate}>
+                            </lightning-input>
+                        </div>
+                    </div>
+
+                    <div class=" slds-m-top_x-small  ">
+                        <span class=" slds-size_8-of-12">Emergency Contact Home No.</span>
+                        <div class=" slds-size_8-of-12 slds-m-top_xx-small slds-m-bottom_large slds-form-element">
+                            <lightning-input type="tel" onchange={handleChange} label="" name="EconHome"
+                                variant="label-hidden" placeholder="Number" class="slds-m-top_small" value={eConHome}>
+                            </lightning-input>
+                        </div>
+                    </div>
+
+                    <div class=" slds-m-top_x-small ">
+                        <span class=" slds-size_8-of-12">Emergency Contact Address</span>
+                        <div class=" slds-size_8-of-12 slds-m-top_xx-small slds-m-bottom_large slds-form-element">
+                            <lightning-input type="text" name="EconAdd" onchange={handleChange} label=""
+                                variant="label-hidden" placeholder="Address" class="slds-m-top_small" value={eConAdd}>
+                            </lightning-input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <!-- References -->
+        <template if:true={checkRefs}>
+
+            <div>
+                <div
+                    class="slds-size_12-of-12 cvDiv slds-m-top_x-large slds-p-around_medium slds-m-bottom_large bold_text">
+                    References
+                </div>
+
+                <div class="slds-grid slds-wrap ListingForm slds-size_11-of-12 detail_cls">
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium dt1">
+                        <div class="slds-form-element">
+                            <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 1 Sent
+                                Date</span>
+                            <lightning-input type="date" label="" class="slds-m-top_x-small" name="Ref1sentdate"
+                                value={Ref1sentdate} autocomplete="off" onchange={handleChange} variant="label-hidden">
+                            </lightning-input>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <div class="slds-form-element">
+                            <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 1
+                                Name/Organisation</span>
+                            <lightning-input class="cls_input slds-m-top_x-small" label="" type="text"
+                                name="Reference1name" value={Reference1name} onchange={handleChange}
+                                variant="label-hidden">
+                            </lightning-input>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 1 Received
+                            Date</span>
+                        <lightning-input type="date" label="" class="slds-m-top_x-small" name="Reference1recdate"
+                            value={Reference1RecDate} autocomplete="off" variant="label-hidden" onchange={handleChange}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <div class="slds-form-element">
+                            <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 1
+                                Phone</span>
+                            <lightning-input class="cls_input slds-m-top_x-small" label="" type="text"
+                                name="Reference1phone" value={Reference1phone} variant="label-hidden"
+                                onchange={handleChange}>
+                            </lightning-input>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 1 Date Range
+                            Start</span>
+                        <lightning-input type="date" label="" class="slds-m-top_x-small" name="Reference1daterangestart"
+                            value={Reference1daterangestart} variant="label-hidden" onchange={handleChange}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 1 Email</span>
+                        <div class="slds-form-element">
+                            <lightning-input class="cls_input slds-m-top_x-small" label="" type="email"
+                                name="Reference1email" value={Reference1email} variant="label-hidden"
+                                onchange={handleChange}>
+                            </lightning-input>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 1 Date Range
+                            End</span>
+                        <lightning-input type="date" label="" class="slds-m-top_x-small" name="Reference1daterangeend"
+                            value={Reference1daterangeend} autocomplete="off" variant="label-hidden"
+                            onchange={handleChange}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 1 Type</span>
+                        <div class="slds-form-element">
+                            <lightning-combobox dropdown-alignment="true" class="slds-m-top_x-small" name="Ref1Type"
+                                label="" value={Ref1Type} options={Ref1Types} onchange={handleChange}
+                                variant="label-hidden">
+                            </lightning-combobox>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12">
+                        <div class="slds-form-element">
+                            <span class="slds-m-bottom_small slds-size_8-of-12">Reference 1 Received</span>
+                            <lightning-input type="checkbox" label="" class="slds-m-top_x-small" name="Ref1Rec"
+                                checked={Ref1Rec} autocomplete="off" variant="label-hidden" onchange={handleChange}>
+                            </lightning-input>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <div class="slds-form-element">
+                            <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 1
+                                Rating</span>
+                            <lightning-combobox dropdown-alignment="true" class="slds-m-top_x-small" name="Ref1Rating"
+                                label="" value={Ref1Rating} options={Ref1Ratings} onchange={handleChange}
+                                variant="label-hidden">
+                            </lightning-combobox>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium ">
+                        <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 2 Sent
+                            Date</span>
+                        <lightning-input type="date" label="" class="slds-m-top_x-small" name="Ref2sentdate"
+                            value={Ref2sentdate} autocomplete="off" variant="label-hidden" onchange={handleChange}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 2
+                            Name/Organisation</span>
+                        <div class="slds-form-element">
+                            <lightning-input class="cls_input slds-m-top_x-small" label="" type="text"
+                                name="Reference2name" value={Reference2name} variant="label-hidden"
+                                onchange={handleChange}>
+                            </lightning-input>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12">
+                        <div class="slds-form-element">
+                            <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 2 Received
+                                Date</span>
+                            <lightning-input type="date" label="" class="slds-m-top_x-small" name="Ref2recdate"
+                                value={Ref2recdate} autocomplete="off" variant="label-hidden" onchange={handleChange}>
+                            </lightning-input>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <div class="slds-form-element">
+                            <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 2
+                                Phone</span>
+                            <lightning-input class="cls_input slds-m-top_x-small" label="" type="text" name="Ref2phone"
+                                value={Ref2phone} variant="label-hidden" onchange={handleChange}>
+                            </lightning-input>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 2 Date Range
+                            Start</span>
+                        <lightning-input type="date" label="" class="slds-m-top_x-small" name="Ref2daterangest"
+                            value={Ref2daterangest} autocomplete="off" variant="label-hidden" onchange={handleChange}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <div class="slds-form-element">
+                            <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 2
+                                Email</span>
+                            <lightning-input class="cls_input slds-m-top_x-small" label="" type="email" name="Ref2email"
+                                value={Ref2email} variant="label-hidden" onchange={handleChange}>
+                            </lightning-input>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 2 Date Range
+                            End</span>
+                        <lightning-input type="date" label="" class="slds-m-top_x-small" name="Ref2daterangeend"
+                            value={Ref2daterangeend} autocomplete="off" variant="label-hidden" onchange={handleChange}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <div class="slds-form-element">
+                            <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 2
+                                Type</span>
+                            <lightning-combobox dropdown-alignment="true" class="slds-m-top_x-small" name="Ref2Type"
+                                label="" value={Ref2Type} placeholder="Select an Option" options={Ref2Types}
+                                variant="label-hidden" onchange={handleChange}>
+                            </lightning-combobox>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12">
+                        <div class="slds-form-element">
+                            <span class="slds-m-bottom_small slds-size_8-of-12">Reference 2 Received</span>
+                            <lightning-input type="checkbox" label="" class="slds-m-top_x-small" name="Ref2rec"
+                                checked={Ref2rec} variant="label-hidden" onchange={handleChange}>
+                            </lightning-input>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <div class="slds-form-element">
+                            <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 2
+                                Rating</span>
+
+                            <lightning-combobox dropdown-alignment="true" class="slds-m-top_x-small" name="Ref2Rating"
+                                label="" value={Ref2Rating} placeholder="Select an Option" options={Ref2Ratings}
+                                variant="label-hidden" onchange={handleChange}>
+                            </lightning-combobox>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium ">
+                        <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 3 Sent
+                            Date</span>
+
+                        <lightning-input type="date" label="" class="slds-m-top_x-small" name="Ref3sentdate"
+                            value={Ref3sentdate} autocomplete="off" variant="label-hidden" onchange={handleChange}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <div class="slds-form-element">
+                            <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 3
+                                Name/Organisation</span>
+
+                            <lightning-input class="cls_input slds-m-top_x-small" label="" type="text"
+                                name="Reference3Name" value={Reference3Name} variant="label-hidden"
+                                onchange={handleChange}>
+                            </lightning-input>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 ">
+                        <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 3 Received
+                            Date</span>
+
+                        <lightning-input type="date" label="" class="slds-m-top_x-small" name="Ref3revdate"
+                            value={Ref3revdate} autocomplete="off" variant="label-hidden" onchange={handleChange}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 3 Phone</span>
+
+                        <div class="slds-form-element">
+                            <lightning-input class="cls_input slds-m-top_x-small" label="" type="text"
+                                name="Reference3phone" value={Reference3phone} variant="label-hidden"
+                                onchange={handleChange}>
+                            </lightning-input>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 3 Date Range
+                            Start</span>
+
+                        <lightning-input type="date" label="" class="slds-m-top_x-small" name="Ref3daterangest"
+                            value={Ref3daterangest} autocomplete="off" variant="label-hidden" onchange={handleChange}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <div class="slds-form-element">
+                            <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 3
+                                Email</span>
+
+                            <lightning-input class="cls_input slds-m-top_x-small" label="" type="email" name="Ref3email"
+                                value={Ref3email} variant="label-hidden" onchange={handleChange}>
+                            </lightning-input>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 3 Date Range
+                            End</span>
+
+                        <lightning-input type="date" label="" class="slds-m-top_x-small" name="Ref3dtrangeend"
+                            value={Ref3dtrangeend} autocomplete="off" variant="label-hidden" onchange={handleChange}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <div class="slds-form-element">
+                            <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 3
+                                Type</span>
+
+                            <lightning-combobox dropdown-alignment="true" class="slds-m-top_x-small" name="Ref3type"
+                                label="" value={Ref3type} placeholder="Select an Option" options={Ref3Types}
+                                variant="label-hidden" onchange={handleChange}>
+                            </lightning-combobox>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12">
+                        <div class="slds-form-element">
+                            <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 3
+                                Received</span>
+
+                            <lightning-input type="checkbox" label="" class="slds-m-top_x-small" name="Ref3received"
+                                checked={Ref3received} autocomplete="off" variant="label-hidden"
+                                onchange={handleChange}>
+                            </lightning-input>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <div class="slds-form-element">
+                            <span class="slds-m-bottom_small slds-m-top_medium slds-size_8-of-12">Reference 3
+                                Rating</span>
+
+                            <lightning-combobox dropdown-alignment="true" class="slds-m-top_x-small" name="Ref3rating"
+                                label="" value={Ref3rating} placeholder="Select an Option" options={Ref3Ratings}
+                                onchange={handleChange} variant="label-hidden">
+                            </lightning-combobox>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="slds-size_12-of-12 cvDiv slds-m-top_x-large slds-p-around_medium slds-m-bottom_large bold_text">
+                    Add Proof</div>
+                <div class="slds-m-bottom_large dropDiv">
+                    <div class="dropzone slds-file-selector__body fileInputBox slds-size_11-of-12 slds-m-top_x-large">
+                        <div class="slds-text-heading_medium slds-text-align_center slds-m-top_x-large">
+                            <img class="slds-m-right_medium cvImg" src={dragFileImg}> Drag file here or click to add
+                            attachment
+                        </div>
+                        <input type="file" name="References" accept="image/*, application/pdf" onchange={handleFile}
+                            class="fileUploader" />
+                    </div>
+                    <template for:each={cvList} for:item="cv">
+                        <div key={cv.Id} class="cvData slds-size_11-of-12">
+                            <p class="filetext" title={cv.Title}>{cv.Title} </p><img src={deleteImg} name={cv.Id}
+                                title={cv.Title} onclick={deleteCv}>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </template>
+
+
+        <!-- Commibend Qualification -->
+        <template if:true={checkQualification}>
+            <div>
+                <div
+                    class="slds-size_12-of-12 cvDiv  slds-m-top_x-large slds-p-around_medium slds-m-bottom_large bold_text">
+                    Qualifications
+                </div>
+                <div class="detail_cls slds-size_11-of-12">
+                    <div class="input slds-size_8-of-12">
+                        <div class="slds-col slds-size_6-of-12">
+                            Status : {commbinedQualStatus}
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            Expiration Date : {commbinedQualExprDate}
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <div class=" ">
+                        <span class=" slds-m-bottom_small slds-size_8-of-12">Qualification Type</span>
+                        <lightning-combobox name="combinedQFtype"
+                            class=" slds-combobox_container slds-combobox slds-combobox__form-element slds-size_8-of-12"
+                            value={commbinedQFtype} options={teacherQFTypeOptions} onchange={handleUpsellChange}>
+                        </lightning-combobox>
+                    </div>
+                    <div class=" slds-size_8-of-12 docDiv slds-m-top_large dualIcon">
+                        <lightning-dual-listbox name="combinnedQualDualValue" source-label="Available" class=""
+                            selected-label="Selected" options={combinedQualificationOptions}
+                            value={combinnedQualificationsValue} onchange={handleChange}>
+                        </lightning-dual-listbox>
+                    </div>
+                </div>
+
+                <!-- Yearly Qualification -->
+                <template if:true={isYearlyQual}>
+                    <div
+                        class="slds-size_12-of-12 cvDiv slds-m-top_x-large slds-p-around_medium slds-m-bottom_large bold_text">
+                        Add Proof</div>
+                    <div class=" slds-m-bottom_large dropDiv">
+                        <div
+                            class="dropzone slds-file-selector__body fileInputBox slds-size_11-of-12 slds-m-top_x-large">
+                            <div class="slds-text-heading_medium slds-text-align_center slds-m-top_x-large">
+                                <img class="slds-m-right_medium cvImg" src={dragFileImg}> Drag file here or click to add
+                                attachment
+                            </div>
+                            <input type="file" name="Early Years Qualifications" accept="image/*, application/pdf"
+                                onchange={handleFile} class="fileUploader" />
+                        </div>
+                        <template for:each={cvList} for:item="cv">
+                            <div key={cv.Id} class="cvData slds-size_11-of-12">
+                                <p class="filetext" title={cv.Title}>{cv.Title} </p><img src={deleteImg} name={cv.Id}
+                                    title={cv.Title} onclick={deleteCv}>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+                <!-- Yearly Qualification -->
+
+                <!-- Support Qualification -->
+                <template if:true={isSupportQual}>
+                    <div
+                        class="slds-size_12-of-12 cvDiv slds-m-top_x-large slds-p-around_medium slds-m-bottom_large bold_text">
+                        Add Proof</div>
+                    <div class="slds-m-left_xx-large slds-m-bottom_large dropDiv">
+                        <div
+                            class="dropzone slds-file-selector__body  fileInputBox slds-size_11-of-12 slds-m-top_x-large">
+                            <div class="slds-text-heading_medium slds-text-align_center slds-m-top_x-large">
+                                <img class="slds-m-right_medium cvImg" src={dragFileImg}> Drag file here or click to add
+                                attachment
+                            </div>
+                            <input type="file" name="Support Qualifications" accept="image/*, application/pdf"
+                                onchange={handleFile} class="fileUploader" />
+                        </div>
+                        <template for:each={cvList} for:item="cv">
+                            <div key={cv.Id} class="cvData slds-size_11-of-12">
+                                <p class="filetext" title={cv.Title}>{cv.Title} </p><img src={deleteImg} name={cv.Id}
+                                    title={cv.Title} onclick={deleteCv}>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+                <!-- Support Qualification -->
+
+                <!-- Teacher Qualification -->
+                <template if:true={isTeacherQual}>
+                    <br />
+                    <br />
+                    <div class="slds-size_11-of-12 detail_cls">
+                        <div class="">
+                            <span class=" slds-m-bottom_small slds-size_8-of-12">TRA Number</span>
+                            <div
+                                class="slds-col slds-size_8-of-12 slds-m-top_x-small slds-m-bottom_large slds-form-element">
+                                <lightning-input class="input" variant="label-hidden" name="tranum" type="text"
+                                    value={tranum} onchange={handleChange} autocomplete="off"></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="slds-size_12-of-12 cvDiv slds-m-top_x-large slds-p-around_medium slds-m-bottom_large bold_text">
+                        Add Proof</div>
+                    <div class=" slds-m-bottom_large dropDiv">
+                        <div
+                            class="dropzone slds-file-selector__body  fileInputBox slds-size_11-of-12 slds-m-top_x-large">
+                            <div class="slds-text-heading_medium slds-text-align_center slds-m-top_x-large">
+                                <img class="slds-m-right_medium cvImg" src={dragFileImg}> Drag file here or click to add
+                                attachment
+                            </div>
+                            <input type="file" name="Teacher Qualification" accept="image/*, application/pdf"
+                                onchange={handleFile} class="fileUploader" />
+                        </div>
+                        <template for:each={cvList} for:item="cv">
+                            <div key={cv.Id} class="cvData slds-size_11-of-12">
+                                <p class="filetext" title={cv.Title}>{cv.Title} </p><img src={deleteImg} name={cv.Id}
+                                    title={cv.Title} onclick={deleteCv}>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+                <!-- Teacher Qualification -->
+
+                <!-- Post 16 Qualification -->
+                <br />
+                <br />
+                <template if:true={isPost16Qual}>
+                    <div class="detail_cls slds-size_11-of-12">
+                        <div class=" ">
+                            <span class=" slds-m-bottom_small slds-size_8-of-12">SET Number</span>
+                            <div class=" slds-size_8-of-12 slds-m-top_small slds-m-bottom_large slds-form-element">
+                                <lightning-input name="snumber" type="text" value={snumb} onchange={handleChange}
+                                    autocomplete="off" variant="label-hidden"></lightning-input>
+                            </div>
+                        </div>
+
+                        <div class=" ">
+                            <span class=" slds-m-bottom_small slds-size_8-of-12 ">SET Expiry Date</span>
+                            <div class=" slds-size_8-of-12 slds-m-top_small slds-m-bottom_large slds-form-element">
+                                <lightning-input type="date" name="expDate" label="" value={expirDate}
+                                    onchange={handleChange} variant="label-hidden"></lightning-input>
+                            </div>
+                        </div>
+
+                        <div class="slds-grid slds-m-top_medium slds-m-bottom_large ">
+                            <div class="slds-size_1-of-12 textp">QTLS</div>
+                            <div>
+                                <lightning-input name="qtl" type="checkbox" onchange={handleChange} checked={QtlsCheck}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="slds-size_12-of-12 cvDiv slds-m-top_x-large slds-p-around_medium slds-m-bottom_large bold_text">
+                        Add Proof</div>
+                    <div class="slds-m-left_xx-large slds-m-bottom_large dropDiv">
+                        <div
+                            class="dropzone slds-file-selector__body fileInputBox slds-size_11-of-12 slds-m-top_x-large">
+                            <div class="slds-text-heading_medium slds-text-align_center slds-m-top_x-large">
+                                <img class="slds-m-right_medium cvImg" src={dragFileImg}> Drag file here or click to add
+                                attachment
+                            </div>
+                            <input type="file" name="Post 16 Qualifications" accept="image/*, application/pdf"
+                                onchange={handleFile} class="fileUploader" />
+                        </div>
+                        <template for:each={cvList} for:item="cv">
+                            <div key={cv.Id} class="cvData slds-size_11-of-12">
+                                {<p class="filetext" title={cv.Title}>{cv.Title} </p> <img src={deleteImg} name={cv.Id}
+                                    title={cv.Title} onclick={deleteCv}>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+                <!-- Post 16 Qualification -->
+
+                <!-- Yearly Qualification -->
+                <template if:true={isOverSeasTeacherQual}>
+                    <!-- <br />
+                    <br /> -->
+                    <div class="detail_cls slds-size_11-of-12">
+                        <div class=" slds-m-top_x-small ">
+                            <span class=" slds-size_8-of-12">
+                                NARIC Approved<span class="helpIcon">
+                                    <lightning-helptext
+                                        content="Please ignore this unless you have been asked by us to have qualifications checked with NARIC. This usually does not apply to teachers from UK, Australia, NZ and Canada">
+                                    </lightning-helptext>
+                                </span>
+
+                            </span>
+                            <lightning-combobox name="naricApprove" label=""
+                                class="slds-combobox_container slds-combobox slds-combobox__form-element slds-form-element__label slds-m-top_xx-small slds-size_8-of-12 slds-m-bottom_medium"
+                                value={naricApprove} options={naricApproveOps} onchange={handleChange}
+                                variant="label-hidden">
+                            </lightning-combobox>
+                        </div>
+
+                        <div class=" slds-m-top_x-small ">
+                            <span class=" slds-size_8-of-12">
+                                TRA Number<span class="helpIcon">
+                                    <lightning-helptext
+                                        content="If you have gained British QTS, then you can enter your QTS teaching number here, otherwise please ignore this">
+                                    </lightning-helptext>
+                                </span>
+
+                            </span>
+                            <div class=" slds-size_8-of-12 slds-m-top_xx-small slds-m-bottom_large slds-form-element">
+                                <lightning-input type="number" name="otstranum" value={otstranum} label=""
+                                    variant="label-hidden" onchange={handleChange}></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="slds-size_12-of-12 cvDiv slds-m-top_x-large slds-p-around_medium slds-m-bottom_large bold_text">
+                        Add Proof</div>
+                    <div class=" slds-m-bottom_large dropDiv">
+                        <div
+                            class="dropzone slds-file-selector__body  fileInputBox slds-size_11-of-12 slds-m-top_x-large">
+                            <div class="slds-text-heading_medium slds-text-align_center slds-m-top_x-large">
+                                <img class="slds-m-right_medium cvImg" src={dragFileImg}> Drag file here or click to add
+                                attachment
+                            </div>
+                            <input type="file" name="Overseas Teacher Qualifications" accept="image/*, application/pdf"
+                                onchange={handleFile} class="fileUploader" />
+                        </div>
+                        <template for:each={cvList} for:item="cv">
+                            <div key={cv.Id} class="cvData slds-size_11-of-12">
+                                <p class="filetext" title={cv.Title}>{cv.Title} </p> <img src={deleteImg} name={cv.Id}
+                                    title={cv.Title} onclick={deleteCv}>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </template>
+        <!-- Commbined Qualification -->
+
+
+        <!-- Upload Photo -->
+        <template if:true={checkUpload}>
+            <div>
+                <div
+                    class="slds-size_12-of-12 cvDiv slds-m-top_x-large slds-p-around_medium slds-m-bottom_large bold_text">
+                    Upload Photo
+                    <span class="helpIcon">
+                        <lightning-helptext content="Please provide a professional photo of head and shoulders.">
+                        </lightning-helptext>
+                    </span>
+                </div>
+
+                <div class=" slds-m-bottom_large dropDiv">
+                    <div class="dropzone slds-file-selector__body  fileInputBox slds-size_11-of-12 slds-m-top_x-large">
+                        <div class="slds-text-heading_medium slds-text-align_center slds-m-top_x-large">
+                            <img class="slds-m-right_medium cvImg" src={dragFileImg}> Drag file here or click to add
+                            attachment
+                        </div>
+                        <input type="file" name="Photo" accept="image/*, application/pdf" onchange={handleFile}
+                            class="fileUploader" />
+                    </div>
+                    <template for:each={cvList} for:item="cv">
+                        <div key={cv.Id} class="cvData slds-size_11-of-12">
+                            <p class="filetext" title={cv.Title}>{cv.Title} </p><img src={deleteImg} name={cv.Id}
+                                title={cv.Title} onclick={deleteCv}>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

@@ -1,0 +1,544 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <div class="mainDiv slds-card">
+        <!-- for early qualification -->
+        <div class="slds-grid slds-gutters slds-border_bottom">
+            <div class="slds-col slds-size_8-of-12 slds-m-left_xx-large" style="display:flex;">
+
+                <div>
+                    <p class="slds-m-top_x-large slds-m-left_large t1">Candidate</p>
+                    <p class="slds-m-left_large t2">My Qualifications</p>
+                </div>
+            </div>
+            <div
+                class="slds-p-horizontal--small slds-col slds-size_4-of-12 slds-m-bottom--medium btns slds-m-top_xx-large">
+                <div class="slds-size_1-of-5 slds-m-left_medium saveBtn" onclick={saveQualification}>Save & Next
+                </div>
+                <div class="slds-size_1-of-5 slds-m-left_medium cancelBtn">Cancel</div>
+            </div>
+        </div>
+
+        <!-- Early Year Qualification -->
+        <div style="display:none">
+            <div
+                class="slds-p-horizontal--small slds-col slds-box slds-box_x-small slds-m-bottom--medium slds-m-top_xx-large qualify">
+                <div>
+                    Early Year Qualification
+                </div>
+            </div>
+
+            <lightning-combobox name="progress" label="Qualification Type"
+                class="combox slds-combobox_container slds-combobox slds-combobox__form-element slds-form-element__label slds-m-vertical_xx-large slds-size_6-of-12"
+                value={EYvalue} options={options} onchange={handleChange}
+                style="font-weight:600; line: height 21px; font-size:12px;">
+            </lightning-combobox>
+
+            <lightning-dual-listbox name="languages"
+                class="slds-m-right_xx-large slds-align_absolute-center slds-dueling-picklist__column_responsive"
+                source-label="Available" selected-label="Selected" options={options} onchange={handleChange}>
+            </lightning-dual-listbox>
+
+            <div
+                class="slds-p-horizontal--small slds-col slds-box slds-box_x-small slds-m-bottom--medium slds-m-top_xx-large qualify">
+                <div>
+                    Add Proof
+                </div>
+            </div>
+        </div>
+
+        <!-- Support qualification -->
+        <div style="display: none;">
+            <div
+                class="slds-p-horizontal--small slds-col slds-box slds-box_x-small slds-m-bottom--medium slds-m-top_xx-large qualify">
+                <div>
+                    Support Qualifications
+                </div>
+            </div>
+
+            <lightning-combobox name="progress" label="Qualification Type"
+                class="combox slds-combobox_container slds-combobox slds-combobox__form-element slds-form-element__label slds-m-vertical_xx-large slds-size_6-of-12"
+                value={value} options={options} onchange={handleChange}
+                style="font-weight:600; line: height 21px; font-size:12px;">
+            </lightning-combobox>
+
+            <lightning-dual-listbox name="languages"
+                class="slds-m-right_xx-large slds-align_absolute-center slds-dueling-picklist__column_responsive"
+                source-label="Available" selected-label="Selected" options={options} onchange={handleChange}>
+            </lightning-dual-listbox>
+
+            <div
+                class="slds-p-horizontal--small slds-col slds-box slds-box_x-small slds-m-bottom--medium slds-m-top_xx-large qualify">
+                <div>
+                    Add Proof
+                </div>
+            </div>
+        </div>
+
+        <!-- ID -->
+        <div style="display: none;">
+            <div
+                class="slds-p-horizontal--small slds-col slds-box slds-box_x-small slds-m-bottom--medium slds-m-top_xx-large qualify">
+                <div>
+                    ID
+                </div>
+            </div>
+
+            <lightning-combobox name="progress" label="Group 1 ID Type"
+                class="combox slds-combobox_container slds-combobox slds-combobox__form-element slds-form-element__label slds-m-vertical_xx-large slds-size_6-of-12"
+                value={value} options={options} onchange={handleChange}
+                style="font-weight:600; line: height 21px; font-size:12px;">
+            </lightning-combobox>
+
+            <lightning-combobox name="progress" label="Name Change Document"
+                class="combox slds-combobox_container slds-combobox slds-combobox__form-element slds-form-element__label slds-m-vertical_xx-large slds-size_6-of-12"
+                value={value} options={options} onchange={handleChange}
+                style="font-weight:600; line: height 21px; font-size:12px;">
+            </lightning-combobox>
+
+            <!-- <div style="display: inline-flex;"> -->
+            <div class="slds-grid slds-gutters">
+
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-dual-listbox name="languages"
+                        class="slds-m-right_xx-large slds-align_absolute-center slds-dueling-picklist__column_responsive "
+                        source-label="Available" selected-label="Selected" options={options} onchange={handleChange}>
+                    </lightning-dual-listbox>
+                </div>
+
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-dual-listbox name="languages"
+                        class="slds-m-right_xx-large slds-align_absolute-center slds-dueling-picklist__column_responsive "
+                        source-label="Available" selected-label="Selected" options={options} onchange={handleChange}>
+                    </lightning-dual-listbox>
+                </div>
+
+            </div>
+
+
+            <div
+                class="slds-p-horizontal--small slds-col slds-box slds-box_x-small slds-m-bottom--medium slds-m-top_xx-large qualify">
+                <div>
+                    Add Proof
+                </div>
+            </div>
+        </div>
+
+        <!-- Emergency Contact -->
+        <div style="display: none;">
+            <div
+                class="slds-p-horizontal--small slds-col slds-box slds-box_x-small slds-m-bottom--medium slds-m-top_xx-large qualify">
+                <div>
+                    Emergency Contact
+                </div>
+            </div>
+
+            <div
+                class="slds-p-around_medium lgc-bg slds-p-horizontal--small slds-col slds-size_8-of-12 slds-m-bottom--medium slds-form-element l-input">
+                <lightning-input type="text" onchange={handleChange} label="Emergency Contact Name" name=EconName
+                    placeholder="Name">
+                </lightning-input>
+            </div>
+
+            <div
+                class="slds-p-around_medium lgc-bg slds-p-horizontal--small slds-col slds-size_8-of-12 slds-m-bottom--medium slds-form-element l-input">
+                <lightning-input type="tel" onchange={handleChange} label="Emergency Contact Mobile No."
+                    name="EconMobile" placeholder="Number">
+                </lightning-input>
+
+            </div>
+
+            <div
+                class="slds-p-around_medium lgc-bg slds-p-horizontal--small slds-col slds-size_8-of-12 slds-m-bottom--medium slds-form-element l-input">
+                <lightning-input type="tel" onchange={handleChange} label="Emergency Contact Work No." name="EconWork"
+                    placeholder="Number">
+                </lightning-input>
+            </div>
+
+            <div
+                class="slds-p-around_medium lgc-bg slds-p-horizontal--small slds-col slds-size_8-of-12 slds-m-bottom--medium slds-form-element l-input">
+                <lightning-input type="text" onchange={handleChange} name="Relation" label="Relationship to You"
+                    placeholder="Relation">
+                </lightning-input>
+            </div>
+
+            <div
+                class="slds-p-around_medium lgc-bg slds-p-horizontal--small slds-col slds-size_8-of-12 slds-m-bottom--medium slds-form-element l-input">
+                <lightning-input type="tel" onchange={handleChange} label="Emergency Contact Home No." name="EconHome"
+                    placeholder="Number">
+                </lightning-input>
+            </div>
+
+            <div
+                class="slds-p-around_medium lgc-bg slds-p-horizontal--small slds-col slds-size_8-of-12 slds-m-bottom--medium slds-form-element l-input">
+                <lightning-input type="text" name="EconAdd" onchange={handleChange} label="Emergency Contact Address"
+                    placeholder="Address">
+                </lightning-input>
+            </div>
+
+        </div>
+
+        <!-- DBS -->
+        <div style="display: none;">
+            <div
+                class="slds-p-horizontal--small slds-col slds-box slds-box_x-small slds-m-bottom_medium slds-m-top_xx-large qualify">
+                <div>
+                    DBS
+                </div>
+            </div>
+
+            <!-- <div class="slds-form-element__control slds-m-top_large checkbox slds-m-bottom_medium">
+                <div class="slds-checkbox">
+                    <input type="checkbox" name="options" id="checkbox-unique-id-73" value="checkbox-unique-id-73"
+                        checked="" />
+                    <label class="slds-checkbox__label" for="checkbox-unique-id-73">
+                        <span class="slds-form-element__label">DBS Disclosure Submitted</span>
+                        <span class="slds-checkbox_faux" style="margin-left: 20px;"></span>
+                    </label>
+                </div>
+            </div> -->
+
+            <lightning-combobox name="dbsname" label="Are you registered with the DBS update service?"
+                class="combox slds-combobox_container slds-combobox slds-combobox__form-element slds-form-element__label slds-m-vertical_xx-large slds-size_6-of-12"
+                value={dbsUpdateSer} options={lstOptions} onchange={handleChange}
+                style="font-weight:600; line: height 21px; font-size:12px;">
+            </lightning-combobox>
+
+            <div
+                class="lgc-bg slds-p-horizontal--small slds-col slds-size_4-of-12 slds-m-bottom_medium slds-form-element l-input">
+                <lightning-input type="number" name="dbnumber" onchange={handleChange} label="DBS Number">
+                </lightning-input>
+
+            </div>
+
+            <!-- <div
+                class="lgc-bg slds-p-horizontal--small slds-col slds-size_4-of-12 slds-m-bottom_medium slds-form-element l-input">
+                <lightning-input type="date" name="input1" label="DBS Payment Date"></lightning-input>
+
+            </div> -->
+
+            <!-- <div
+                class="lgc-bg slds-p-horizontal--small slds-col slds-size_4-of-12 slds-m-bottom_medium slds-form-element l-input">
+                <lightning-input type="text" label="PayPal Payment Reference" value="">
+                </lightning-input>
+            </div> -->
+
+            <!-- <div
+                class="lgc-bg slds-p-horizontal--small slds-col slds-size_4-of-12 slds-m-bottom_medium slds-form-element l-input">
+                <lightning-input type="number" name="input2" label="DBS Disclosure ID No."></lightning-input>
+            </div>
+
+            <div style="margin-left: 6em;"
+                class="slds-size_8-of-12 lgc-bg slds-p-horizontal--small slds-col slds-m-bottom_medium slds-m-top_medium slds-form-element">
+                <lightning-combobox name="progress" label="DBS Disclosure Status"
+                    class="slds-combobox_container slds-combobox slds-combobox__form-element slds-form-element__label slds-m-vertical_xx-large slds-size_6-of-12"
+                    value={value} options={options} onchange={handleChange} style="font-weight:600; font-size:12px;">
+                </lightning-combobox>
+            </div>
+
+            <div style="margin-left: 6em;"
+                class="slds-size_8-of-12 lgc-bg slds-p-horizontal--small slds-col slds-m-bottom_medium slds-m-top_medium slds-form-element">
+                <lightning-combobox name="progress" label="DBS Payment Type"
+                    class="slds-combobox_container slds-combobox slds-combobox__form-element slds-form-element__label slds-m-vertical_xx-large slds-size_6-of-12"
+                    value={value} options={options} onchange={handleChange} style="font-weight:600; font-size:12px;">
+                </lightning-combobox>
+            </div>
+
+            <div
+                class="lgc-bg slds-p-horizontal--small slds-col slds-size_4-of-12 slds-m-bottom--medium slds-form-element l-input">
+                <lightning-input type="number" name="input3" label="DBS Tracking No."></lightning-input>
+
+            </div> -->
+
+        </div>
+
+        <!-- Overseas DBS Check -->
+        <div style="display: none;">
+            <div
+                class="slds-p-horizontal--small slds-col slds-box slds-box_x-small slds-m-bottom--medium slds-m-top_xx-large qualify">
+                <div>
+                    Overseas DBS Check
+                </div>
+            </div>
+
+            <div style="margin-top: 10.93em;"
+                class="lgc-bg slds-p-horizontal--small slds-col slds-size_4-of-12 slds-m-bottom_medium slds-form-element l-input">
+                <lightning-input type="date" name="input1" label="UK Arrival Date"></lightning-input>
+
+            </div>
+
+            <div style="margin-top: 7.56em;"
+                class="slds-form-element__control slds-m-top_large checkbox slds-m-bottom_medium">
+                <div class="slds-checkbox">
+                    <input type="checkbox" name="options" id="checkbox-unique-id-74" value="checkbox-unique-id-73"
+                        checked="" />
+                    <label class="slds-checkbox__label" for="checkbox-unique-id-74">
+                        <span class="slds-form-element__label">OS DBS Original Given to Candidate</span>
+                        <span class="slds-checkbox_faux" style="margin-left: 20px;"></span>
+                    </label>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Overseas Police Check -->
+        <div style="display: none;">
+            <div
+                class="slds-p-horizontal--small slds-col slds-box slds-box_x-small slds-m-bottom_medium slds-m-top_xx-large qualify">
+                Overseas Police Check
+            </div>
+
+            <div style="margin-left: 6em;"
+                class="slds-size_8-of-12 lgc-bg slds-p-horizontal--small slds-col slds-m-bottom_medium slds-m-top_medium slds-form-element">
+                <lightning-combobox name="progress" label="Overseas Police Check"
+                    class="slds-combobox_container slds-combobox slds-combobox__form-element slds-form-element__label slds-m-vertical_xx-large slds-size_6-of-12"
+                    value={value} options={options} placeholder="Select" onchange={handleChange}
+                    style="font-weight:600; font-size:12px;">
+                </lightning-combobox>
+            </div>
+
+            <div>
+                <div style="margin-left: 7em;font-weight:bold; margin-top:2em;">Date Lived/Worked Overseas</div>
+                <div class="slds-grid slds-gutters" style="margin-top: 5px;">
+                    <div class="dateside lgc-bg slds-col slds-m-bottom_medium slds-size_1-of-12 slds-form-element"
+                        style="margin-left: 6em;">
+                        <lightning-input type="date" name="input1" placeholder="Start Date"></lightning-input>
+
+                    </div>
+
+                    <div class="dateside lgc-bg slds-col slds-m-bottom_medium slds-size_1-of-12 slds-form-element">
+                        <lightning-input type="date" name="input1" placeholder="End Date"></lightning-input>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div>
+                <div style="margin-left: 7em;font-weight:bold; margin-top:2em;">Overseas Police Check</div>
+                <div class="slds-grid slds-gutters" style="margin-top: 5px;">
+                    <div class="dateside lgc-bg slds-col slds-m-bottom_medium slds-size_1-of-12 slds-form-element"
+                        style="margin-left: 6em;">
+                        <lightning-input type="date" name="input1" placeholder="Valid From"></lightning-input>
+
+                    </div>
+
+                    <div class="dateside lgc-bg slds-col slds-m-bottom_medium slds-size_1-of-12 slds-form-element">
+                        <lightning-input type="date" name="input1" placeholder="Expiry Date"></lightning-input>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-form-element__control slds-m-top_large checkbox slds-m-bottom_medium">
+                <div class="slds-checkbox">
+                    <input type="checkbox" name="options" id="checkbox-unique-id-75" value="checkbox-unique-id-73" />
+                    <label class="slds-checkbox__label" for="checkbox-unique-id-75">
+                        <span class="slds-form-element__label">OS DBS Original Given to Candidate</span>
+                        <span class="slds-checkbox_faux" style="margin-left: 20px;"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Overseas Teacher Qualifications -->
+        <div style="display: none;">
+            <div
+                class="slds-p-around_x-small slds-p-horizontal--small slds-col slds-box slds-box_x-small slds-m-bottom--medium slds-m-top_xx-large qualify">
+                <div>
+                    Overseas Teacher Qualifications
+                </div>
+            </div>
+
+            <div
+                class="slds-p-around_x-small lgc-bg slds-p-horizontal--small slds-col slds-size_4-of-12 slds-m-bottom_medium slds-form-element l-input">
+                <lightning-input type="date" name="input1" label="Date 1st Worked in UK"></lightning-input>
+
+            </div>
+
+            <div
+                class="slds-p-around_x-small lgc-bg slds-p-horizontal--small slds-col slds-size_4-of-12 slds-m-bottom_medium slds-form-element l-input">
+                <lightning-input type="date" name="input1" label="QTS Awarded Date"></lightning-input>
+
+            </div>
+
+            <div style="margin-left: 6em;"
+                class="slds-p-around_x-small slds-size_8-of-12 lgc-bg slds-p-horizontal--small slds-col slds-m-bottom_medium slds-m-top_medium slds-form-element">
+                <lightning-combobox name="progress" label="Qualification Type"
+                    class="slds-combobox_container slds-combobox slds-combobox__form-element slds-form-element__label slds-m-vertical_xx-large slds-size_6-of-12"
+                    value={value} options={options} onchange={handleChange} style="font-weight:600; font-size:12px;">
+                </lightning-combobox>
+            </div>
+
+            <div style="margin-left: 6em;"
+                class="slds-p-around_x-small slds-size_8-of-12 lgc-bg slds-p-horizontal--small slds-col slds-m-bottom_medium slds-m-top_medium slds-form-element">
+                <lightning-combobox name="progress" label="NARIC Approved"
+                    class="slds-combobox_container slds-combobox slds-combobox__form-element slds-form-element__label slds-m-vertical_xx-large slds-size_6-of-12"
+                    value={value} options={options} onchange={handleChange} style="font-weight:600; font-size:12px;">
+                </lightning-combobox>
+            </div>
+
+            <div
+                class="slds-p-around_x-small lgc-bg slds-p-horizontal--small slds-col slds-size_4-of-12 slds-m-bottom_medium slds-form-element l-input">
+                <lightning-input type="date" name="input1" label="OTT QTS Required By"></lightning-input>
+
+            </div>
+
+            <div
+                class="slds-p-around_x-small lgc-bg slds-p-horizontal--small slds-col slds-size_4-of-12 slds-m-bottom--medium slds-form-element l-input">
+                <lightning-input type="number" name="input3" label="NCTL Number"></lightning-input>
+
+            </div>
+
+            <div
+                class="slds-p-around_x-small slds-p-horizontal--small slds-col slds-box slds-box_x-small slds-m-bottom--medium slds-m-top_xx-large qualify">
+                <div>
+                    Qualifications
+                </div>
+            </div>
+
+            <lightning-dual-listbox name="languages"
+                class="slds-p-around_x-small slds-m-right_xx-large slds-size_6-of-12 slds-align_absolute-center slds-dueling-picklist__column_responsive"
+                source-label="Available" selected-label="Selected" options={options} onchange={handleChange}>
+            </lightning-dual-listbox>
+        </div>
+
+        <!-- Perm DBS -->
+        <div style="display: none;">
+            <div
+                class="slds-p-around_x-small slds-p-horizontal--small slds-col slds-box slds-box_x-small slds-m-bottom--medium slds-m-top_xx-large qualify">
+                <div>
+                    Perm DBS
+                </div>
+            </div>
+
+            <div
+                class="slds-p-around_x-small lgc-bg slds-p-horizontal--small slds-col slds-size_4-of-12 slds-m-bottom--medium slds-form-element l-input">
+                <lightning-input type="text" name="permDBS" placeholder="Number" onchange={handleChange}
+                    label="DBS Number" value={dbsValue}>
+                </lightning-input>
+
+            </div>
+
+            <div class="slds-grid slds-gutters slds-m-left_xx-large slds-m-top_medium slds-p-left_small">
+                <div class="slds-col slds-size_2-of-12 slds-m-left_large textp">On Update Service
+                </div>
+                <div>
+                    <lightning-input name="onUPser" class="slds-p-left_large" type="checkbox" onchange={handleChange}
+                        value={checkbox}>
+                    </lightning-input>
+                </div>
+            </div>
+            <!-- <div class="slds-form-element__control slds-m-top_large checkbox slds-m-bottom_medium">
+                <div class="slds-checkbox">
+                    <input type="checkbox" name="options" id="checkbox-unique-id-76" value="checkbox-unique-id-73"
+                        checked={checked} />
+                    <label class="slds-checkbox__label" for="checkbox-unique-id-76">
+                        <span class="slds-form-element__label">On Update Service</span>
+                        <span class="slds-checkbox_faux" style="margin-left: 20px;"></span>
+                    </label>
+                </div>
+            </div> -->
+        </div>
+
+        <!-- Post 16 Qualifications -->
+        <div>
+            <div
+                class="slds-p-around_x-small slds-p-horizontal--small slds-col slds-box slds-box_x-small slds-m-bottom--medium slds-m-top_xx-large qualify">
+                <div>
+                    Post 16 Qualifications
+                </div>
+            </div>
+
+            <div
+                class="slds-p-around_x-small lgc-bg slds-p-horizontal--small slds-col slds-size_4-of-12 slds-m-bottom--medium slds-form-element l-input">
+                <lightning-input type="text" name="snumber" onchange={handleChange} label="SET Number">
+                </lightning-input>
+
+            </div>
+
+            <div style="margin-left: 6em;"
+                class="slds-p-around_x-small slds-size_8-of-12 lgc-bg slds-p-horizontal--small slds-col slds-m-bottom_medium slds-m-top_medium slds-form-element">
+                <lightning-combobox name="quList" label="Qualification Type"
+                    class="slds-combobox_container slds-combobox slds-combobox__form-element slds-form-element__label slds-m-vertical_xx-large slds-size_6-of-12"
+                    value={qValue} options={qList} onchange={handleChange} style="font-weight:600; font-size:12px;">
+                </lightning-combobox>
+            </div>
+
+            <div
+                class="slds-p-around_x-small lgc-bg slds-p-horizontal--small slds-col slds-size_4-of-12 slds-m-bottom_medium slds-form-element l-input">
+                <lightning-input type="date" name="expDate" label="SET Expiry Date"></lightning-input>
+
+            </div>
+
+            <!-- <div class="slds-form-element__control slds-m-top_large checkbox slds-m-bottom_medium">
+                <div class="slds-checkbox">
+                    <input type="checkbox" name="options" id="checkbox-unique-id-77" value="checkbox-unique-id-73" />
+                    <label class="slds-checkbox__label" for="checkbox-unique-id-77">
+                        <span class="slds-form-element__label">QTLS</span>
+                        <span class="slds-checkbox_faux" style="margin-left: 20px;"></span>
+                    </label>
+                </div>
+            </div> -->
+
+            <div class="slds-grid slds-gutters slds-m-left_xx-large slds-m-top_medium slds-p-left_small">
+                <div class="slds-col slds-size_2-of-12" style="margin-left: 1.5em;">QTLS</div>
+                <div>
+                    <lightning-input name="qtl" type="checkbox" onchange={handleChange} value={qtlsvalue}>
+                    </lightning-input>
+                </div>
+            </div>
+
+            <div
+                class="slds-p-around_x-small slds-p-horizontal--small slds-col slds-box slds-box_x-small slds-m-bottom--medium slds-m-top_xx-large qualify">
+                <div>
+                    Qualifications
+                </div>
+            </div>
+
+            <lightning-dual-listbox name="qualselect"
+                class="slds-p-around_x-small slds-m-right_xx-large slds-size_6-of-12 slds-align_absolute-center slds-dueling-picklist__column_responsive"
+                source-label="Available" selected-label="Selected" options={qualopt} onchange={handleChange}>
+            </lightning-dual-listbox>
+        </div>
+
+        <!-- Safeguarding -->
+        <div style="display: none;">
+            <div>
+                <div
+                    class="slds-p-around_x-small slds-p-horizontal--small slds-col slds-box slds-box_x-small slds-m-bottom--medium slds-m-top_xx-large qualify">
+                    <div>
+                        Safeguarding
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="slds-p-around_x-small lgc-bg slds-p-horizontal--small slds-col slds-size_4-of-12 slds-m-bottom_medium slds-form-element l-input">
+                <lightning-input type="date" name="safedate" onchange={handleChange}
+                    label="Safeguarding Complition Date">
+                </lightning-input>
+
+            </div>
+        </div>
+
+        <!-- Photo -->
+        <div style="display: none;">
+            <div
+                class="slds-p-around_x-small slds-p-horizontal--small slds-col slds-box slds-box_x-small slds-m-bottom--medium slds-m-top_xx-large qualify">
+                <div>
+                    Photo
+                </div>
+            </div>
+
+            <div class="slds-form-element__control slds-m-top_large checkbox slds-m-bottom_medium">
+                <div class="slds-checkbox">
+                    <input type="checkbox" name="options" id="checkbox-unique-id-78" value="checkbox-unique-id-73" />
+                    <label class="slds-checkbox__label" for="checkbox-unique-id-78">
+                        <span class="slds-form-element__label">Photo Copy Submitted</span>
+                        <span class="slds-checkbox_faux" style="margin-left: 20px;"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

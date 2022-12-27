@@ -1,0 +1,7 @@
+<apex:component access="global" controller="NewLineController">
+    
+    <apex:attribute name="object" type="String" description="for new space or new line" default="line"/>
+    
+    <apex:outputText value="{!NewLine}" rendered="{!object=='line'}"/> 
+    <apex:outputText value="{!Space}" rendered="{!object=='space'}" escape="true"/> 
+</apex:component>

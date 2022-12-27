@@ -1,0 +1,18 @@
+<template>
+    <lightning-combobox name="Upsell"
+                        label="Upsell"
+                        placeholder="Select Upsell"
+                        options={upsellOptions}
+                        onchange={handleUpsellChange}>
+    </lightning-combobox>
+    <!-- <lightning-combobox name="Sla"
+                        label="Sla"
+                        placeholder="Select Sla"
+                        options={slaOptions}>
+    </lightning-combobox> -->
+
+    <lightning-dual-listbox name="group2aIdType" value={group2aIdType}
+                        class="slds-m-right_xx-large slds-align_absolute-center slds-dueling-picklist__column_responsive "
+                        source-label="Available" selected-label="Selected" options={slaOptions} onchange={handleChange}>
+        </lightning-dual-listbox>
+</template>

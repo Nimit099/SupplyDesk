@@ -1,0 +1,114 @@
+<template>
+
+    <!-- ===== Toast ====== -->
+
+    <c-ts_-tost-notification></c-ts_-tost-notification>
+
+    <!-- ==== Toast ====== -->
+
+    <!-- ======= Spinner ======= -->
+
+    <template if:true={isSpinner}>
+        <div class="slds-spinner_container spinner-center" style="overflow: hidden;">
+            <div class="spinner-ts">
+                <div class="inner one"></div>
+                <div class="inner two"></div>
+                <div class="inner three"></div>
+            </div>
+        </div>
+    </template>
+
+    <!-- ======= Spinner ======= -->
+
+    <div class="container" style={backgroundImage}>
+        <div class="slds-grid forms-container">
+            <div class="slds-col logo_cls">
+                <img src={bglogo} />
+            </div>
+            <div class="slds-col signin-signup">
+                <div class="sign-in-form">
+                    <div>
+                        <h2 class="title slds-text-align_center slds-p-vertical_small">Create an Account</h2>
+                        <p class="subtitle slds-text-align_center slds-p-bottom_large">Please register down below</p>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="input-field f-name">
+                                    <img src={fname_icon} class="f-name-img" />
+                                    <lightning-input name="FirstName" class="input_cls" autocomplete="FirstName"
+                                        onchange={handleChange} placeholder="FirstName" onfocusout={onblurvalue}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                            <div class=" slds-col slds-size_1-of-2">
+                                <div class="input-field lname">
+                                    <img src={fname_icon} class="f-name-img" />
+                                    <lightning-input name="LastName" class="input_cls" autocomplete="LastName"
+                                        onfocusout={onblurvalue} onchange={handleChange} placeholder="LastName">
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-field e-mail">
+                            <img src={email_icon} class="mail" />
+                            <lightning-input name="Email" class="input_cls" autocomplete="Email"
+                                data-id="user-email-fld" onfocusout={onblurvalue} placeholder="Email Id"
+                                onchange={handleChange}></lightning-input>
+                        </div>
+
+                        <div class="input-field team">
+                            <img src={job_icon} class="Icon" />
+                            <lightning-combobox name="Team" value={teamval} placeholder="Team" class="input_cls"
+                                onfocusout={onblurvalue} options={teampicklist} onchange={handleUpsellChange}>
+
+                            </lightning-combobox>
+                        </div>
+                        <div class="input-field job">
+                            <img src={testimg} class="Icon" />
+
+
+                            <lightning-combobox name="Job Title" disabled={disableIt} value={jobval}
+                                placeholder="Job Title" class="input_cls" onfocusout={onblurvalue}
+                                options={jobpicklistflt} onchange={handleChange}>
+                            </lightning-combobox>
+                        </div>
+                        <div class="input-field urnCode">
+                            <img src={testimg2} class="Icon postcode" />
+
+                            <lightning-input name="URNCode" class="input_cls" autocomplete="URNCode"
+                                onchange={handleChange} placeholder="URN (Unique Reference Number)"></lightning-input>
+                            <lightning-helptext
+                                content="URN is the 6 digit Unique Reference Number of your school as supplied by the Department for Education. If you do not have a URN please visit the government website to obtain your URN">
+                            </lightning-helptext>
+                        </div>
+                        
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="input-field mobile">
+                                    <img src={mob_icon} class="mobile-img" />
+                                    <lightning-input name="Mobile" class="input_cls" autocomplete="Mobile"
+                                        onchange={handleChange} placeholder="Mobile no."></lightning-input>
+                                </div>
+                            </div>
+                            <div class=" slds-col slds-size_1-of-2">
+                                <div class="input-field Phone">
+
+                                    <img src={phone_icon} class="phone-img" />
+                                    <lightning-input name="Phone" class="input_cls" autocomplete="Phone"
+                                        onchange={handleChange} placeholder="Phone no."></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-top_medium">
+                            <input type="submit" value="REGISTER" class="btn_cls registerbtn" onclick={register}>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <c-ts_-error-component reloadpage={reloadpage}></c-ts_-error-component>
+
+</template>

@@ -1,0 +1,54 @@
+<apex:page standardController="TR1__Closing_Report__c" showHeader="false" sidebar="false" extensions="ClosingReportButtonsCtrl" tabStyle="TR1__Closing_Report__c">
+    <apex:sectionHeader title="Closing Report Edit" subtitle="{!currentcr.Name}"/>
+    <apex:form >    
+  
+    <apex:pageBlock Id="ClosingReportEdit">
+        
+        <apex:outputPanel id="msgBolck"> <apex:pagemessages /> </apex:outputPanel>
+        <apex:pageBlockButtons >            
+            <apex:commandButton value="Save" action="{!SaveEndAssignment}" rerender="ClosingReportEnd,msgBolck"/> 
+            <apex:commandbutton value="Cancel" onclick="window.close(); return false;"/>
+        </apex:pageBlockButtons>
+        <apex:pageBlockSection columns="1">
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.TR1__Closing_Report__c.Fields.TR1__Job__c.Label}"/>
+                <apex:outputField value="{!currentcr.TR1__Job__c}"/>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.TR1__Closing_Report__c.Fields.TR1__Account__c.Label}"/>
+                <apex:outputField value="{!currentcr.TR1__Account__c}"/>
+            </apex:pageBlockSectionItem>
+             <apex:pageBlockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.TR1__Closing_Report__c.Fields.TR1__Person_Placed__c.Label}"/>
+                <apex:outputField value="{!currentcr.TR1__Person_Placed__c}"/>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+        <apex:pageBlockSection title="Close Information" columns="1">
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.TR1__Closing_Report__c.Fields.TR1__Start_Date__c.Label}"/>
+                <apex:outputField value="{!currentcr.TR1__Start_Date__c}"/>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.TR1__Closing_Report__c.Fields.TR1__End_Date__c.Label}"/>
+                <apex:inputField value="{!currentcr.TR1__End_Date__c}" required="true"/>
+            </apex:pageBlockSectionItem> 
+             <apex:pageBlockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.TR1__Closing_Report__c.Fields.TR1__End_Assignment_Reason__c.Label}"/>
+                <apex:inputField value="{!currentcr.TR1__End_Assignment_Reason__c}" required="true"/>
+            </apex:pageBlockSectionItem> 
+             <apex:pageBlockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.TR1__Closing_Report__c.Fields.TR1__End_Assignment_Comments__c.Label}"/>
+                <apex:inputField value="{!currentcr.TR1__End_Assignment_Comments__c}" required="true"/>
+            </apex:pageBlockSectionItem> 
+        </apex:pageBlockSection>        
+    </apex:pageBlock>
+    <apex:outputPanel id="ClosingReportEnd" style="display: none;">
+        <apex:outputPanel rendered="{!isSuccess}">
+            <script type="text/javascript"> 
+                parent.opener.top.location = '/{!currentcr.Id}';                    
+                window.close();
+            </script>
+        </apex:outputPanel>
+    </apex:outputPanel>
+    </apex:form>    
+</apex:page>

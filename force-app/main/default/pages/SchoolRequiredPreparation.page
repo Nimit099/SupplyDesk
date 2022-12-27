@@ -1,0 +1,242 @@
+<apex:page controller="SchoolRequiredPreparationController"  sidebar="false" showHeader="false">
+    
+    <apex:slds />
+    <apex:actionStatus startText="Record Saving..." id="pageStatus" style="margin-top:100px;" > 
+        <apex:facet name="start">
+            <div classs="slds-spinner_container" >
+                <div class="slds-spinner--brand slds-spinner slds-spinner--large" role="alert">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </apex:facet>
+    </apex:actionStatus>
+    <apex:form id="form">
+        <div style="height:100px; background-color:White">
+            <div style="padding:1%; margin-left:3%; margin-top:1%;">
+                <apex:image url="{!$Resource.SDlogobig}" width="300" height="150"/>
+            </div>
+        </div>
+        
+        <div style="background-color:red; height:10px;">
+        </div>
+        <html>
+            <head>
+                <style>
+                    li {
+                    margin : 1.5%;
+                    }
+                    .slds-form-element{
+                    margin-bottom: 4%;
+                    }
+                    .slds-grid.slds-gutters{
+                    margin : 0.5%;
+                    }
+                    .home{
+                    font-size:130%;
+                    background-color:White;
+                    padding: 4%;
+                    margin-top:10%;
+                    padding-bottom:10%;
+                    }
+                    
+                    .slds-button{
+                    width: 10%;
+    				height: 40px;
+                    }
+                    
+                    .btnDiv{
+                    	    margin-bottom: 4%;
+                    }
+                </style>
+                
+                
+                
+            </head>
+            <body>
+                <div id="body" class="slds-grid" style="background-color:#e3e1e2 !important; padding-bottom:10%;">
+                    <div class="slds-col" style="width:17%;">
+                        
+                    </div>
+                    <div class="slds-col" style="width:66%;">
+                        <div class="home">
+                            <div class="slds-grid slds-gutters" style="padding:2%; color:red !important; font-size:28px;">
+                                <div class="slds-col slds-align_absolute-center">
+                                    <b> COVID-19 risk assessment Form</b>
+                                </div>
+                            </div>
+                            <ol class="slds-list--ordered">
+                                <li>Can you confirm that your school has carried out a detailed COVID-19 risk assessment which covers supply staff and that a range of protective measures and approaches have been implemented (in accordance with the DfE’s guidance) to reduce the risk of transmission of infection in your school and to keep staff safe?</li>
+                                <div class="slds-align_absolute-center btnDiv">
+                                <button type="button" class="slds-button slds-button_brand" onclick="myFunction('Yes')" id="Assignment_Yes">Yes</button>
+                                <button type="button" class="slds-button slds-button_neutral" onclick="myFunction('No')" id="Assignment_No">No</button>
+                                </div>
+                                    <li>
+                                    Can you confirm that all supply candidates working in your school have/will have received training in relation to the measures and procedures that the school has in place to prevent the spread of infection? </li>
+                                <div class="slds-align_absolute-center btnDiv">
+                                <button type="button" class="slds-button slds-button_brand" onclick="SchoolCarriedFunction('Yes')" id="SchoolCarried_Yes">Yes</button>
+                                <button type="button" class="slds-button slds-button_neutral" onclick="SchoolCarriedFunction('No')" id="SchoolCarried_No">No</button>
+                                </div>
+                                
+                                <!--<div class="slds-form-element">
+                                <div class="slds-form-element__control">
+                                <div class="slds-select_container">
+                                <apex:selectList size="1" value="{!isSupplyCandidateWorking}" styleClass="slds-select">
+                                <apex:selectOptions value="{!PickListVal}" />
+                                </apex:selectList>
+                                </div>
+                                </div>
+                                </div> -->
+                                <li>
+                                    You can confirm that you will notify the candidate and Supply Desk in the event that there is a confirmed case of COVID-19 in your school in order that the candidate can take appropriate action and self-isolate if necessary.
+                                </li>
+                                <div class="slds-align_absolute-center btnDiv" >
+                                <button type="button" class="slds-button slds-button_brand" onclick="NotifySupplyFunction('Yes')" id="NotifySupply_Yes">Yes</button>
+                                <button type="button" class="slds-button slds-button_neutral" onclick="NotifySupplyFunction('No')" id="NotifySupply_No">No</button>
+                                </div>
+                              
+                                <!--<div class="slds-form-element">
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-select_container">
+                                            <apex:selectList size="1" value="{!isNotifyToSupplyDeskoCovidCase}" styleClass="slds-select">
+                                                <apex:selectOptions value="{!PickListVal}" />
+                                            </apex:selectList>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </ol>
+                            
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col">
+                                    <div class="slds-form-elemet slds-hint-parent">
+                                        <span class="slds-form-element__label" style="font-size:110%; color:#181819c7;">Additional Comment</span>
+                                        <div class="slds-form-element__control">
+                                            <span class="slds-form-element__static slds-m-bottom--x-small">
+                                                <div class="requiredInput">
+                                                    <apex:inputTextArea value="{!AdditionalComment}"  rows="2" styleClass="slds-input" />
+                                                </div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-grid slds-gutters" style="margin-top:5%;">
+                                <div class="slds-col">
+                                    <apex:commandButton value="Submit" onclick="showToast();" action="{!Submit}" rerender="body" status="pageStatus" styleClass="slds-button slds-button_destructive" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col" style="width:17%;">
+                        
+                    </div>
+                </div>
+                
+            </body>
+            <div class="slds-grid slds-gutters" style="margin-top:1%;">
+                                <div class="slds-col slds-align_absolute-center">
+                                    <div class="demo-only slds-hidden" style="height: 4rem;" id='ToastMessage'>
+    <div class="slds-notify_container slds-is-relative">
+        <div class="slds-notify slds-notify_toast slds-theme_success" role="alert">
+            <span class="slds-assistive-text">success</span>
+            <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+                <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#success')}" />
+                </svg>
+            </span>
+            <div class="slds-notify__content">
+                <h2 class="slds-text-heading_small ">Record has been updated successfully.</h2>
+            </div>            
+        </div>
+    </div>
+</div>
+                                </div>
+                            </div>
+        </html>
+        <apex:actionFunction name="PassCovid19Assisment" action="{!echoVal}" reRender="resultPanel" status="myStatus" >
+            <apex:param name="firstParam" assignTo="{!isCovRiskAssesmet}" value="" />
+        </apex:actionFunction>
+        
+        <apex:actionFunction name="SchoolCarriedAction" action="{!echoVal}" reRender="resultPanel" status="myStatus" >
+            <apex:param name="firstParam" assignTo="{!isSupplyCandidateWorking}" value="" />
+        </apex:actionFunction>
+        
+        <apex:actionFunction name="NotifySupplyAction" action="{!echoVal}" reRender="resultPanel" status="myStatus" >
+            <apex:param name="firstParam" assignTo="{!isNotifyToSupplyDeskoCovidCase}" value="" />
+        </apex:actionFunction>
+    </apex:form>
+    <script>
+        function myFunction(id) {
+            var Yes = document.getElementById('Assignment_Yes');
+            var No = document.getElementById('Assignment_No');
+            
+            if(id == 'Yes'){
+                PassCovid19Assisment('Yes');
+                Yes.classList.remove("slds-button_neutral");
+                Yes.classList.add("slds-button_brand");
+                No.classList.remove("slds-button_brand");
+                No.classList.add("slds-button_neutral");
+            }else{
+                PassCovid19Assisment('No');
+                Yes.classList.remove("slds-button_brand");
+                Yes.classList.add("slds-button_neutral");
+                No.classList.remove("slds-button_neutral");
+                No.classList.add("slds-button_brand");
+            }
+        }
+    
+        function SchoolCarriedFunction(id) {
+            var Yes = document.getElementById('SchoolCarried_Yes');
+            var No = document.getElementById('SchoolCarried_No');
+            
+            if(id == 'Yes'){
+                SchoolCarriedAction('Yes');
+                Yes.classList.remove("slds-button_neutral");
+                Yes.classList.add("slds-button_brand");
+                No.classList.remove("slds-button_brand");
+                No.classList.add("slds-button_neutral");
+            }else{
+                SchoolCarriedAction('No');
+                Yes.classList.remove("slds-button_brand");
+                Yes.classList.add("slds-button_neutral");
+                No.classList.remove("slds-button_neutral");
+                No.classList.add("slds-button_brand");
+            } 
+        }
+    
+    	function NotifySupplyFunction(id) {
+            var Yes = document.getElementById('NotifySupply_Yes');
+            var No = document.getElementById('NotifySupply_No');
+            
+            if(id == 'Yes'){
+                NotifySupplyAction('Yes');
+                Yes.classList.remove("slds-button_neutral");
+                Yes.classList.add("slds-button_brand");
+                No.classList.remove("slds-button_brand");
+                No.classList.add("slds-button_neutral");
+            }else{
+                NotifySupplyAction('No');
+                Yes.classList.remove("slds-button_brand");
+                Yes.classList.add("slds-button_neutral");
+                No.classList.remove("slds-button_neutral");
+                No.classList.add("slds-button_brand");
+            } 
+        }
+    
+            function showToast() {
+                    var element = document.getElementById("ToastMessage");
+    				element.classList.remove("slds-hidden");
+                	
+                	var element = document.getElementById("body").style.display="none";
+                //element.classList.add("slds-hidden");
+                //myVar = setInterval(CloseToast, 3000);
+                }
+    
+    		function CloseToast() {
+                  var element = document.getElementById("ToastMessage");
+    				element.classList.add("slds-hidden");
+                }
+    </script>
+</apex:page>

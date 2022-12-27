@@ -1,0 +1,100 @@
+<template>
+
+    <!-- ======= Spinner ======= -->
+
+    <template if:true={isSpinner}>
+        <div class="slds-spinner_container spinner-center" style="overflow: hidden;">
+            <div class="spinner-ts">
+                <div class="inner one"></div>
+                <div class="inner two"></div>
+                <div class="inner three"></div>
+            </div>
+        </div>
+    </template>
+
+    <!-- ======= Spinner ======= -->
+    <template if:true={checkClient}>
+
+        <div class="communitymain_cls" onclick={check}>
+            <div>
+                <div class="content">
+                    <div class="midBlock slds-grid" style={backgroundImage}>
+                        <div class="welcomeText slds-col slds-size_12-of-12">
+                            <h2>Review candidate compliance here!</h2>
+                            <p class="slds-m-top_x-medium"> Click below to access</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Content-->
+            <div class="content slds-p-horizontal_medium">
+                <div class="complianceDiv">
+                    <div class="middleText">
+                        <div class="timesheet-table">
+                            <div class="slds-grid slds-wrap table-row-header slds-p-vertical_medium ">
+                                <div class="slds-col slds-size_2-of-12">
+                                    <div>Candidate Name</div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-12">
+                                    Qualification Verified
+                                </div>
+                                <div class="slds-col slds-size_2-of-12">
+                                    <div>ID Checked</div>
+                                </div>
+
+                                <div class="slds-col slds-size_2-of-12">
+                                    <div>Barred List</div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-12">
+                                    <div>DBS Valid Date</div>
+                                </div>
+
+                                <div class="slds-col slds-size_2-of-12">
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                        <template for:each={crlist} for:item="cr">
+                            <div class="slds-grid slds-wrap slds-p-vertical_medium " key={cr}>
+                                <div class="slds-col slds-size_2-of-12">
+                                    {cr.TR1__Person_Placed__r.FirstName}
+                                </div>
+                                <div class="slds-col slds-size_2-of-12">
+                                    <lightning-input disabled="true" type="checkbox" name="input1"
+                                        checked={cr.qualificationVerified}></lightning-input>
+
+                                </div>
+                                <div class="slds-col slds-size_2-of-12">
+                                    {cr.TR1__Person_Placed__r.SET_Checked_Date_Hidden__c}
+                                </div>
+
+
+
+                                <div class="slds-col slds-size_2-of-12">
+                                    {cr.TR1__Person_Placed__r.Barred_List_Date_Checked_Hidden__c}
+                                </div>
+
+                                <div class="slds-col slds-size_2-of-12 ">
+                                    {cr.TR1__Person_Placed__r.DBS_Issue_Date_Hidden__c}
+                                </div>
+
+
+                                <div class="slds-col slds-size_2-of-12 ">
+                                    <button class="btn_cls" data-value={cr.Id} onclick={openpdf}>Click Here</button>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+            <template if:true={nodatafound}>
+                <div class="no-data-div">
+                    <div class="no-data-txt">No Data Found!!!</div>
+                </div>
+            </template>
+        </div>
+    </template>
+    <!-- Error Compoenent -->
+    <c-ts_-error-component reloadpage={reloadpage}></c-ts_-error-component>
+</template>

@@ -1,0 +1,459 @@
+<apex:page renderAs="pdf" showHeader="false" applyBodyTag="false" standardController="TR1__Closing_Report__c" extensions="ConfirmationLetterPDFController">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Conf of Checks Temp</title>
+        <style>
+            body {
+                font-family: 'Arial Unicode MS';
+                font-size: 10pt;
+                color: #333;
+            }
+
+            .tableheading {
+                background-color: #d2232a;
+                color: #fff;
+                font-family: 'Arial Unicode MS';
+                font-weight: bold;
+                font-style: bold;
+                font-size: 11pt;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div style="page-break-after:always;">
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" align="center">
+                        <apex:image url="{!$Resource.SDlogobig}" width="400" height="71" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">
+                        {!nameOfclient}
+                        <br />
+                    </td>
+                    <td width="50%" align="right" valign="bottom">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}"><apex:param value="{!cteatedate}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" valign="top">
+                        <br /> Dear {!hmName},
+                        <br />
+                        <br />
+                        <!--    Thank you for choosing Supply Desk to provide your supply staff. Please find below details of the candidate who will be working with you. -->
+                        Please find below the vetting checks carried out by the Compliance Department of Supply Desk in relation to the candidate
+                        below.
+                    </td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <b>Details:</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="30%" valign="top" rowspan="2">
+                        <apex:image url="{!photoImgUrl}" height="100" width="100" />
+                    </td>
+                    <td width="70%" valign="top">Candidate Name:
+                        <strong>{!nameOfcandidate}</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="70%" valign="top">Date of Birth:
+                        <strong>
+                            <apex:outputText value="{0,date,dd/MM/yyyy}">
+                                <apex:param value="{!birthdate}" /> </apex:outputText>
+                        </strong>
+                    </td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <strong>Identity Check </strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Documents Checked</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText escape="false" value="{!SUBSTITUTE(docChecked1,';','; ')}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">&nbsp;</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText escape="false" value="{!SUBSTITUTE(docChecked2A,';','; ')}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">&nbsp;</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText escape="false" value="{!SUBSTITUTE(docChecked2B,';','; ')}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Date of Check</td>
+                    <td width="50%" valign="top"><apex:outputText value="{0,date,dd/MM/yyyy}"> <apex:param value="{!group1doc}" /> </apex:outputText>
+                    </td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <strong>Clear Barred List Check</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Date of check</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                            <apex:param value="{!barredate}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Check Clear</td>
+                    <td width="50%" valign="top">{!clearBarred}</td>
+                </tr>
+                <!-- <tr>
+                    <td width="50%" valign="top">EWC Registration Date (If Applicable)</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                            <apex:param value="{!EWCrdate}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">EWC Registration Checked Date (If Applicable)</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                            <apex:param value="{!EWCrcdate}" /> </apex:outputText>
+                    </td>
+                </tr> -->
+                <apex:outputPanel layout="none" rendered="{!if(EWCrdate!=null, true ,false)}">
+                    <tr>
+                        <td width="65%" valign="top">EWC Registration Date (If Applicable)</td>
+                        <td width="65%" valign="top"><apex:outputText value="{0,date,dd/MM/yyyy}"><apex:param value="{!EWCrdate}" /> </apex:outputText></td>
+                    </tr>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!if(EWCrcdate!=null, true ,false)}">
+                    <tr>
+                        <td width="50%" valign="top">EWC Registration Checked Date (If Applicable)</td>
+                        <td width="50%" valign="top"><apex:outputText value="{0,date,dd/MM/yyyy}"><apex:param value="{!EWCrcdate}" /> </apex:outputText></td>
+                    </tr>
+                </apex:outputPanel>
+            </table>
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <strong>Enhanced DBS Check</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Certificate Valid Date</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                            <apex:param value="{!DBSissuedate}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Disclosure Number</td>
+                    <td width="50%" valign="top">{!DBSdiscloseredate}</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Date of DBS Update Service Check</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                            <apex:param value="{!DBSlastcheckeddate}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Clear DBS?</td>
+                    <td width="50%" valign="top">{!DBSclear}
+                        <apex:outputPanel layout="none" rendered="{!if(DBSclear=='No', true ,false)}">
+                            <br/>
+                            <em>If NO, Supply Desk will advise, by phone, of any relevant information disclosed by the DBS check, and will instruct the candidate to disclose their DBS certificate at the commencement of the assignment.</em>
+                        </apex:outputPanel>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div style="page-break-before:always;">
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <strong>Prohibition from Teaching/Sanctions Check (TRA)</strong>
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td colspan="2" valign="top">Details of relevant checks confirmed below.
+                    </td>
+                </tr> -->
+                <tr>
+                    <td width="50%" valign="top">Prohibition Order</td>
+                    <td width="50%" valign="top"><apex:outputText value="{0,date,dd/MM/yyyy}"> <apex:param value="{!ProhibitionOrder}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Historic GTCE Sanctions</td>
+                    <td width="50%" valign="top"><apex:outputText value="{0,date,dd/MM/yyyy}"> <apex:param value="{!ProhibitionOrder}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">S.128 Barring Direction</td>
+                    <td width="50%" valign="top"><apex:outputText value="{0,date,dd/MM/yyyy}"> <apex:param value="{!ProhibitionOrder}" /> </apex:outputText>
+                    </td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">Qualified Teacher
+                        <strong></strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Teacher Reference Number</td>
+                    <td width="50%" valign="top">{!NCTLnumber}</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Date of Check</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                            <apex:param value="{!NCTLchecked}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Date QTS Awarded</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                            <apex:param value="{!QTSawarded}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td width="50%" valign="top">Induction Complete?</td>
+                    <td width="50%" valign="top">{!NQTinduction}</td>
+                </tr> -->
+                <tr>
+                    <td width="50%" valign="top">Date Induction Complete</td>
+                    <!-- <td width="50%" valign="top">{!TR1__Closing_Report__c.TR1__Person_Placed__r.NQT_Induction_Complete_Hidden__c}</td> -->
+                    <td width="50%" valign="top">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}"> <apex:param value="{!NQTinductiondate}" /> </apex:outputText>
+                    </td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <strong>FE - SET (formerly IFL)</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">SET Number</td>
+                    <td width="50%" valign="top">{!NumberHidden}</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Date of Check</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                            <apex:param value="{!SETcheckedate}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">QTLS</td>
+                    <td width="50%" valign="top">{!QTLShidden}</td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <strong>Overseas Check</strong>
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td width="50%" valign="top">Overseas Police Check Clear</td>
+                    <td width="50%" valign="top">{!CASE(policeCheck,'No', 'No','With Police','Not
+                        Received','Yes','Yes','N/A','Not Required','')}</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Letter of Good Conduct Received?</td>
+                    <td width="50%" valign="top">{!CASE(latterofgood,'Yes','Yes','No','Not
+                        Required','','Not Required','Not Required')}
+                        <br />
+                        <br />
+                        <em>If NO, Supply Desk will advise, by phone, of any relevant information disclosed by the Overseas Police
+                            Check and/or Letter of Good Conduct.</em>
+                    </td>
+                </tr> -->
+                <tr>
+                    <td width="50%" valign="top">Overseas Police Check</td>
+                    <td width="50%" valign="top">{!CASE(policeCheck,'No', 'No','With Police','Not Received','Yes','Yes','N/A','Not Required','')}</td>
+                    
+                </tr>
+                <apex:outputPanel layout="none" rendered="{!if(policeCheck=='N/A', false, true)}">
+                    <tr>
+                        <td width="50%" valign="top">Overseas Police Check date</td>
+                        <td width="50%" valign="top">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}"><apex:param value="{!OPCdate}" /> </apex:outputText>
+                        </td>
+                    </tr>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!if(policeCheck=='No', true, false)}">
+                    <tr>
+                        <td width="50%" valign="top">Letter of Good Conduct Received?</td>
+                        <td width="50%" valign="top">{!CASE(latterofgood,'Yes','Yes','No','No','','Not Required','Not Required')}
+                        <br />
+                            <br />
+                        <em>If NO, Supply Desk will advise, by phone, of any relevant information disclosed by the Overseas Police Check and/or Letter of Good Conduct.</em></td>
+                    </tr>
+                </apex:outputPanel>
+            </table>
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <strong>Qualification Check</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Qualifications Verified</td>
+                    <!-- <td width="50%" valign="top">Yes</td> -->
+                    <td width="50%" valign="top">{!QualificationVerified}</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Qualifications</td>
+                    <td width="50%" valign="top">{!Qualification}</td>
+                </tr>
+                <apex:outputPanel layout="none" rendered="{!if(QualCopies!= null, true, false)}">
+                    <tr>
+                        <td width="50%" valign="top">Date of Check</td>
+                        <td width="50%" valign="top">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}"> <apex:param value="{!QualCopies}" /> </apex:outputText>
+                        </td>
+                    </tr>
+                </apex:outputPanel>
+            </table>
+            <BR />
+        </div>
+        <div style="page-break-before:always;">
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">Right to Work
+                        <strong></strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Right to Work in UK Verified</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                            <apex:param value="{!RTWdate}" /> </apex:outputText>
+                    </td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">Employment History &amp; References
+                        <strong></strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" valign="top">
+                        Obtained and Verified and obtained in accordance with DfE guidelines.
+                    </td>
+                </tr>
+
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <strong>Disqualification under the childcare act 2006</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Date of Declaration</td>
+                    <td width="50%" valign="top">
+                    <apex:outputText value="{0,date,dd/MM/yyyy}"> <apex:param value="{!registrationform}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Disqualification by Association Check Clear?</td>
+                    <td width="50%" valign="top">{!DBAchecked}
+                        <br />
+                        <br />
+                        <apex:outputPanel layout="none" rendered="{!if(DBAchecked=='No', true ,false)}">
+                            <br />
+                            <em>If above is NO, Supply Desk will advise, by phone, of any relevant restrictions that apply.</em>
+                        </apex:outputPanel>
+                    </td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <strong>Safeguarding Training</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Safeguarding Training Completed</td>
+                    <td width="50%" valign="top">
+                        {!IF (training=='Yes','Yes', 'No')}</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top"></td>
+                    <td width="50%" valign="top">
+                        <em>Supply Desk requires all candidates to update their Safeguarding Training every 3 years.</em>
+                    </td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td width="100%" valign="top" class="tableheading">Other Checks That Have Been Carried Out
+                        <strong></strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        <ul>
+                            <li>Mental and physical fitness to work with children in a school, verified.</li>
+                            <li>Competency based interview completed.</li>
+                            <!-- <li>Mental and physical fitness to work in the role of {!jobtitle} verified.</li>
+                            <li>Competency based interview completed.</li>
+                            <li>Teachers who have failed induction or probation.</li>
+                            <li>General Teaching Council for England (GTCE) sanctions.</li>
+                            <li>Teachers and others prohibited from the profession.</li>
+                            <li>Teachers sanctioned in other EEA member states.</li>
+                            <li>Section 128 barring directions.</li> -->
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td width="100%" valign="top">
+                        <p>Yours sincerely, </p>
+                        <p>{!ownername}
+                            <br /> Supply Desk {!branch}
+                            <br />
+                        </p>
+                        <br />
+                        <br />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</apex:page>

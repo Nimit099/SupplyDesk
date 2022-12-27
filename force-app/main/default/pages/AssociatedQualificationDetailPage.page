@@ -1,0 +1,66 @@
+<apex:page standardController="TR1__Associated_Qualification__c"  extensions="AssociatedQualificationDetailCtrl" action="{!goToStandardPage}">
+    <apex:form id="frm">
+        <apex:sectionheader title="Compliance" subtitle="{!TR1__Associated_Qualification__c.Name}" rendered="{!showPanel}"/>
+        <apex:sectionheader title="Note Edit" subtitle="{!TR1__Associated_Qualification__c.Name}" rendered="{!!showPanel}"/>
+        <apex:pagemessages id="msg" />
+        <apex:pageBlock mode="view" id="AQView" title="Compliance" rendered="{!showPanel}">
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!edit}" value="Edit"/>
+                <apex:commandButton action="{!backToContact}" value="Back"/>
+                <apex:commandButton action="{!clickAddNote}" value="Add Note" status="status" rerender="frm,rtList"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection title="{!fieldsetLabel}">
+                <apex:repeat value="{!$ObjectType.TR1__Associated_Qualification__c.FieldSets[TR1__Associated_Qualification__c.TR1__Qualification__r.TR1__Field_Set_ID__c]}" var="field">
+                    <apex:outputField value="{!assoQual[field.FieldPath]}" />
+                </apex:repeat> 
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Other Details">
+                <apex:repeat value="{!$ObjectType.TR1__Associated_Qualification__c.FieldSets.page_override}" var="field">
+                    <apex:outputField value="{!assoQual[field.FieldPath]}" />
+                </apex:repeat> 
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        
+        <apex:outputPanel rendered="{!!showPanel}" id="pb">              
+            <apex:pageBlock >
+                <apex:pageBlockButtons >
+                    <apex:commandButton action="{!createNote}" value="Save" status="status" rerender="frm" />
+                    <apex:commandButton action="{!backToCurrentRecord}" value="Cancel" immediate="true"/>
+                </apex:pageBlockButtons> 
+                <apex:pageBlockSection >
+                    <apex:outputLabel value="Note Information" style="font-weight:bold">
+                    </apex:outputLabel>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection >
+                    <apex:inputCheckbox label="Private" value="{!privateNote}"/><br/>
+                    <apex:inputText label="Title" required="true" value="{!noteTitle}" size="50" /><br/>
+                    <apex:inputTextarea label="Body" cols="60" value="{!noteBody}" rows="20" /><br/>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        <apex:actionStatus id="status" >
+        <apex:facet name="start" >
+            <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
+                &nbsp;
+            </div>
+            <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+                <div style="display: inline-block; padding: 2px; background-color: #fff; width: 125px;">
+                    <img src="/img/loading.gif" style="float: left; margin: 8px;" />
+                    <span style="display: inline-block; padding: 10px 0px;">Please Wait...</span>
+                </div>
+            </div>
+        </apex:facet>
+    </apex:actionStatus>
+    </apex:form>
+    <apex:outputPanel id="rtList">
+    <apex:outputPanel rendered="{!showPanel}" >
+        <apex:relatedList list="CombinedAttachments" subject="{!Id}"/>
+        <apex:relatedList subject="{!TR1__Associated_Qualification__c}" list="OpenActivities" />
+        <apex:relatedList subject="{!TR1__Associated_Qualification__c}" list="ActivityHistories" />
+        <apex:outputLink value="/_ui/common/history/ui/EntityHistoryFilterPage?id={!TR1__Associated_Qualification__c.id}">
+            Click to view field history
+        </apex:outputLink>
+    </apex:outputPanel>
+        </apex:outputPanel>
+</apex:page>

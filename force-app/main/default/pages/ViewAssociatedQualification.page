@@ -1,0 +1,24 @@
+<apex:page standardController="TR1__Associated_Qualification__c"  extensions="ViewAssociatedQualification" action="{!goToStandardPage}">
+   <apex:form > 
+    <apex:sectionheader title="Compliance" subtitle="{!TR1__Associated_Qualification__c.Name}"/>
+      <apex:pagemessages id="msg" />
+        <apex:pageBlock mode="edit" id="AQEdit" title="Compliance"  >
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!saveAQ}" value="Save"  />
+                <apex:commandButton action="{!doCancelAQ}" value="Cancel"/>
+            </apex:pageBlockButtons>
+                <apex:pageBlockSection title="{!TR1__Associated_Qualification__c.TR1__Qualification__r.TR1__Field_Set_ID__c}">
+                    <apex:repeat value="{!$ObjectType.TR1__Associated_Qualification__c.FieldSets[TR1__Associated_Qualification__c.TR1__Qualification__r.TR1__Field_Set_ID__c]}" var="field">
+                          <apex:inputField value="{!assoQual[field.FieldPath]}" required="{!OR(field.Required,field.dbrequired)}"/>
+                    </apex:repeat> 
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection title="Other Details">
+                    <apex:repeat value="{!$ObjectType.TR1__Associated_Qualification__c.FieldSets.page_override}" var="field">
+                          <apex:inputField value="{!assoQual[field.FieldPath]}" required="{!OR(field.Required,field.dbrequired)}"/>
+                    </apex:repeat> 
+                </apex:pageBlockSection>
+         </apex:pageBlock>
+    </apex:form>
+         <apex:relatedList list="CombinedAttachments" subject="{!Id}"/>
+</apex:page>

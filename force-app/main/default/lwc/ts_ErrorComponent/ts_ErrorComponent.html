@@ -1,0 +1,27 @@
+<template>
+    <template if:true={openpopup}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open backColor"
+            aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1"
+            style="z-index: 1000001;">
+            <div class="slds-modal__container popupCls">
+                <header class="slds-modal__header slds-modal__header_empty slds-grid slds-wrap slds-p-vertical_medium slds-p-top_medium header_cls">
+                    <img src={warningicon} class="slds-m-left_medium"/>
+                    <h1 class="slds-m-left_medium">Content Creation Error</h1>
+                </header>
+                <div class="slds-modal__content contentCls" id="modal-content-id-2">
+                    <h2 class="slds-align_absolute-center errormsg">
+                        Something went Wrong!!!
+                    </h2>
+                    <div class="slds-grid slds-p-top_x-large slds-grid_align-center">
+                        <div class="slds-col slds-grid slds-size_1-of-1 slds-grid_align-center">
+                            <button
+                                class="slds-button close_btn"
+                                onclick={closeModal}>Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

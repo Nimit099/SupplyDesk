@@ -1,0 +1,454 @@
+<!-- <apex:page renderAs="pdf" showHeader="false" applyBodyTag="false" standardController="TR1__Closing_Report__c" extensions="TestConfirmationPageController"> -->
+<apex:page showHeader="false" applyBodyTag="false" renderas="pdf" standardController="TR1__Closing_Report__c" extensions="TestConfirmationPageController">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Conf of Checks Temp</title>
+        <style>
+            body {
+                font-family: 'Arial Unicode MS';
+                font-size: 10pt;
+                color: #333;
+            }
+
+            .tableheading {
+                background-color: #d2232a;
+                color: #fff;
+                font-family: 'Arial Unicode MS';
+                font-weight: bold;
+                font-style: bold;
+                font-size: 11pt;
+            }
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    </head>
+
+    <body>
+        <script>
+            $(document).ready(function () {
+                // alert('op');
+
+                console.log('{!RecordId}');
+
+                setTimeout(() => {
+                    console.log('koko');
+                    console.log('{!RecordId}');
+                    console.log('amkmk');
+                    console.log('{!Testval}');
+                    console.log('{!crId}');
+                }, 1000);
+            });
+        </script>
+        <div style="page-break-after:always;">
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" align="center">
+                        <apex:image url="{!$Resource.SDlogobig}" width="400" height="71" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">
+                        {!TR1__Closing_Report__c.TR1__Account__r.Name}
+                        <br />
+                        <!--   {!TR1__Closing_Report__c.TR1__Contact__c}<br />
+                        {!TR1__Closing_Report__c.TR1__Account__r.BillingStreet}<br />
+                        {!TR1__Closing_Report__c.TR1__Account__r.BillingCity}<br />
+                        {!TR1__Closing_Report__c.TR1__Account__r.BillingState}<br />
+                        {!TR1__Closing_Report__c.TR1__Account__r.BillingPostalCode} -->
+                    </td>
+                    <td width="50%" align="right" valign="bottom">
+
+                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                            <apex:param value="{!TR1__Closing_Report__c.CreatedDate}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" valign="top">
+                        <br /> Dear {!TR1__Closing_Report__c.Hiring_Manager__r.FirstName},
+                        <br />
+                        <br />
+                        <!--    Thank you for choosing Supply Desk to provide your supply staff. Please find below details of the candidate who will be working with you. -->
+                        Please find below the vetting checks carried out by the Compliance Department of Supply Desk in relation to the candidate
+                        below.
+                    </td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <b>Details:</b>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td width="30%" valign="top" rowspan="2">
+                        <apex:image url="{!photoImgUrl}" height="100" width="100" />
+                    </td>
+                    <td width="70%" valign="top">Candidate Name:
+                        <strong>{!TR1__Closing_Report__c.TR1__Person_Placed__r.FirstName} {!TR1__Closing_Report__c.TR1__Person_Placed__r.LastName}</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="70%" valign="top">Date of Birth:
+                        <strong>
+                            <apex:outputText value="{0,date,dd/MM/yyyy}">
+                                <apex:param value="{!TR1__Closing_Report__c.TR1__Person_Placed__r.Date_of_Birth__c}" /> </apex:outputText>
+                        </strong>
+                    </td>
+                </tr>
+
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <strong>Identity Check </strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Documents Checked</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText escape="false" value="{!SUBSTITUTE(TR1__Closing_Report__c.TR1__Person_Placed__r.Group_1_ID_Type_Hidden__c,';','; ')}"
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">&nbsp;</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText escape="false" value="{!SUBSTITUTE(TR1__Closing_Report__c.TR1__Person_Placed__r.Group_2A_ID_Type_Hidden__c,';','; ')}"
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">&nbsp;</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText escape="false" value="{!SUBSTITUTE(TR1__Closing_Report__c.TR1__Person_Placed__r.Group_2B_ID_Type_Hidden__c,';','; ')}"
+                        />
+                    </td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <strong>Clear Barred List Check</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Date</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                            <apex:param value="{!TR1__Closing_Report__c.TR1__Person_Placed__r.Barred_List_Date_Checked_Hidden__c}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">EWC Registration Date (If Applicable)</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                            <apex:param value="{!TR1__Closing_Report__c.TR1__Person_Placed__r.EWC_Registration_Date_Hidden__c}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">EWC Registration Checked Date (If Applicable)</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                            <apex:param value="{!TR1__Closing_Report__c.TR1__Person_Placed__r.EWC_Registration_Checked_Date_Hidden__c}" /> </apex:outputText>
+                    </td>
+                </tr>
+            </table>
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <strong>Enhanced DBS Check</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Certificate Valid Date</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                            <apex:param value="{!TR1__Closing_Report__c.TR1__Person_Placed__r.DBS_Issue_Date_Hidden__c}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Disclosure Number</td>
+                    <td width="50%" valign="top">{!TR1__Closing_Report__c.TR1__Person_Placed__r.DBS_Disclosure_ID_Number_Hidden__c}</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Date of DBS Update Service Check</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                            <apex:param value="{!TR1__Closing_Report__c.TR1__Person_Placed__r.DBS_Last_Checked_Date_Hidden__c}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Clear DBS?</td>
+                    <td width="50%" valign="top">{!TR1__Closing_Report__c.TR1__Person_Placed__r.Clear_DBS_Hidden__c}
+                        <br />
+                        <br />
+                        <em>If NO, Supply Desk will advise, by phone, of any relevant information disclosed by the DBS check,
+                            and will instruct the candidate to disclose their DBS certificate at the commencement of the
+                            assignment.
+                        </em>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div style="page-break-before:always;">
+            <BR />
+            <!--      <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading"><strong>Enhanced DBS Check</strong></td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Certificate Valid Date</td>
+                    <td width="50%" valign="top"><apex:outputText value="{0,date,dd/MM/yyyy}"> <apex:param value="{!TR1__Closing_Report__c.TR1__Person_Placed__r.DBS_Issue_Date_Hidden__c}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Disclosure Number</td>
+                    <td width="50%" valign="top">{!TR1__Closing_Report__c.TR1__Person_Placed__r.DBS_Disclosure_ID_Number_Hidden__c}</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Date of DBS Update Service Check</td>
+                    <td width="50%" valign="top"><apex:outputText value="{0,date,dd/MM/yyyy}"> <apex:param value="{!TR1__Closing_Report__c.TR1__Person_Placed__r.DBS_Last_Checked_Date_Hidden__c}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Clear DBS?</td>
+                    <td width="50%" valign="top">{!TR1__Closing_Report__c.TR1__Person_Placed__r.Clear_DBS_Hidden__c}<br />
+                        <br />
+                        <em>If NO, Supply Desk will advise, by phone, of any relevant information disclosed by the DBS check, and will instruct the candidate to disclose their DBS certificate at the commencement of the assignment.</em></td>
+                </tr>
+            </table>  -->
+
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <strong>Prohibition from Teaching Check</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" valign="top">Details of relevant checks confirmed below.
+                    </td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">Qualified Teacher NCTL
+                        <strong></strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Teacher Reference Number</td>
+                    <td width="50%" valign="top">{!TR1__Closing_Report__c.TR1__Person_Placed__r.NCTL_Number_Hidden__c}</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Check Date</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                            <apex:param value="{!TR1__Closing_Report__c.TR1__Person_Placed__r.NCTL_Checked_Date_Hidden__c}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">QTS Awarded Date</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                            <apex:param value="{!TR1__Closing_Report__c.TR1__Person_Placed__r.QTS_Awarded_Date_Hidden__c}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Induction Complete?</td>
+                    <td width="50%" valign="top">{!TR1__Closing_Report__c.TR1__Person_Placed__r.NQT_Induction_Complete_Hidden__c}</td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <strong>FE - SET (formerly IFL)</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">SET Number</td>
+                    <td width="50%" valign="top">{!TR1__Closing_Report__c.TR1__Person_Placed__r.SET_Number_Hidden__c}</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Checked Date</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                            <apex:param value="{!TR1__Closing_Report__c.TR1__Person_Placed__r.SET_Checked_Date_Hidden__c}" /> </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">QTLS</td>
+                    <td width="50%" valign="top">{!TR1__Closing_Report__c.TR1__Person_Placed__r.QTLS_Hidden__c}</td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <strong>Overseas Check</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Overseas Police Check Clear</td>
+                    <td width="50%" valign="top">{!CASE(TR1__Closing_Report__c.TR1__Person_Placed__r.OS_Police_Check_Hidden__c,'No', 'No','With Police','Not
+                        Received','Yes','Yes','N/A','Not Required','')}</td>
+
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Letter of Good Conduct Received?</td>
+                    <td width="50%" valign="top">{!CASE(TR1__Closing_Report__c.TR1__Person_Placed__r.Letter_of_Good_Conduct_Hidden__c,'Yes','Yes','No','Not
+                        Required','','Not Required','Not Required')}
+                        <br />
+                        <br />
+                        <em>If NO, Supply Desk will advise, by phone, of any relevant information disclosed by the Overseas Police
+                            Check and/or Letter of Good Conduct.</em>
+                    </td>
+                </tr>
+            </table>
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <strong>Qualification Check</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Qualifications Verified</td>
+                    <td width="50%" valign="top">Yes</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Qualifications</td>
+                    <!-- Qualifications_Hidden__c -->
+                    <!--<td width="50%" valign="top">{!TR1__Closing_Report__c.TR1__Job__r.TR1__Contact__r.Qualifications_Hidden__c}</td>-->
+                    <td width="50%" valign="top">{!TR1__Closing_Report__c.TR1__Person_Placed__r.Qualifications_Hidden__c}</td>
+
+                </tr>
+
+            </table>
+            <BR />
+        </div>
+        <div style="page-break-before:always;">
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">Right to Work
+                        <strong></strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Right to Work in UK Verified</td>
+                    <td width="50%" valign="top">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                            <apex:param value="{!TR1__Closing_Report__c.TR1__Person_Placed__r.Right_to_Work_Sited_Date_Hidden__c}" /> </apex:outputText>
+                    </td>
+                </tr>
+
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">Employment History &amp; References
+                        <strong></strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" valign="top">
+                        Verified and obtained in accordance with DfE guidelines.
+                    </td>
+                </tr>
+
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <strong>Disqualification by Association</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Disqualification by Association Check Clear?</td>
+                    <td width="50%" valign="top">{!TR1__Closing_Report__c.TR1__Person_Placed__r.DBA_Check_Hidden__c}
+                        <br />
+                        <br />
+                        <em>If above is NO, Supply Desk will advise, by phone, of any relevant restrictions that apply.</em>
+                    </td>
+                </tr>
+
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <strong>Safeguarding Training</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Safeguarding Training Completed</td>
+                    <td width="50%" valign="top">
+                        {!IF (TR1__Closing_Report__c.TR1__Person_Placed__r.Safeguarding_Training_Hidden__c=='Yes','Yes', 'No')}</td>
+
+                </tr>
+                <tr>
+                    <!-- <td width="50%" valign="top">{!IF (TR1__Closing_Report__c.TR1__Job__r.TR1__Contact__r.Safeguarding_Training_Hidden__c,'YES', 'NO')}</td> -->
+                    <td width="50%" valign="top"></td>
+                    <td width="50%" valign="top">
+                        <em>Supply Desk requires all candidates to update their Safeguarding Training every 3 years.</em>
+                    </td>
+
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td width="100%" valign="top" class="tableheading">Other Checks That Have Been Carried Out
+                        <strong></strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        <ul>
+                            <li>Mental and physical fitness to work in the role of {!TR1__Closing_Report__c.Job_Title__c} verified.</li>
+                            <li>Competency based interview completed.</li>
+                            <!--          <li>Employment history verified and references obtained in accordance with DfE guidance.</li>       -->
+                            <li>Teachers who have failed induction or probation.</li>
+                            <li>General Teaching Council for England (GTCE) sanctions.</li>
+                            <li>Teachers and others prohibited from the profession.</li>
+                            <li>Teachers sanctioned in other EEA member states.</li>
+                            <li>Section 128 barring directions.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="5">
+                <tr>
+                    <td width="100%" valign="top">
+                        <p>Yours sincerely, </p>
+                        <p>{!TR1__Closing_Report__c.TR1__Job__r.Owner.Name}
+                            <br /> Supply Desk {!TR1__Closing_Report__c.TR1__Job__r.Branch__c}
+                            <br />
+                        </p>
+                        <br />
+                        <br />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <script>
+            window.onload = (event) => {
+                console.log('page is fully loaded');
+                console.log({!crId});
+            };
+            // function codeAddress() {
+            //     alert('ok');
+
+            // }
+            // window.onload = codeAddress;    
+        </script>
+    </body>
+</apex:page>

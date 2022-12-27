@@ -1,0 +1,2054 @@
+<apex:page title="Candidate Scheduler" standardController="Contact" id="pageId" extensions="TRS_FilterJobs" sidebar="false"
+    tabStyle="Scheduler__tab">
+
+    <apex:includeScript value="{!URLFOR($Resource.jQuery, 'js/jquery-1.9.1.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.jQuery, 'js/jquery-ui-1.10.3.custom.min.js')}" />
+
+    <apex:stylesheet value="{!URLFOR($Resource.jQuery, 'css/ui-lightness/jquery-ui-1.10.3.custom.min.css')}" />
+    <apex:variable var="list" value="{!''}{!strings}" />
+
+    <style>
+        .tableStyle {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            border: 1px solid #000000;
+            border-width: 1px 1px 0px 0px;
+
+            -moz-border-radius-bottomleft: 0px;
+            -webkit-border-bottom-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+
+            -moz-border-radius-bottomright: 0px;
+            -webkit-border-bottom-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+
+            -moz-border-radius-topright: 0px;
+            -webkit-border-top-right-radius: 0px;
+            border-top-right-radius: 0px;
+
+            -moz-border-radius-topleft: 0px;
+            -webkit-border-top-left-radius: 0px;
+            border-top-left-radius: 0px;
+        }
+
+        .tableStyle table {
+            width: 100%;
+            margin: 0px;
+            padding: 0px;
+            border-spacing: 0px !important;
+        }
+
+        .tableStyle tr:last-child td:last-child {
+            -moz-border-radius-bottomright: 0px;
+            -webkit-border-bottom-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+        }
+
+        .tableStyle table tr:first-child td:first-child {
+            -moz-border-radius-topleft: 0px;
+            -webkit-border-top-left-radius: 0px;
+            border-top-left-radius: 0px;
+        }
+
+        .tableStyle table tr:first-child td:last-child {
+            -moz-border-radius-topright: 0px;
+            -webkit-border-top-right-radius: 0px;
+            border-top-right-radius: 0px;
+        }
+
+        .tableStyle tr:last-child td:first-child {
+            -moz-border-radius-bottomleft: 0px;
+            -webkit-border-bottom-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+        }
+
+        .tableStyle tr:hover td {
+            background-color: #ffffff;
+        }
+
+        .tableStyle tr:nth-child(odd) {
+            background-color: #d4e7f9;
+        }
+
+        .tableStyle tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        .tableStyle td {
+            vertical-align: middle;
+            background-color: #e5f2f0;
+            border: 1px solid #000000 !important;
+            border-width: 0px 0px 1px 1px !important;
+            text-align: center;
+            padding: 7px;
+            font-size: 12px;
+            font-family: Arial;
+            font-weight: normal;
+            color: #000000;
+        }
+
+        .tableStyle tr:last-child td {
+            border-width: 0px 0px 0px 1px;
+        }
+
+        .tableStyle tr td:last-child {
+            border-width: 0px 0px 1px 1px;
+        }
+
+        .tableStyle tr:last-child td:last-child {
+            border-width: 0px 0px 0px 1px;
+        }
+
+        .tableStyle thead td {
+            background: -o-linear-gradient(bottom, #3d8d8d 5%, #285e5e 100%);
+            background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #3d8d8d), color-stop(1, #285e5e));
+            background: -moz-linear-gradient( center top, #3d8d8d 5%, #285e5e 100%);
+            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#3d8d8d", endColorstr="#285e5e");
+            background: -o-linear-gradient(top, #3d8d8d, 285e5e);
+            background-color: #3d8d8d;
+            border: 0px solid #000000;
+            text-align: center;
+            border-width: 0px 0px 1px 1px;
+            font-size: 12px;
+            font-family: Arial;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .tableStyle thead:hover td {
+            background: -o-linear-gradient(bottom, #3d8d8d 5%, #285e5e 100%);
+            background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #3d8d8d), color-stop(1, #285e5e));
+            background: -moz-linear-gradient( center top, #3d8d8d 5%, #285e5e 100%);
+            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#3d8d8d", endColorstr="#285e5e");
+            background: -o-linear-gradient(top, #3d8d8d, 285e5e);
+            background-color: #3d8d8d;
+        }
+
+        .tableStyle tr:first-child td:first-child {
+            border-width: 0px 0px 1px 1px;
+        }
+
+        .tableStyle tr:first-child td:last-child {
+            border-width: 0px 0px 1px 1px;
+        }
+
+        .labelCol {
+            padding-right: 5px;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .redColorStyle {
+            background-color: #D95252 !important;
+            display: inline-block;
+            width: 100%;
+            color: white;
+            padding: 2px;
+            margin-bottom: 2px;
+        }
+
+        .yellowColorStyle {
+            background-color: #F5DA81 !important;
+            display: inline-block;
+            width: 100%;
+            color: white;
+            padding: 2px;
+            margin-bottom: 2px;
+            height: 100%;
+        }
+
+        .greenColorStyle {
+            background-color: #90D93F !important;
+            display: inline-block;
+            width: 100%;
+            color: white;
+            padding: 2px;
+            margin-bottom: 2px;
+        }
+
+        .orangeColorStyle {
+            background-color: #FE9A2E !important;
+            display: inline-block;
+            width: 100%;
+            color: white;
+            padding: 2px;
+            margin-bottom: 2px;
+            height: 100%;
+        }
+
+        .grayColorStyle {
+            background-color: #B2B2B2 !important;
+            display: inline-block;
+            width: 100%;
+            color: white;
+            padding: 2px;
+            margin-bottom: 2px;
+            height: 100%;
+        }
+
+        .blueColorStyle {
+            background-color: #00BFFF !important;
+            display: inline-block;
+            width: 100%;
+            color: white;
+            padding: 2px;
+            margin-bottom: 2px;
+            height: 100%;
+        }
+
+        .peachColorStyle {
+            background-color: #F5DA81 !important;
+            display: inline-block;
+            width: 100%;
+            color: white;
+            padding: 2px;
+            margin-bottom: 2px;
+            height: 100%;
+        }
+
+        .hoverDivClass {
+            background-color: rgb(31, 70, 230);
+            border-style: dashed;
+            border-width: 1px;
+            color: white;
+        }
+
+        .hoverDivClass a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .calendarButton {
+            //background-image: url("{!URLFOR($Resource.Calendar)}");
+            cursor: pointer;
+        }
+
+        .ui-tooltip,
+        .arrow:after {
+            background: white;
+            border: 2px solid white;
+        }
+
+        .ui-tooltip {
+            padding: 10px 20px;
+            color: white;
+            border-radius: 20px;
+            font: bold 14px "Helvetica Neue", Sans-Serif;
+            box-shadow: 0 0 7px black;
+        }
+
+        .arrow {
+            width: 70px;
+            height: 16px;
+            overflow: hidden;
+            position: absolute;
+            left: 50%;
+            margin-left: -35px;
+            bottom: -16px;
+        }
+
+        .arrow.top {
+            top: -16px;
+            bottom: auto;
+        }
+
+        .arrow.left {
+            left: 20%;
+        }
+
+        .arrow:after {
+            content: "";
+            position: absolute;
+            left: 20px;
+            top: -20px;
+            width: 25px;
+            height: 25px;
+            box-shadow: 6px 5px 9px -9px black;
+            -webkit-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            -o-transform: rotate(45deg);
+            tranform: rotate(45deg);
+        }
+
+        .arrow.top:after {
+            bottom: -20px;
+            top: auto;
+        }
+
+        .ui-widget-overlay {
+            z-index: 1;
+        }
+
+        .confirmM2 {
+            border-color: #39f !important;
+        }
+
+        .errorM3 {
+            border-color: #c00 !important;
+        }
+
+        .messageText {
+            color: black !important;
+        }
+
+        .ui-dialog-titlebar-close {
+            display: none;
+        }
+
+
+        .leftContainer {
+            display: inline-block;
+            text-align: left;
+            border: 0px;
+            float: left;
+            width: 65%;
+            vertical-align: middle;
+        }
+
+        .rightContainer {
+            display: inline-block;
+            text-align: right;
+            border: 0px;
+            float: right;
+            vertical-align: middle;
+        }
+
+        .tdHeaderStyle {
+            font-weight: bold;
+            color: #4a4a56;
+            font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
+            font-size: 91%;
+        }
+
+        .btn {}
+
+        .swal-button {
+            background: #7cd1f9 !important;
+        }
+    </style>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+
+        var j$ = jQuery.noConflict();
+        j$(function () {
+            applyJqueryFunctions();
+        });
+
+        function applyJqueryFunctions() {
+            applyWeekPicker();
+            applyTootltip();
+            applyButtonToQuickCreate();
+            console.log('applyJqueryFunctions');
+        }
+
+        function callActionFunction() {
+            saveClosingReport();
+        }
+
+        function dbswarning() {
+            var myboolean = document.getElementById('pageId:formId:dialogBoxPageBlock:j_id335:j_id344:dbs').value;
+            //var myboolean = false;
+            console.log('Positive DBS:' + myboolean);
+            if (myboolean == 'true') {
+                swal("Positive DBS !!");
+                console.log('Positive DBS Warning');
+            } else {
+                console.log('Positive DBS false');
+            }
+            console.log('Changing value.....');
+            document.getElementById('pageId:formId:dialogBoxPageBlock:j_id335:j_id344:dbs').value = 'false';
+            console.log(document.getElementById('pageId:formId:dialogBoxPageBlock:j_id335:j_id344:dbs').value);
+        }
+
+        function applyButtonToQuickCreate() {
+
+            j$("#prevBtnId").button().unbind('click').click(function (event) {
+                event.preventDefault();
+                console.log('In previous Week');
+                previousWeek();
+            });
+
+            j$("#nextBtnId").button().unbind('click').click(function (event) {
+                event.preventDefault();
+                console.log('In next week');
+                nextWeek();
+            });
+
+            j$("#prevBtnId2").button().unbind('click').click(function (event) {
+                event.preventDefault();
+                console.log('In previous Week');
+                previousWeek();
+            });
+
+            j$("#nextBtnId2").button().unbind('click').click(function (event) {
+                event.preventDefault();
+                console.log('In next week');
+                nextWeek();
+            });
+
+            j$("#CreateVacancyLink")
+                .button()
+                .click(function (event) {
+                    event.preventDefault();
+                    //createVacancyReord();
+            });
+                
+            j$("#SwitchView")
+            .button()
+            .click(function (event) {
+                event.preventDefault();
+                window.open('/apex/TRS_FilterCandidates', '_self');
+                
+            });
+                
+            j$("#editVacancyLink")
+                .a()
+                .click(function (event) {
+                    event.preventDefault();
+                    //editVacancy();
+            });
+        }
+
+        // WEEK PICKER Code
+        function applyWeekPicker() {
+            var startDate;
+            var endDate;
+
+            var selectCurrentWeek = function () {
+                window.setTimeout(function () {
+                    j$('#weekpicker').datepicker('widget').find('.ui-datepicker-current-day a').addClass('ui-state-active')
+                }, 1);
+            }
+
+            j$('#weekpicker').button().unbind('click').datepicker({
+                minDate: 0,
+                showOtherMonths: false,
+                selectOtherMonths: false,
+                firstDay: 1,
+                onSelect: function (dateText, inst) {
+                    var date = j$(this).datepicker('getDate');
+                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1);
+                    endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
+                    var dateFormat = inst.settings.dateFormat || j$.datepicker._defaults.dateFormat;
+
+                    selectCurrentWeek();
+                    updateWeek(j$.datepicker.formatDate("dd/mm/yy", startDate), j$.datepicker.formatDate("dd/mm/yy", endDate));
+                },
+                beforeShow: function () {
+                    selectCurrentWeek();
+                },
+                beforeShowDay: function (date) {
+                    var cssClass = '';
+                    if (date >= startDate && date <= endDate)
+                        cssClass = 'ui-datepicker-current-day';
+                    return [true, cssClass];
+                },
+                onChangeMonthYear: function (year, month, inst) {
+                    selectCurrentWeek();
+                }
+            }).datepicker('widget').addClass('ui-weekpicker');
+
+            j$('#weekpicker2').button().unbind('click').datepicker({
+                minDate: 0,
+                showOtherMonths: false,
+                selectOtherMonths: false,
+                firstDay: 1,
+                onSelect: function (dateText, inst) {
+                    var date = j$(this).datepicker('getDate');
+                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1);
+                    endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
+                    var dateFormat = inst.settings.dateFormat || j$.datepicker._defaults.dateFormat;
+
+                    selectCurrentWeek();
+                    updateWeek(j$.datepicker.formatDate("dd/mm/yy", startDate), j$.datepicker.formatDate("dd/mm/yy", endDate));
+                },
+                beforeShow: function () {
+                    selectCurrentWeek();
+                },
+                beforeShowDay: function (date) {
+                    var cssClass = '';
+                    if (date >= startDate && date <= endDate)
+                        cssClass = 'ui-datepicker-current-day';
+                    return [true, cssClass];
+                },
+                onChangeMonthYear: function (year, month, inst) {
+                    selectCurrentWeek();
+                }
+            }).datepicker('widget').addClass('ui-weekpicker');
+
+            //j$('.ui-weekpicker .ui-datepicker-calendar tr').on('mousemove', function() { $(this).find('td a').addClass('ui-state-hover'); });
+            //j$('.ui-weekpicker .ui-datepicker-calendar tr').live('mouseleave', function() { $(this).find('td a').removeClass('ui-state-hover'); });
+        }
+
+        function applyTootltip() {
+
+            j$('.applyTooltipStyle').tooltip({
+                content: function () {
+                    var element = j$(this);
+                    if (element.is("[title]")) {
+                        return element.attr("title");
+                    }
+                },
+                position: {
+                    my: "center bottom-20",
+                    at: "center top",
+                    using: function (position, feedback) {
+                        j$(this).css(position);
+                        j$("<div>")
+                            .addClass("arrow")
+                            .addClass(feedback.vertical)
+                            .addClass(feedback.horizontal)
+                            .appendTo(this);
+                    }
+                },
+                close: function (event, ui) {
+                    ui.tooltip.hover(
+                        function () {
+                            j$(this).stop(true).fadeTo(400, 1);
+                        },
+                        function () {
+                            j$(this).fadeOut("400", function () { $(this).remove(); })
+                        }
+                    );
+                }
+            });
+        }
+        function mergeConfirmation() {
+            return confirm('This action cannot be undone. Are you sure you want to cancel the assignment?');
+        }
+
+
+    </script>
+    <style>
+        .tableStyle {
+            border-collapse: collapse;
+            border-spacing: 0px 0px;
+        }
+
+        .colStyle1 {
+            width: 33%;
+            text-align: right;
+            padding-top: 3px;
+            padding-bottom: 5px
+        }
+
+        .colStyle2 {
+            width: 33%;
+            padding-left: 20px;
+            padding-top: 5px;
+            padding-bottom: 5px
+        }
+
+        .colStyle3 {
+            width: 33%;
+            text-align: right;
+            padding-top: 5px;
+            padding-bottom: 5px
+        }
+    </style>
+
+    <apex:form id="formId">
+        <c:DependentMultiPicklistComponent_v1 />
+        <apex:pageMessages id="msgId" />
+        <TR1:Overlay style="processing" />
+        <apex:actionStatus id="searchOverlay" onStart="showOverlay();" onstop="hideOverlay();"></apex:actionstatus>
+        <div id="overlay"></div>
+
+        <apex:actionFunction name="previousWeek" oncomplete="applyJqueryFunctions();" action="{!previousWeek}" rerender="msgId,vacaniesPanel,CalanderWeek"
+            status="searchOverlay" />
+        <apex:actionFunction name="nextWeek" oncomplete="applyJqueryFunctions();" action="{!nextWeek}" rerender="msgId,vacaniesPanel,CalanderWeek"
+            status="searchOverlay" />
+
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="1" title="Select Candidate">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Candidate Name" />
+                    <apex:outputPanel >
+                        <apex:inputField value="{!ClosingRep.TR1__Person_Placed__c}" />
+                        <apex:commandButton value="Go" action="{!getCandidateDetails}" rerender="formId" status="searchOverlay" oncomplete="applyJqueryFunctions();"
+                        />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+
+            <!-- CANDIDATE INFROMATION SECTION : START-->
+            <apex:pageBlockSection columns="1" title="Candidate Details" rendered="{!contact.id != null}">
+
+                <apex:pageBlockSection columns="1">
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Candidate Alert" />
+                        <apex:outputText value="{!contact.Alert__c}" style="color : red" />
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+
+                <apex:pageBlockSection columns="2">
+                    <apex:pageBlockSectionItem dataStyle="text-align:left; width: 30%; max-width: 30%;">
+                        <apex:outputLabel value="Candidate Name" />
+                        <apex:outputPanel >
+                            <apex:outputlink value="/{!contact.id}" target="_blank">{!contact.Name}</apex:outputlink>
+                            <apex:outputLink value="/apex/TRS_CandidateCalendar?contactId={!contact.id}" style="cursor:pointer;" target="_blank">
+                                <apex:image value="{!URLFOR($Resource.Images, 'calendar.png')}" width="30" height="30" />
+                            </apex:outputLink>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="People Owner" />
+                        <apex:outputField value="{!contact.OwnerId}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Compliance Status" />
+                        <apex:outputField value="{!contact.Compliance_Status__c}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Sector" />
+                        <apex:outputField value="{!contact.Sector__c}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Branch" />
+                        <apex:outputField value="{!contact.Division__c}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputlabel value="Job Title" />
+                        <apex:outputField value="{!contact.Job_Titles__c}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Home Postcode" />
+                        <apex:outputField value="{!contact.otherPostalCode}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Transport" />
+                        <apex:outputField value="{!contact.Transport__c}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Mobile Phone" />
+                        <apex:outputField value="{!contact.MobilePhone}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Distance Will Travel" />
+                        <apex:outputField value="{!contact.Distance_Will_Travel__c}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Phone" />
+                        <apex:outputField value="{!contact.Phone}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Preferred LEA" />
+                        <apex:outputField value="{!contact.Preferred_LEA__c}" />
+                    </apex:pageBlockSectionItem>
+
+                </apex:pageBlockSection>
+            </apex:pageBlockSection>
+            <!-- CANDIDATE INFROMATION SECTION : END-->
+        </apex:pageBlock>
+
+        <apex:outputPanel id="CalanderWeek">
+            <div id="headerId" style="text-align:center; width:100%;">
+                <table width="100%">
+                    <tr>
+                        <td width="35%" style="text-align:left;vertical-align:bottom;">
+                            <apex:outputPanel id="navigationPanel">
+                                <span id="toolbar">
+                                    <a href="#" id="CreateVacancyLink" onclick="createVacancyReord();">Create Vacancy</a>
+                                </span>
+                                <span id="toolbar">
+                                    <a href="#" id="SwitchView">Switch</a>
+                                </span>
+                            </apex:outputPanel>
+                        </td>
+                        <td width="30%" style="text-align:center;vertical-align:bottom;{!IF((isPermanant),'display:none','')}">
+                            <h1 class="h2Style" style="font-size: 18px;">
+                                Calendar for Week {!week}
+                                <br/>
+                            </h1>
+                        </td>
+                        <td width="35%"></td>
+                    </tr>
+                </table>
+                <br/>
+                <br/>
+                <apex:actionFunction name="updateWeek" action="{!updateWeek}" rerender="formId" status="searchOverlay" oncomplete="applyJqueryFunctions();">
+                    <apex:param name="startDateStr" value="str" assignTo="{!startDateStr}" />
+                    <apex:param name="endDateStr" value="str" assignTo="{!endDateStr}" />
+                </apex:actionFunction>
+            </div>
+        </apex:outputPanel>
+
+        <apex:pageBlock rendered="{!isPermanant == false}">
+            <!--FILTER SECTION : START-->
+            <apex:pageBlockSection title="Vacancy Filters" columns="2" collapsible="true" id="filterpbsid">
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Booking Type" />
+                    <apex:inputField value="{!VacRec.Booking_Type__c}" />
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Area" />
+                    <apex:inputField value="{!VacRec.TR1__State_Area__c}" />
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Regional Area" />
+                    <apex:inputField value="{!VacRec.TR1__Regional_Area__c}" />
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Branch" />
+                    <apex:inputField value="{!conTemp.Division__c}" />
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Region" />
+                    <apex:inputfield value="{!conTemp.LEA__c}" />
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Vacancy Owner" />
+                    <apex:inputField value="{!conTemp.Hidden_Scheduler_Filter__c}" />
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="LEA" />
+                    <apex:inputField value="{!conTemp.Preferred_LEA__c}" />
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Show" />
+                    <apex:selectList value="{!whichVacancy}" size="1" multiSelect="false">
+                        <apex:selectOptions value="{!whichVacancyOptions}" />
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Client Name" />
+                    <apex:inputField value="{!VacRec.TR1__Account__c}" />
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Post Code" />
+                    <apex:inputField value="{!conTemp.OtherPostalCode}" />
+                </apex:pageBlockSectionItem>
+
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection title="Vacancy SET Filters" columns="2" collapsible="true" id="filter2pbsid">
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Job Titles" />
+                    <apex:inputField value="{!tempcontact.Job_Titles__c}" />
+                </apex:pageBlockSectionItem>
+
+                <apex:pageblockSectionItem >
+                    <apex:outputLabel value="Subject" />
+                    <apex:inputField value="{!VacRec.Subject2__c}" />
+                </apex:pageblockSectionItem>
+
+
+                <apex:pageBlockSectionItem id="pbsi3">
+                    <apex:outputLabel value="SEN Experience" />
+                    <apex:inputfield value="{!VacRec.SEN_Experience__c}" />
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Year/Key Stage" />
+                    <apex:inputfield value="{!VacRec.Year_Key_Stage__c}" />
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Skills Training Experience" />
+                    <apex:inputfield value="{!VacRec.Skills_Training_Experience__c}" />
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:inputCheckbox value="{!isSortingByDistances}" />
+                    <apex:outputLabel value="Sort By Distance" style="font-weight: bold;" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:inputCheckbox value="{!isPersonPlaced}" />
+                    <apex:outputLabel value="Previously Placed Candidate" style="font-weight: bold;" />
+                </apex:pageBlockSectionItem>
+
+            </apex:pageBlockSection>
+            <!--FILTER SECTION : END-->
+
+            <!--FILTER RESULT & OTHER BUTTONS SECTION (ON TOP) : START-->
+            <table width="100%">
+                <tr>
+                    <td width="35%"></td>
+                    <td width="30%">
+                        <center>
+                            <apex:commandButton action="{!getResourceAvailability}" value="Filter Vacancies" rerender="tableRec,pgMessage,filter3,vacaniesPanel"
+                                oncomplete="applyJqueryFunctions();" status="searchOverlay" style="text-align:centre;" />
+                            <apex:commandButton action="{!resetFilters}" value="Reset Filters" rerender="filterSection,tableRec,pgMessage,filter3,filter2pbsid,filterpbsid,vacaniesPanel"
+                                oncomplete="applyJqueryFunctions();" status="searchOverlay" style="text-align:centre;" />
+                        </center>
+                    </td>
+                    <td width="35%">
+                        <button id="nextBtnId" style="float: right;">Next</button>
+                        <input type="button" id="weekpicker" value="Select Week" style="float: right;" />
+                        <button id="prevBtnId" style="float: right;">Previous</button>
+                    </td>
+                </tr>
+            </table>
+            <!--FILTER RESULT & OTHER BUTTONS SECTION (ON TOP) : END-->
+
+            <br/>
+            <br/>
+
+            <!--FILTER RESULT SECTION : START-->
+            <apex:outputPanel id="vacaniesPanel">
+                <apex:outputPanel rendered="{!OR(AND(Resources.size!=null,Resources.size>0),ClosingRep.TR1__Person_Placed__c==null)}" id="WrapperPanel">
+                    <div class="tableStyle">
+                        <script>
+                            function openVacancyCalendar(vacancyId) {
+                                window.open('/apex/TRS_JobCalendar?vacancyId=' + vacancyId, '_blank');
+                            }
+                        </script>
+                        <apex:outputPanel id="tableRec">
+                            <table class="tableStyle" id="tableClass1" height="Auto">
+                                <tr>
+                                    <td width="30%">
+                                        <b>Candidate Schedules </b>
+                                    </td>
+                                    <td width="5%"></td>
+                                    <td width="5%"></td>
+                                    <td width="5%"></td>
+                                    <apex:repeat value="{!Resources[0].weekDayMap}" var="Date" rendered="{!isweekDayMapPopulated}">
+                                        <td width="50px">
+                                            <apex:repeat value="{!weekDayMap[Date]}" var="vaccAss">
+                                                <table width="100%">
+                                                    <tr>
+                                                        <td style="border:none !important; padding:0px">
+                                                            <div style="width:100%;">
+                                                                <div class="leftContainer,greenColorStyle" style="display:{!IF(vaccAss.Id==null , 'None','')}">
+                                                                    <apex:outputText value="{0, date,hh:mm a }">
+                                                                        <apex:param value="{!vaccAss.Start_Date_Time__c+offset}" />
+                                                                    </apex:outputText>
+                                                                    -
+                                                                    <apex:outputText value="{0, date,  hh:mm a }">
+                                                                        <apex:param value="{!vaccAss.End_Date_Time__c+offset}" />
+                                                                    </apex:outputText>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </apex:repeat>
+                                        </td>
+                                    </apex:repeat>
+                                    <td width="50px" style="{!IF(!isweekDayMapPopulated,'','display:none')}">&nbsp;</td>
+                                    <td width="50px" style="{!IF(!isweekDayMapPopulated,'','display:none')}">&nbsp;</td>
+                                    <td width="50px" style="{!IF(!isweekDayMapPopulated,'','display:none')}">&nbsp;</td>
+                                    <td width="50px" style="{!IF(!isweekDayMapPopulated,'','display:none')}">&nbsp;</td>
+                                    <td width="50px" style="{!IF(!isweekDayMapPopulated,'','display:none')}">&nbsp;</td>
+                                    <td width="50px" style="{!IF(!isweekDayMapPopulated,'','display:none')}">&nbsp;</td>
+                                    <td width="50px" style="{!IF(!isweekDayMapPopulated,'','display:none')}">&nbsp;</td>
+                                    <td class="EmptyTD" width="3%">
+                                    </td>
+                                </tr>
+                            </table>
+                            <table>
+                                <thead>
+                                    <td width="30%">
+                                        <div reRender="vacaniesPanel">
+                                            <apex:commandLink action="{!getResourceAvailability}" value="Vacancy Name{!IF(sortExpression=='name',IF(sortDirection='ASC','▼','▲'),'')}"
+                                                id="cmdSort">
+                                                <apex:param value="name" name="column" assignTo="{!sortExpression}"></apex:param>
+                                            </apex:commandLink>
+                                        </div>
+                                    </td>
+                                    <td width="5%">Withheld</td>
+                                    <td width="5%">Distance</td>
+                                    <td width="5%">Calendar</td>
+                                    <apex:repeat value="{!weekHeader}" var="week">
+                                        <td>
+                                            <apex:outputText escape="false" value="{!week}" />
+                                        </td>
+                                    </apex:repeat>
+                                    <td width="3%">
+                                        Book
+                                    </td>
+                                </thead>
+                                <!--{!resources}-->
+
+                                <apex:repeat value="{!resources}" var="resource">
+                                    <tr>
+                                        <td width="30%">
+                                            <div id="{!resource.Vacancy.Id}" class="droppableDiv" style="width:100%;">
+                                                <apex:outputLink value="/{!resource.Vacancy.Id}" target="_blank" title="{!resource.tooltipContent}" styleClass="applyTooltipStyle">
+                                                    {!resource.Vacancy.Name}
+                                                </apex:outputLink>
+                                                <apex:outputPanel rendered="{!contact.id != null && isPersonPlaced}">
+                                                    <h3 style="color:red;">{!mapToShowPersonPlaced[resource.vacancy.TR1__Account__c]}</h3>
+                                                </apex:outputPanel>
+                                                <br/> LEA:{!resource.Vacancy.LEA__c}
+                                                <br/> SUB LEA:{!resource.Vacancy.Sub_LEA__c}
+                                                <br/>
+                                            </div>
+                                        </td>
+                                        <td width="5%">
+
+                                            <apex:outputPanel rendered="{!contact.id != null}">
+                                                {!mapToShowWithHeld[resource.vacancy.TR1__Account__c]}
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!contact.id == null}">
+                                                -
+                                            </apex:outputPanel>
+                                        </td>
+                                        <td width="5%">
+                                            <apex:outputPanel rendered="{!contact.id != null}">
+                                                {!resource.distanceVal} mi
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!contact.id == null}">
+                                                N/A
+                                            </apex:outputPanel>
+                                        </td>
+                                        <td width="5%">
+                                            <apex:outputLink value="/apex/TRS_JobCalendar?vacancyId={!resource.Vacancy.Id}" style="cursor:pointer;" target="_blank">
+                                                <apex:image value="{!URLFOR($Resource.Images, 'calendar.png')}" width="30" height="30" />
+                                            </apex:outputLink>
+                                        </td>
+
+                                        <apex:repeat value="{!resource.dateAvailMap}" var="dates">
+
+                                            <td width="50px">
+                                                <table>
+                                                    <apex:repeat value="{!resource.dateAvailMap[dates]}" var="ddWrap">
+                                                        <tr width="100px" name="{!ddWrap.vacAvailabilityRec.Id}" id="editVacancyLink" ondblclick="editVacancy2('{!ddWrap.vacAvailabilityRec.Id}');">
+                                                            <!-- {!ddWrap.vacAvailabilityRec.Id} -->
+                                                            <td style="border-width: 0px 0px 0px 0px !important; padding: 0px;display:{!IF(ddWrap.vacAvailabilityRec.Start_Date_Time__c!=null , '','None')}">
+                                                                <apex:outputPanel rendered="{!ddWrap.vacAvailabilityRec!=null}">
+                                                                    <div class="{!ddWrap.dayDetail1.colorStyle}">
+                                                                        <apex:outputPanel styleClass="applyTooltipStyle" rendered="{!ddWrap.dayDetail1.Status == 'Booked'}" title="{!ddWrap.dayDetail1.tooltipContent}">
+                                                                            <div style="width:100%">
+                                                                                <div class="leftContainer,{!ddWrap.dayDetail1.colorStyle}">
+                                                                                    {!ddWrap.dayDetail1.assignedJobName}
+
+                                                                                    <apex:outputText value="{0, date,hh:mm a }">
+                                                                                        <apex:param value="{!ddWrap.vacAvailabilityRec.Start_Date_Time__c+offset}" />
+                                                                                    </apex:outputText>
+                                                                                    -
+                                                                                    <apex:outputText value="{0, date,  hh:mm a }">
+                                                                                        <apex:param value="{!ddWrap.vacAvailabilityRec.End_Date_Time__c+offset}" />
+                                                                                    </apex:outputText>
+
+                                                                                </div>
+                                                                                <div>
+                                                                                    {!ddWrap.canAvailabilityRec.Candidate__r.Candidate_Alias__c}
+                                                                                </div>
+                                                                            </div>
+                                                                        </apex:outputPanel>
+                                                                        <apex:outputPanel rendered="{!ddWrap.dayDetail1.Status != 'Booked'}">
+                                                                            <div style="width:100%">
+                                                                                <div class="leftContainer,{!ddWrap.dayDetail1.colorStyle}">
+                                                                                    <apex:outputPanel rendered="{!ddWrap.dayDetail1.Status == 'Available'}">
+                                                                                        <apex:outputText value="{0, date,hh:mm a }">
+                                                                                            <apex:param value="{!ddWrap.vacAvailabilityRec.Start_Date_Time__c+offset}" />
+                                                                                        </apex:outputText>
+                                                                                        -
+                                                                                        <apex:outputText value="{0, date,  hh:mm a }">
+                                                                                            <apex:param value="{!ddWrap.vacAvailabilityRec.End_Date_Time__c+offset}" />
+                                                                                        </apex:outputText>
+
+                                                                                        <a href="javascript:void(0);" onclick="doOpenDialogForClosingReport('{!resource.vacancy.Id}','{!resource.vacancy.Name}','{!resource.enddate}','{!resource.vacancy.Shift__c}','{!dates}');return false;"
+                                                                                            style="cursor:pointer; text-decoration:None ; display:{!IF(AND(Count!=0,resource.jobAvailCount!=0),'','none')}">
+                                                                                            <span style="color:White">Book Slot</span>
+                                                                                        </a>
+                                                                                    </apex:outputPanel>
+
+                                                                                    <apex:outputPanel rendered="{!ddWrap.dayDetail1.Status == 'Unknown'}">
+                                                                                        <apex:outputText value="{0, date,hh:mm a }">
+                                                                                            <apex:param value="{!ddWrap.vacAvailabilityRec.Start_Date_Time__c+offset}" />
+                                                                                        </apex:outputText>
+                                                                                        -
+                                                                                        <apex:outputText value="{0, date,  hh:mm a }">
+                                                                                            <apex:param value="{!ddWrap.vacAvailabilityRec.End_Date_Time__c+offset}" />
+                                                                                        </apex:outputText>
+                                                                                    </apex:outputPanel>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                </apex:outputPanel>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:repeat>
+                                                </table>
+                                                <script>
+                                                    function editVacancy2(Id){
+                                                        console.log('<<<----Now you entered double clicked---->');      
+                                                        var name = Id;
+                                                        editVacancy(Id);
+                                                    }                                   
+                                                </script>
+                                            </td>
+                                        </apex:repeat>
+                                        <td>
+                                            <apex:image value="{!URLFOR($Resource.Images,'add-button-md.png')}" height="20" width="20" style="cursor:pointer;" rendered="{!AND(Count != 0,resource.jobAvailCount != 0)}">
+                                            <!-- <apex:image value="{!URLFOR($Resource.Images,'add-button-md.png')}" height="20" width="20" style="cursor:pointer;" > -->
+                                                <apex:actionSupport event="onclick" action="{!openDialogForClosingReport}" rerender="SchedulerDiv,pgMessage,dialogBoxForBooking"
+                                                    status="searchOverlay" oncomplete="applyJqueryFunctions();">
+                                                    <apex:param name="Job1" value="{!resource.vacancy.Id}" />
+                                                    <apex:param name="vacancyName" value="{!resource.vacancy.Name}" />
+                                                    <apex:param name="vacancyDate" value="{!resource.enddate}" />
+                                                    <apex:param name="vacancyPayType" value="{!resource.vacancy.Shift__c}" />
+                                                </apex:actionSupport>
+                                            </apex:image>
+                                            <br/>
+                                        </td>
+
+                                    </tr>
+                                </apex:repeat>
+                            </table>
+                            <apex:actionFunction name="doOpenDialogForClosingReport" action="{!openDialogForClosingReport}" rerender="SchedulerDiv,pgMessage,dialogBoxForBooking"
+                                status="searchOverlay" oncomplete="applyJqueryFunctions();">
+                                <apex:param name="Job1" value="" assignTo="{!resource.vacancy.Id}" />
+                                <apex:param name="vacancyName" value="" assignTo="{!resource.vacancy.Name}" />
+                                <apex:param name="vacancyDate" value="" />
+                                <apex:param name="vacancyPayType" value="" assignTo="{!resource.vacancy.Shift__c}" />
+                                <apex:param name="vacancyStartDate" value="" assignTo="{!vacancyStartDate}" />
+                            </apex:actionFunction>
+                        </apex:outputPanel>
+                    </div>
+
+
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!OR(Resources.size==0,Resources.size=null)}">
+                    No matching Vacancies found for selected filters. Please refine your search filters.
+                </apex:outputPanel>
+            </apex:outputPanel>
+            <!--FILTER RESULT SECTION : END-->
+
+            <!--FILTER RESULT & OTHER BUTTONS SECTION (ON BOTTOM) : START-->
+            <table width="100%">
+                <tr>
+                    <td width="35%"></td>
+                    <td width="30%">
+                        <center>
+                            <apex:commandButton action="{!getResourceAvailability}" value="Filter Vacancies" rerender="tableRec,pgMessage,filter3,vacaniesPanel"
+                                oncomplete="applyJqueryFunctions();" status="searchOverlay" style="text-align:centre;" />
+                            <apex:commandButton action="{!resetFilters}" value="Reset Filters" rerender="filterSection,tableRec,pgMessage,filter3,Filter,filter2pbsid,filterpbsid,vacaniesPanel"
+                                oncomplete="applyJqueryFunctions();" status="searchOverlay" style="text-align:centre;" />
+                        </center>
+                    </td>
+                    <!-- pagination -->
+
+                    <td width="14%">
+                        <apex:outputPanel id="pDiv">
+
+                            <apex:commandButton action="{!previouspaginaton}" value="Previous Page" disabled="{!IF(OFFSETvalue == 0,true,false)}" status="MyStatus1"
+                            />
+                            <apex:selectList id="ListSize" size="1" value="{!SelectSize}" onchange="changeListsizeJS();" label="PageSize">
+                                <apex:selectOption itemValue="5" itemLabel="5" />
+                                <apex:selectOption itemValue="10" itemLabel="10" />
+                                <apex:selectOption itemValue="20" itemLabel="20" />
+                                <apex:selectOption itemValue="25" itemLabel="25" />
+                                <apex:selectOption itemValue="50" itemLabel="50" />
+                                <apex:selectOption itemValue="100" itemLabel="100" />
+                                <apex:actionFunction name="changeListsizeJS" action="{!changeListsize}" />
+                            </apex:selectList>
+
+                            <apex:commandButton action="{!nextpaginaton}" value="Next Page" disabled="{!IF(recordSize < SelectSize,true,false)}" status="MyStatus1"
+                            /> &nbsp;
+                            <apex:actionStatus stopText="" id="MyStatus1">
+                                <apex:facet name="start">
+                                    <img src="/img/loading.gif" />
+                                </apex:facet>
+                            </apex:actionStatus>&nbsp;
+                        </apex:outputPanel>
+                    </td>
+
+                    <!-- end pagination -->
+
+
+                    <td width="35%">
+                        <button id="nextBtnId2" style="float: right;">Next</button>
+                        <!--Rerender : vacaniesPanel-->
+                        <input type="button" id="weekpicker2" value="Select Week" style="float: right;" />
+                        <!--Rerender : vacaniesPanel-->
+                        <button id="prevBtnId2" style="float: right;">Previous</button>
+                        <!--Rerender : vacaniesPanel-->
+                    </td>
+                </tr>
+            </table>
+            <!--FILTER RESULT & OTHER BUTTONS SECTION (ON BOTTOM) : END-->
+        </apex:pageBlock>
+
+        <!--CREATE BOOKING DAILOG : START-->
+
+        <apex:outputPanel id="dialogBoxForBooking">
+            <apex:outputPanel rendered="{!showAssignmentDialogBox}" id="dialogBoxForBooking1">
+                <style>
+                    .messageText {
+                        color: green;
+                    }
+
+                    .datePicker {
+                        z-index: 1000;
+                    }
+                </style>
+                <script>
+                    j$('#createClosingReportDiv').dialog({
+                        title: 'Book Candidate',
+                        resizable: false,
+                        modal: true,
+                        closeOnEscape: false,
+                        width: 900,
+                        position: {
+                            my: "center",
+                            at: "center"
+                        },
+                        zIndex: 990,
+                        buttons: {
+                            "Save": {
+                                text: "Save",
+                                id: "bttnsave",
+                                click: function () {
+                                    if (true) {
+                                        saveClosingReport();
+                                        j$(this).dialog("destroy");
+                                    }
+                                }                            
+                            }
+                            , "Partial Save": function () {
+                                if (true) {
+                                    PatialsaveClosingReport();
+                                    j$(this).dialog("destroy");
+                                }
+                            },
+                            Close: function () {
+                                refresh();
+                                j$(this).dialog("destroy");
+                            }
+                        },
+                    }).parent().appendTo(j$("#pageId\\:formId"));
+
+                    // Destroy all Tooltips
+                    j$(".applyTooltipStyle").tooltip("destroy");
+
+                    applyButtonSet();
+
+                    function applyButtonSet() {
+                        j$("#selectDaysDiv").buttonset();
+                    }
+                    j$('input[name*=targetDateToUpdate]').datepicker({
+                        changeMonth: true,
+                        changeYear: true,
+                        dateFormat: "dd/mm/yy",
+                        firstDay: 1
+                    });
+
+                    var value1;
+
+                    var sum;
+                    function val1() {
+
+                        value1 = document.getElementById("daypayrate").value;
+                        console.log(value1);
+
+                        var value2 = document.getElementById("daychargerate").value;
+                        console.log(value2);
+
+                        //gppd=value2 - (value1 + (value1 * 0.13)) || AS BURDEN RATE INCREASED, CHANGED VALUE FROM 0.095 TO 0.13 || 04/04/2022
+                        if (!value1 == "" && !value2 == "") {
+                            sum1 = value1 * 0.13; // CHANGED VALUE || 04/04/2022
+                            console.log('sum1:' + sum1);
+                            console.log('val1:' + value1);
+
+                            sum = parseFloat(value1) + parseFloat(sum1);
+                            console.log('sum:' + sum);
+
+                            total = value2 - sum;
+                            gppd = Math.round(total * 100) / 100;
+                            console.log('gppd:' + gppd);
+                            document.getElementById("total").innerHTML = gppd;
+
+                            if (gppd <= 48.00) {
+                                document.getElementById("total").style.backgroundColor = "#FF0000";
+                                swal("Margin is below target !!");
+                            } else if (gppd > 48.01 && gppd < 51.01) {
+                                document.getElementById("total").style.backgroundColor = "#FFBF00";
+                            } else {
+                                document.getElementById("total").style.backgroundColor = "#ADFF2F";
+                            }
+                        } else if (!value1 == "" && value2 == "") {
+                            document.getElementById("total").innerHTML = "--";
+                        } else if (!value2 == "" && value1 == "") {
+                            document.getElementById("total").innerHTML = "--";
+                        } else {
+                            document.getElementById("total").innerHTML = "--";
+                        }
+                    }
+                </script>
+                <style>
+                    .spinner {
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        margin-top: -50px;
+                        margin-left: -50px;
+                    }
+                </style>
+                <apex:outputPanel id="SpinnerId">
+                    <apex:actionStatus id="loadingscreen">
+                        <apex:facet name="start">
+                            <apex:outputPanel styleclass="spinner">
+                                <img src="/img/loading32.gif" width="40" height="40" />
+                                <br/>
+                                <apex:outputLabel value="Loading..." />
+                            </apex:outputPanel>
+                        </apex:facet>
+                    </apex:actionStatus>
+                </apex:outputPanel>
+                <apex:actionFunction name="saveClosingReport" action="{!saveClosingReport}" oncomplete="applyJqueryFunctions();applyButtonSet();dbswarning();"
+                    rerender="SpinnerId,pgMessage,dialogBoxForBooking" status="loadingscreen">
+                    <!-- formId -->
+                    <apex:param name="partialsave" value="False" />
+                </apex:actionFunction>
+
+                <apex:actionFunction name="PatialsaveClosingReport" action="{!saveClosingReport}" rerender="SchedulerDiv,pgMessage,dialogBoxForBooking,createClosingReportDiv"
+                    oncomplete="applyJqueryFunctions();applyButtonSet();" status="searchOverlay">
+                    <apex:param name="partialsave" value="True" />
+                </apex:actionFunction>
+
+                <apex:actionFunction name="refresh" action="{!refresh}" rerender="formId" oncomplete="applyJqueryFunctions();applyButtonSet();"
+                    status="searchOverlay" immediate="true" />
+                <div id="createClosingReportDiv" style="display:none">
+
+                    <!--MATCHING TABLE : START-->
+                    <div>
+                        <table>
+                            <tr>
+                                <td></td>
+                                <apex:repeat value="{!csdJSDateMap}" var="dates">
+                                    <td>
+                                        <apex:outputText value="{0, date,dd/MM/yy}">
+                                            <apex:param value="{!dates}" />
+                                        </apex:outputText>
+                                    </td>
+                                </apex:repeat>
+                            </tr>
+                            <tr>
+                                <td>Candidate Availability</td>
+                                <apex:repeat value="{!csdJSDateMap}" var="dates">
+                                    <td>
+                                        <apex:repeat value="{!csdJSDateMap[dates]}" var="v">
+                                            <table title="Candidate Availability">
+                                                <tr>
+                                                    <td style="display:{!IF(v.canAvail.Id!=null , '', 'None')};">
+                                                        <div class="{!v.Colour}">
+                                                            <apex:outputText value="{0, date,hh:mm a }">
+                                                                <apex:param value="{!v.canAvail.Start_Date_Time__c+offset}" />
+                                                            </apex:outputText>
+                                                            -
+                                                            <apex:outputText value="{0, date,  hh:mm a }">
+                                                                <apex:param value="{!v.canAvail.End_Date_Time__c+offset}" />
+                                                            </apex:outputText>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </apex:repeat>
+                                    </td>
+                                </apex:repeat>
+                            </tr>
+                            <tr>
+                                <td>Vacancy Schedule</td>
+                                <apex:repeat value="{!csdJSDateMap}" var="dates">
+                                    <td>
+                                        <apex:repeat value="{!csdJSDateMap[dates]}" var="v">
+                                            <apex:outputPanel id="Withshiftsec" rendered="{!csdJSDateMap[dates]!=null}">
+                                                <table title="Vacancy Schedule">
+                                                    <tr>
+                                                        <td style="display:{!IF(v.vaccAvail.Id!=null , '', 'None')};">
+                                                            <div class="{!v.Colour}">
+                                                                <apex:outputText value="{0, date,hh:mm a }">
+                                                                    <apex:param value="{!v.vaccAvail.Start_Date_Time__c+offset}" />
+                                                                </apex:outputText>
+                                                                -
+                                                                <apex:outputText value="{0, date,  hh:mm a }">
+                                                                    <apex:param value="{!v.vaccAvail.End_Date_Time__c+offset}" />
+                                                                </apex:outputText>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!csdJSDateMap==null}" id="Nullsection">
+                                                There are no Availability on job created yet for current week.
+                                            </apex:outputPanel>
+                                        </apex:repeat>
+                                    </td>
+                                </apex:repeat>
+                            </tr>
+                            <tr>
+                                <td style="font-size:large;font-weight: 700;">GPPD (Gross Profit Per Day) : </td>
+                                <td>
+                                    <table title="gppd">
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <label id="total" style="font-size:x-large;font-weight: bold;">--</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--MATCHING TABLE : START-->
+
+                    <apex:pageBlock id="dialogBoxPageBlock" mode="edit">
+                        <apex:pageMessages id="closingReportMsgId" />
+
+                        <apex:pageBlockSection >
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Vacancy" />
+                                <apex:outputLink value="/{!vacancyId}" target="_blank">
+                                    {!vacancyName}
+                                </apex:outputLink>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Candidate" />
+                                <apex:outputLink value="/{!contact.Id}" target="_blank">
+                                    {!contact.Name}
+                                </apex:outputLink>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:inputHidden id="dbs" value="{!positivedbs}" />
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:inputHidden id="myv" />
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Maximum Hour Pay Rate" for="maximum__hour__pay__rate" />
+                                <apex:outputField value="{!conToShowRate.Hourly_Rate_Agreed__c}" id="maximum__hour__pay__rate" />
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Maximum Hour Charge Rate" for="maximum__hour__charge__rate" />
+                                <apex:outputField value="{!VacancyRecord.Maximum_Hour_Charge_Rate__c}" id="maximum__hour__charge__rate" />
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Hour Pay Rate" />
+                                <apex:outputPanel >
+                                    <apex:outputField value="{!closingReport.Maximum_Hour_Pay_Rate__c}" rendered="{!closingReport.id != null}" />
+                                    <apex:inputField value="{!closingReport.Maximum_Hour_Pay_Rate__c}" rendered="{!closingReport.id == null}" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Hour Charge Rate" />
+                                <apex:outputPanel >
+                                    <apex:outputField value="{!closingReport.Maximum_Hour_Charge_Rate__c}" rendered="{!closingReport.id != null}" />
+                                    <apex:inputField value="{!closingReport.Maximum_Hour_Charge_Rate__c}" rendered="{!closingReport.id == null}" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Pay Rate Calculator" />
+                                <apex:outputPanel >
+                                    <apex:outputField value="{!closingReport.Maximum_Pay_rate_Per_Day__c}" rendered="{!closingReport.id != null}" />
+                                    <input value="{!closingReport.Maximum_Pay_rate_Per_Day__c}" id="daypayrate" rendered="{!closingReport.id == null}" onfocusout="val1()"
+                                    />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Charge Rate Calculator" />
+                                <apex:outputPanel >
+                                    <apex:outputField value="{!closingReport.Maximum_Charge_Per_Day__c}" rendered="{!closingReport.id != null}" />
+                                    <input value="{!closingReport.Maximum_Charge_Per_Day__c}" id="daychargerate" rendered="{!closingReport.id == null}" onfocusout="val1()"
+                                    />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Day Pay Rate" />
+                                <apex:outputPanel >
+                                    <apex:outputField value="{!closingReport.Maximum_Day_Pay_Rate__c}" rendered="{!closingReport.id != null}" />
+                                    <apex:inputField value="{!closingReport.Maximum_Day_Pay_Rate__c}" rendered="{!closingReport.id == null}" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Day Charge Rate" />
+                                <apex:outputPanel >
+                                    <apex:outputField value="{!closingReport.Maximum_Day_Charge_Rate__c}" rendered="{!closingReport.id != null}" />
+                                    <apex:inputField value="{!closingReport.Maximum_Day_Charge_Rate__c}" rendered="{!closingReport.id == null}" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Half Day Pay Rate" />
+                                <apex:outputPanel >
+                                    <apex:outputField value="{!closingReport.Maximum_Half_Day_Pay_Rate__c}" rendered="{!closingReport.id != null}" />
+                                    <apex:inputField value="{!closingReport.Maximum_Half_Day_Pay_Rate__c}" rendered="{!closingReport.id == null}" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Half Day Charge Rate" />
+                                <apex:outputPanel >
+                                    <apex:outputField value="{!closingReport.Maximum_Half_Day_Charge_Rate__c}" rendered="{!closingReport.id != null}" />
+                                    <apex:inputField value="{!closingReport.Maximum_Half_Day_Charge_Rate__c}" rendered="{!closingReport.id == null}" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Hiring Manager" />
+                                <apex:outputLabel value="{!hManager}" />
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <!-- HG : 04Dec2016 : Add logic to pre populate this -->
+                                <apex:outputLabel value="Pay Type" />
+                                <apex:outputPanel >
+                                    <apex:outputField value="{!closingReport.Pay_Type__c}" rendered="{!closingReport.id != null}" />
+                                    <apex:inputField value="{!closingReport.Pay_Type__c}" rendered="{!closingReport.id == null}" required="true" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Contact" />
+                                <apex:outputLabel value="{!clientContact}" />
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Booking Type" />
+                                <apex:outputPanel >
+                                    <apex:outputField value="{!closingReport.Booking_Type__c}" rendered="{!closingReport.id != null}" />
+                                    <apex:inputField value="{!closingReport.Booking_Type__c}" rendered="{!closingReport.id == null}" required="true" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Timesheet Approver" />
+                                <apex:outputPanel >
+                                    <apex:outputField value="{!closingReport.TR1__Timesheet_Approver__c}" rendered="{!closingReport.id != null}" />
+                                    <apex:inputField value="{!closingReport.TR1__Timesheet_Approver__c}" rendered="{!closingReport.id == null}" required="true"
+                                    />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Booking Reason" />
+                                <apex:outputPanel >
+                                    <apex:outputField value="{!closingReport.Booking_Reason__c}" rendered="{!closingReport.id != null}" />
+                                    <apex:inputField value="{!closingReport.Booking_Reason__c}" rendered="{!closingReport.id == null}" required="true" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="School Working Days" />
+                                <apex:outputPanel styleClass="requiredInput" layout="block">
+                                    <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                    <apex:inputField value="{!closingReport.School_Working_Days__c}" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+
+                            <apex:pageBlockSectionItem >
+                                <!--Hardik : 04Dec2016 : replace it with CR fields-->
+                                <apex:outputLabel value="Select Start Date" />
+                                <apex:outputPanel styleClass="requiredInput" layout="block">
+                                    <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                    <apex:inputText value="{!startDateEnterred}" id="targetDateToUpdate1" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Annual Leave Entitlement" />
+                                <apex:outputPanel styleClass="requiredInput" layout="block">
+                                    <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                    <apex:inputField value="{!closingReport.Annual_Leave_Entitlement__c}" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <!--Hardik : 04Dec2016 : replace it with CR fields-->
+                                <apex:outputLabel value="Select End Date" />
+                                <apex:outputPanel styleClass="requiredInput" layout="block">
+                                    <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                    <apex:inputText value="{!endDateEnterred}" id="targetDateToUpdate2" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Comparator Full-Time Annual Salary" />
+                                <apex:inputField value="{!closingReport.Comparator_Full_Time_Annual_Salary__c}" />
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Vacancy Credit" />
+                                <apex:outputPanel >
+                                    <apex:inputField value="{!closingReport.TR1__Job_Credit__c}" rendered="{!closingReport.id == null}" required="True" />
+                                    <apex:outputField value="{!closingReport.TR1__Job_Credit__r.Name}" rendered="{!closingReport.id != null}" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Vacancy Percentage" />
+                                <apex:outputPanel >
+                                    <apex:inputField value="{!closingReport.TR1__Job_Percentage__c}" rendered="{!closingReport.id == null}" required="True" />
+                                    <apex:outputField value="{!closingReport.TR1__Job_Percentage__c}" rendered="{!closingReport.id != null}" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Candidate Credit" />
+                                <apex:outputPanel >
+                                    <apex:inputField value="{!closingReport.TR1__Candidate_Credit__c}" rendered="{!closingReport.id == null}" />
+                                    <apex:outputField value="{!closingReport.TR1__Candidate_Credit__r.Name}" rendered="{!closingReport.id != null}" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Candidate Percentage" />
+                                <apex:outputPanel >
+                                    <apex:inputField value="{!closingReport.TR1__Candidate_Percentage__c}" rendered="{!closingReport.id == null}" />
+                                    <apex:outputField value="{!closingReport.TR1__Candidate_Percentage__c}" rendered="{!closingReport.id != null}" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Marketing Credit" />
+                                <apex:outputPanel >
+                                    <apex:inputField value="{!closingReport.TR1__Marketing_Credit__c}" rendered="{!closingReport.id == null}" />
+                                    <apex:outputField value="{!closingReport.TR1__Marketing_Credit__r.Name}" rendered="{!closingReport.id != null}" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Marketing Percentage" />
+                                <apex:outputPanel >
+                                    <apex:inputField value="{!closingReport.TR1__Marketing_Percentage__c}" rendered="{!closingReport.id == null}" />
+                                    <apex:outputField value="{!closingReport.TR1__Marketing_Percentage__c}" rendered="{!closingReport.id != null}" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Other Credit" />
+                                <apex:outputPanel >
+                                    <apex:inputField value="{!closingReport.TR1__Other_Credit__c}" rendered="{!closingReport.id == null}" />
+                                    <apex:outputField value="{!closingReport.TR1__Other_Credit__r.Name}" rendered="{!closingReport.id != null}" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Other Percentage" />
+                                <apex:outputPanel >
+                                    <apex:inputField value="{!closingReport.TR1__Other_Percentage__c}" rendered="{!closingReport.id == null}" />
+                                    <apex:outputField value="{!closingReport.TR1__Other_Percentage__c}" rendered="{!closingReport.id != null}" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Other2 Credit" />
+                                <apex:outputPanel >
+                                    <apex:inputField value="{!closingReport.TR1__Other2_Credit__c}" rendered="{!closingReport.id == null}" />
+                                    <apex:outputField value="{!closingReport.TR1__Other2_Credit__r.Name}" rendered="{!closingReport.id != null}" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Other2 Percentage" />
+                                <apex:outputPanel >
+                                    <apex:inputField value="{!closingReport.TR1__Other2_Percentage__c}" rendered="{!closingReport.id == null}" />
+                                    <apex:outputField value="{!closingReport.TR1__Other2_Percentage__c}" rendered="{!closingReport.id != null}" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                </div>
+            </apex:outputPanel>
+        </apex:outputPanel>
+        <!--CREATE BOOKING DAILOG : END-->
+
+
+        <!--CREATE VACANCY DAILOG : START-->
+        <apex:actionFunction name="createVacancyReord" action="{!openCreateVacancyRecordDialog}" status="searchOverlay" rerender="dialogBoxforVacancy"
+        />
+
+        <apex:outputPanel id="dialogBoxforVacancy">
+            <apex:actionRegion >
+                <apex:outputPanel rendered="{!showCreateVacancyRecord}">
+                    <script>
+                        j$('#createVacancyDiv').dialog({
+                            title: 'Create Vacancy',
+                            resizable: false,
+                            modal: true,
+                            closeOnEscape: false,
+                            width: 1300,
+                            position: {
+                                my: "center",
+                                at: "center"
+                            },
+                            zIndex: 990,
+                            buttons: {
+                                "Save": function () {
+                                    if (true) {
+                                        saveCreateVacancyRecord();
+                                        j$(this).dialog("destroy");
+                                    }
+                                },
+                                Cancel: function () {
+                                    j$(this).dialog("destroy");
+                                    cancelVacancyCreation();
+                                }
+                            },
+                        }).parent().appendTo(j$("#pageId\\:formId"));
+
+                        // Destroy all Tooltips
+                        j$('.applyTooltipStyle').tooltip("destroy");
+
+                        applyButtonSet();
+
+                        function applyButtonSet() {
+                            j$("#selectDaysDiv").buttonset();
+                        }
+                    </script>
+                    <apex:actionFunction name="saveCreateVacancyRecord" action="{!saveCreateVacancyRecord}" status="searchOverlay" rerender="dialogBoxforVacancy,vacancy_dialog_messages,formId"
+                    />
+                    <apex:actionFunction name="cancelVacancyCreation" action="{!cancelVacancyCreation}" status="searchOverlay" rerender="dialogBoxforVacancy"
+                        immediate="true" />
+
+                    <div id="createVacancyDiv" style="display:none">
+                        <apex:pageBlock id="vacancy_dialog_messages" mode="edit">
+                            <apex:actionFunction action="{!doSchoolNamePopulate}" status="loadSubmitStatus" name="schoolNamePopulate" reRender="vacancy_dialog_messages"
+                            />
+
+                            <apex:pageMessages id="vacMsgId" />
+                            <apex:pageBlockSection columns="2" collapsible="false">
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Client Name" for="client__name" />
+                                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputField value="{!vacRecord.TR1__Account__c}" id="client__name" tabOrderHint="1" onchange="schoolNamePopulate()"
+                                        /> &nbsp;
+                                        <apex:actionstatus id="loadSubmitStatus" dir="RTL">
+                                            <apex:facet name="start">
+                                                <apex:image url="/img/loading.gif" alt=" Loading.... "></apex:image>
+                                            </apex:facet>
+                                        </apex:actionstatus>
+
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Pay Type" for="pay__type" />
+                                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputField value="{!vacRecord.Shift__c}" id="pay__type" tabOrderHint="12">
+                                            <apex:actionSupport event="onchange" rerender="thePageBlock,thePageBlock_label,thePageBlock2,thePageBlock2_label,thePageBlock3,thePageBlock4,vacMsgId"
+                                                status="searchOverlay" action="{!dummyFunction}" />
+                                        </apex:inputField>
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="School Type" for="school__type" />
+                                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputField value="{!vacRecord.School_Type__c}" id="school__type" tabOrderHint="2" />
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputPanel id="thePageBlock2_label">
+                                        <apex:outputLabel value="Hour Charge Rate" for="maxHRPay" rendered="{!vacRecord.Shift__c=='Hourly'}" />
+                                        <apex:outputLabel value="Day Charge Rate" for="maxDPay" rendered="{!vacRecord.Shift__c=='Daily'}" />
+                                        <apex:outputLabel value="AM/PM Charge Rate" for="maxHLFPay" rendered="{!OR(vacRecord.Shift__c=='AM',vacRecord.Shift__c=='PM')}"
+                                        />
+                                    </apex:outputPanel>
+                                    <apex:outputPanel id="thePageBlock2">
+                                        <apex:inputField value="{!vacRecord.Maximum_Hour_Charge_Rate__c}" rendered="{!vacRecord.Shift__c=='Hourly'}" id="maxHRPay"
+                                            tabOrderHint="14" />
+                                        <apex:inputField value="{!vacRecord.TR1__Maximum_Bill_Rate__c}" rendered="{!vacRecord.Shift__c=='Daily'}" id="maxDPay" tabOrderHint="14"
+                                        />
+                                        <apex:inputField value="{!vacRecord.TR1__Minimum_Bill_Rate__c}" rendered="{!OR(vacRecord.Shift__c=='AM',vacRecord.Shift__c=='PM')}"
+                                            id="maxHLFPay" tabOrderHint="14" />
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Contact" for="contact__id" />
+                                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputField value="{!vacRecord.TR1__Contact__c}" id="contact__id" tabOrderHint="3" />
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Hiring Manager" for="hiring__manager" />
+                                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputField value="{!vacRecord.TR1__Hiring_Manager__c}" id="hiring__manager" tabOrderHint="4" />
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Estimated Start Date" for="estimated__start__date" />
+                                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputField value="{!vacRecord.TR1__Estimated_Start_Date__c}" id="estimated__start__date" tabOrderHint="15" />
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Timesheet Approver" for="Timesheet Approver" />
+                                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputField value="{!vacRecord.Timesheet_Approver__c}" id="Timesheet__Approver" tabOrderHint="4" />
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Booking Type" for="booking__type" />
+                                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputField value="{!vacRecord.Booking_Type__c}" id="booking__type" tabOrderHint="5" />
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Estimated End Date" for="estimated__end__date" />
+                                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputField value="{!vacRecord.TR1__Estimated_End_Date__c}" id="estimated__end__date" tabOrderHint="16" />
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Booking Reason" for="Booking_Reason" />
+                                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputField value="{!vacRecord.Booking_Reason__c}" id="Booking_Reason" tabOrderHint="6" />
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Different Time Slots For Every Weekdays" for="weekday" />
+                                    <apex:outputPanel layout="block">
+                                        <apex:outputPanel layout="block" />
+                                        <apex:inputCheckbox value="{!vacRecord.Selected_Week_Days__c}" id="weekday" tabIndex="9">
+                                            <apex:actionSupport event="onchange" rerender="StartTime_s, thePageBlock3, EndTime_s,thePageBlock4, weekSection_i, weekSection_l"
+                                                status="searchOverlay" action="{!weekdayFunction}" />
+                                        </apex:inputCheckbox>
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Vacancy Name" for="vacancy__name" />
+                                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputField value="{!vacRecord.Name}" id="vacancy__name" tabOrderHint="7" />
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+                                
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputPanel styleClass="requiredInput" id="StartTime_s">
+                                        <apex:outputLabel value="Start Time" for="start__time"  rendered="{!vacRecord.Selected_Week_Days__c = FALSE}"/>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel styleClass="requiredInput" layout="block" id="thePageBlock3" >
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputField value="{!vacRecord.Start_Time__c}" id="start__time" tabOrderHint="17" rendered="{!vacRecord.Selected_Week_Days__c = FALSE}"/>
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+                                
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Job Title" for="job__title" />
+                                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputField value="{!vacRecord.Job_Title__c}" id="job__title" tabOrderHint="8" />
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputPanel styleClass="requiredInput" id="EndTime_s">
+                                        <apex:outputLabel value="End Time" for="end__time" rendered="{!vacRecord.Selected_Week_Days__c = FALSE}"/>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel styleClass="requiredInput" layout="block" id="thePageBlock4">
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputField value="{!vacRecord.End_Time__c}" id="end__time" tabOrderHint="18" rendered="{!vacRecord.Selected_Week_Days__c = FALSE}"/>
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Applicable Days" for="applicable__days" />
+                                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputField value="{!vacRecord.Applicable_Days__c}" id="applicable__days" tabOrderHint="19">
+                                            <apex:actionSupport event="onchange" rerender="StartTime_s, thePageBlock3, EndTime_s,thePageBlock4, weekSection_i, weekSection_l"
+                                                status="searchOverlay" action="{!weekdayFunction}" />
+                                        </apex:inputField>
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+                                
+                                <!-- Different Time slots for every weekends (Start)-->
+                                
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputPanel id="weekSection_l">
+                                        <apex:outputLabel value="" rendered="{!vacRecord.Selected_Week_Days__c}"/>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel id="weekSection_i">
+                                        <table style="display:{!IF(vacRecord.Selected_Week_Days__c, 'block', 'none')}">
+                                            <apex:outputText value="Applicable Days Not Selected" rendered="{!OR(strings.size < 0,AND(vacRecord.Selected_Week_Days__c = TRUE ,strings.size > 0))}"/>
+                                            <tr style="display:{!IF(strings.size > 0 , '', 'none')}">
+                                                <th>Day</th>
+                                                <th style="text-align: end; padding-right:10px;">Start Time</th>
+                                                <th style="text-align: center">End Time</th>
+                                            </tr>
+                                            <tbody>
+                                                <tr style="display:{!IF(CONTAINS(list, 'Monday') , '', 'none')}">
+                                                    <td><apex:outputLabel value="Monday" /></td>
+                                                    <td><apex:inputField value="{!vacRecord.Start_Time__c}"  tabOrderHint="17" onchange="weekdays_Action();"/></td>
+                                                    <td><apex:inputField value="{!vacRecord.End_Time__c}"  tabOrderHint="17" /></td>
+                                                </tr>
+                                                <tr style="display:{!IF(CONTAINS(list, 'Tuesday') , '', 'none')}">
+                                                    <td><apex:outputLabel value="Tuesday" /></td>
+                                                    <td><apex:inputField value="{!vacRecord.Start_Time__c}"  tabOrderHint="17" /></td>
+                                                    <td><apex:inputField value="{!vacRecord.End_Time__c}"  tabOrderHint="17" /></td>
+                                                </tr>
+                                                <tr style="display:{!IF(CONTAINS(list, 'Wednesday') , '', 'none')}">
+                                                    <td><apex:outputLabel value="Wednesday" /></td>
+                                                    <td><apex:inputField value="{!vacRecord.Start_Time__c}"  tabOrderHint="17" /></td>
+                                                    <td><apex:inputField value="{!vacRecord.End_Time__c}"  tabOrderHint="17" /></td>
+                                                </tr>
+                                                <tr style="display:{!IF(CONTAINS(list, 'Thursday') , '', 'none')}">
+                                                    <td><apex:outputLabel value="Thursday" /></td>
+                                                    <td><apex:inputField value="{!vacRecord.Start_Time__c}"  tabOrderHint="17" /></td>
+                                                    <td><apex:inputField value="{!vacRecord.End_Time__c}"  tabOrderHint="17" /></td>
+                                                </tr>
+                                                <tr style="display:{!IF(CONTAINS(list, 'Friday') , '', 'none')}">
+                                                    <td><apex:outputLabel value="Friday" /></td>
+                                                    <td><apex:inputField value="{!vacRecord.Start_Time__c}"  tabOrderHint="17" /></td>
+                                                    <td><apex:inputField value="{!vacRecord.End_Time__c}"  tabOrderHint="17" /></td>
+                                                </tr>
+                                                <tr style="display:{!IF(CONTAINS(list, 'Saturday') , '', 'none')}">
+                                                    <td><apex:outputLabel value="Saturday" /></td>
+                                                    <td><apex:inputField value="{!vacRecord.Start_Time__c}"  tabOrderHint="17" /></td>
+                                                    <td><apex:inputField value="{!vacRecord.End_Time__c}"  tabOrderHint="17" /></td>
+                                                </tr>
+                                                <tr style="display:{!IF(CONTAINS(list, 'Sunday') , '', 'none')}">
+                                                    <td><apex:outputLabel value="Sunday" /></td>
+                                                    <td><apex:inputField value="{!vacRecord.Start_Time__c}"  tabOrderHint="17" /></td>
+                                                    <td><apex:inputField value="{!vacRecord.End_Time__c}"  tabOrderHint="17" /></td>
+                                                </tr>
+                                            </tbody>
+                                            <!-- <apex:actionFunction name="weekdays_Action" action="{!weekdaysAction}" /> -->
+                                        </table>
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem> 
+                                
+                                <!-- Different Time slots for every weekends (End)-->
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Overnight Shift?" />
+                                    <apex:inputCheckbox id="ngtShifting" value="{!isMidNight}" tabIndex="9" />
+                                </apex:pageBlockSectionItem>
+                                
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Notes" for="notes__text__area" />
+                                    <apex:inputField value="{!vacRecord.Notes__c}" id="notes__text__area" tabOrderHint="11" />
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Year/Key Stage" for="year__key__stage" />
+                                    <apex:inputField value="{!vacRecord.Year_Key_Stage__c}" id="year__key__stage" tabOrderHint="10" />
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Subject" for="subject__name" />
+                                    <apex:inputField value="{!vacRecord.Subject2__c}" id="subject__name" tabOrderHint="9" />
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="SEN Experience" for="sen__experience" />
+                                    <apex:inputField value="{!vacRecord.SEN_Experience__c}" id="sen__experience" tabOrderHint="21" />
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Skills Training Experience" for="skills__training__experience" />
+                                    <apex:inputField value="{!vacRecord.Skills_Training_Experience__c}" id="skills__training__experience" tabOrderHint="23" />
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Vacancy Owner" for="Vacancy_Owner" />
+                                    <apex:inputField value="{!vacRecord.ownerId}" id="userId" />
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Chatter Team" for="chatter__team" />
+                                    <apex:inputField value="{!vacRecord.Chatter_Team__c}" id="chatter__team" tabOrderHint="24" />
+                                </apex:pageBlockSectionItem>
+
+                            </apex:pageBlockSection>
+                            <br/>
+                            <br/>
+                        </apex:pageBlock>
+                    </div>
+
+
+                </apex:outputPanel>
+            </apex:actionRegion>
+        </apex:outputPanel>
+        <!--CREATE VACANCY DAILOG : END-->
+
+
+         <!-- EDIT VACANCY DAILOG : START-->
+        <apex:actionFunction name="editVacancy" action="{!openEditVacancyRecordDialog}" status="searchOverlay" rerender="dialogBoxforeditVacancy">
+            <apex:param name="firstParam" assignTo="{!enteredText1}" value="" />
+        </apex:actionFunction>
+ 
+         <apex:outputPanel id="dialogBoxforeditVacancy">
+             <apex:actionRegion >
+                 <apex:outputPanel rendered="{!editCreateVacancyRecord}">
+                     <script>
+                         j$('#createVacancyDiv').dialog({
+                             title: 'Edit Availability',
+                             resizable: false,
+                             modal: true,
+                             closeOnEscape: false,
+                             width: 600,
+                             position: {
+                                 my: "center",
+                                 at: "center"
+                             },
+                             zIndex: 990,
+                             buttons: {
+                                 "Save": function () {
+                                     if (true) {
+                                         saveEditVacancyRecord();
+                                         j$(this).dialog("destroy");
+                                     }
+                                 },
+                                 Cancel: function () {
+                                     j$(this).dialog("destroy");
+                                     cancelEditVacancyCreation();
+                                 },
+                                 "Delete" : function () { 
+                                    deleteEditVacancyRecord();
+                                    j$(this).dialog("destroy");
+                                 }
+                             },
+                         }).parent().appendTo(j$("#pageId\\:formId"));
+ 
+                         // Destroy all Tooltips
+                         j$('.applyTooltipStyle').tooltip("destroy");
+ 
+                         applyButtonSet();
+ 
+                         function applyButtonSet() {
+                             j$("#selectDaysDiv").buttonset();
+                         }
+                     </script>
+                     <apex:actionFunction name="saveEditVacancyRecord" action="{!saveEditVacancyRecord}" status="searchOverlay" rerender="dialogBoxforeditVacancy,vacancy_dialog_messages,formId" />
+                     
+                     <apex:actionFunction name="cancelEditVacancyCreation" action="{!cancelEditVacancyCreation}" status="searchOverlay" rerender="dialogBoxforeditVacancy" immediate="true" />
+                     <apex:actionFunction name="deleteEditVacancyRecord" action="{!deleteEditVacancyCreation}" status="searchOverlay" rerender="dialogBoxforeditVacancy" immediate="true" />
+ 
+                     <div id="createVacancyDiv" style="display:none">
+                         <apex:pageBlock id="vacancy_dialog_messages2" mode="edit">
+                             <apex:actionFunction action="{!doSchoolNamePopulate}" status="loadSubmitStatus" name="schoolNamePopulate" reRender="vacancy_dialog_messages"
+                             />
+ 
+                             <apex:pageMessages id="vacMsgId" />
+                             <apex:pageBlockSection columns="1" collapsible="false">
+                                <!-- {!vD2D.Id} / {!vD2D.Name} / {!vD2D.End_Date_Time__c} / {!vD2D.Shift__c} / {!vD2D.Start_Date_Time__c} / {!vD2D.Status__c} / {!vD2D.Vacancy__c} / {!vD2D.Vacancy_Date__c} / {!vD2D.Candidate_Assigned__c} / {!vD2D.Closing_Report_Schedule__c}
+                                {!vD2D.Vacancy__r.Name} -->
+                                <!-- Vacancy Name -->
+                                <apex:pageBlockSectionItem dataStyle="text-align:left; width: 30%; max-width: 30%;">
+                                    <apex:outputLabel value="Vacancy Name" />
+                                    <apex:outputField value="{!vD2D.Vacancy__r.Name}" />
+                                </apex:pageBlockSectionItem>
+
+                                <!-- Candidate Name -->
+                                <apex:pageBlockSectionItem dataStyle="text-align:left; width: 30%; max-width: 30%;">
+                                    <apex:outputLabel value="Candidate" />
+                                    <apex:outputField value="{!vD2D.Candidate_Assigned__c}" />
+                                </apex:pageBlockSectionItem>
+
+                                <!-- Vacancy Name -->
+                                <apex:pageBlockSectionItem dataStyle="text-align:left; width: 30%; max-width: 30%;">
+                                    <apex:outputLabel value="Name" />
+                                    <apex:outputField value="{!vD2D.Name}" />
+                                </apex:pageBlockSectionItem>
+
+                                <!-- Vacancy Shift -->
+                                <apex:pageBlockSectionItem dataStyle="text-align:left; width: 30%; max-width: 30%;">
+                                    <apex:outputLabel value="Shift" />
+                                    <apex:outputField value="{!vD2D.Shift__c}" />
+                                </apex:pageBlockSectionItem>
+
+                                <!-- Vacancy Status -->
+                                <apex:pageBlockSectionItem dataStyle="text-align:left; width: 30%; max-width: 30%;">
+                                    <apex:outputLabel value="Status" />
+                                    <apex:outputField value="{!vD2D.Status__c}" />
+                                </apex:pageBlockSectionItem>
+
+                                <!-- Vacancy Date -->
+                                <apex:pageBlockSectionItem dataStyle="text-align:left; width: 30%; max-width: 30%;">
+                                    <apex:outputLabel value="Date" />
+                                    <apex:outputField value="{!vD2D.Vacancy_Date__c}" />
+                                </apex:pageBlockSectionItem>
+
+                                <!-- vacancy Start date -->
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="New Start Time" for="start__time" />
+                                    <apex:outputPanel styleClass="requiredInput" layout="block" id="thePageBlock3">
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputField value="{!vD2D.Vacancy__r.Start_Time__c}" id="start__time" tabOrderHint="17" />
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+
+                                <!-- vacancy end date -->
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="New End Time" for="end__time" />
+                                    <apex:outputPanel styleClass="requiredInput" layout="block" id="thePageBlock3">
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputField value="{!vD2D.Vacancy__r.End_Time__c}" id="end__time" tabOrderHint="17" />
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+
+                             </apex:pageBlockSection>
+                             <br/>
+                             <br/>
+                         </apex:pageBlock>
+                     </div>
+ 
+                 </apex:outputPanel>
+             </apex:actionRegion>
+         </apex:outputPanel>
+         <!--EDIT VACANCY DAILOG : END-->
+
+    </apex:form>
+</apex:page>

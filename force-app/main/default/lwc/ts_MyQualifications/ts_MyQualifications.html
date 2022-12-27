@@ -1,0 +1,95 @@
+<template>
+
+    <template if:true={checkClient}>
+        <div class="slds-all-elements qualifyDiv" onclick={check}>
+            <!-- Page Content-->
+            <div id="content" class="slds-snap-content mainDiv" style="z-index:100">
+                <div class="slds-content">
+                    <div class="slds">
+                        <!-- Content Heading -->
+                        <div class="slds-page-header contentDiv" role="banner">
+                            <div class="slds-grid slds-wrap slds-grid--align-spread">
+                                <div class="slds-col">
+                                    <div class="slds-media">
+                                        <div class="slds-media__body">
+                                            <p class="slds-text-heading--label">CANDIDATE</p>
+                                            <div class="slds-grid">
+                                                <h2
+                                                    class="slds-text-heading--medium slds-m-right--small slds-truncate slds-align-middle">
+                                                    My Qualification</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Qualificationlist">
+                            <div
+                                class="slds-size_12-of-12 slds-m-left_xx-large slds-grid slds-wrap slds-col--padded slds-grid--align-spread headeRow">
+                                <div class="slds-col slds-size_1-of-4 slds-p-top_medium">
+                                    <div class="slds-text slds-truncate text1">Qualification Name</div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-4 slds-p-top_medium">
+                                    <div class="slds-text slds-truncate text1 textcenter">Expiration Date</div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-4 slds-p-top_medium statusText">
+                                    <div class="slds-text slds-truncate text1 textcenter">Status</div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-4 slds-p-top_medium ">
+                                    <div class="slds-text slds-truncate text1 textcenter">Action</div>
+                                </div>
+                            </div>
+
+                            <template for:each={qualificationList} for:item="ql">
+                                <div class="slds-size_12-of-12 slds-grid slds-wrap slds-m-left_xx-large slds-m-top_x-large slds-col--padded slds-grid--align-spread dataRow"
+                                    key={ql.Id}>
+                                    <div class="slds-col slds-size_1-of-4 textd nameclass"
+                                        id={ql.TR1__Qualification__r.Name} data-id={ql.TR1__Qualification__r.Name}
+                                        data-record={ql.TR1__Qualification__r.Name}>{ql.TR1__Qualification__r.Name}
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-4 textd textcenter">{ql.TR1__Expiration_Date__c}
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-4 textd statusText textcenter">
+                                        {ql.TR1__Status__c}</div>
+                                    <div class="slds-col slds-size_1-of-4 textd actionDiv">
+                                        <template if:true={ql.Status}>
+                                            <div class="edit textcenterm" data-id={ql.TR1__Qualification__r.Name}
+                                                data-record={ql.TR1__Qualification__r.Name} onclick={editQualification}>
+                                                <span>
+                                                    <img src={editImg} class="slds-m-right_small">
+                                                    <p>Edit</p>
+                                                </span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
+                            <div
+                                class="slds-size_12-of-12 slds-grid slds-wrap slds-m-left_xx-large slds-m-top_x-large slds-col--padded slds-grid--align-spread dataRow">
+                                <div class="slds-col slds-size_1-of-4 textd nameclass" id="Qualifications"
+                                    data-id="Qualifications" data-record="Qualifications">
+                                    Qualifications</div>
+                                <div class="slds-col slds-size_1-of-4 textd textcenter"></div>
+                                <div class="slds-col slds-size_1-of-4 textd statusText textcenter"></div>
+                                <div class="slds-col slds-size_1-of-4 textd actionDiv">
+                                    <div class="edit textcenterm" data-id="Qualifications" data-record="Qualifications"
+                                        onclick={editQualification}>
+                                        <span>
+                                            <img src={editImg} class="slds-m-right_small">
+                                            <p>Edit</p>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Page Content-->
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <c-ts_-error-component reloadpage={reloadpage}></c-ts_-error-component>
+</template>

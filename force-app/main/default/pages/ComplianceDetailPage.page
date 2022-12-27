@@ -1,0 +1,40 @@
+<apex:page StandardController="Contact" extensions="ComplianceDetailPageController" showHeader="true">
+ <apex:form >
+     <style>
+        .vfHelpText a            {position:relative;}
+        .vfHelpText a span       {display: none;}
+        .vfHelpText a:hover span {display: block;
+                                  position:absolute;
+                                  top:1.25em;
+                                  padding:2px 5px;
+                                  left:-1em; width:15em;
+                                  z-index:100;
+                                  border:1px solid orange;
+                                  background-color:#FEFDB9;
+                                  color:black;
+                                  text-align:left;
+                                 }
+    </style>
+     <apex:pageBlock >
+        <apex:pageBlockButtons location="top">
+            <apex:commandButton value="Add/Edit Compliance" action="{!redirectToCompliance}"/>
+        </apex:pageBlockButtons>
+         <apex:pageBlockSection >
+          <apex:repeat value="{!listqualifications}" var="eachqualn"  >
+            <apex:pageBlockSectionItem >
+             
+             <apex:outputLabel value="{!eachqualn.qualfcn.Name}" >
+              <span class="vfHelpText">
+               <apex:outputLink value="javascript:return false;"> 
+                <apex:image value="/s.gif" styleClass="helpOrb" rendered="{!IF(eachqualn.qualfcn.Description__c!=null,true,false)}"/>
+                 <span >{!eachqualn.qualfcn.Description__c}</span>
+               </apex:outputLink>
+              </span>
+             </apex:outputLabel> 
+            <apex:outputField value="{!eachqualn.asscqualfcn.ComplianceStatus__c}"></apex:outputField> 
+            </apex:pageBlockSectionItem>
+         </apex:repeat>
+      </apex:pageBlockSection>
+     </apex:pageBlock>
+ </apex:form>
+</apex:page>

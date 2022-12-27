@@ -1,0 +1,2 @@
+<apex:page standardController="TR1__Job_Board_Application__c" extensions="ConvertToApplicationController" action="{!rejectAndDelete}">
+</apex:page>

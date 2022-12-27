@@ -1,0 +1,22 @@
+
+.dualIcon .slds-button__icon {
+    color: #D90000 !important;
+}
+
+.slds-button_icon-container{
+    color: #D90000 !important;
+}
+
+.slds-dueling-list__column{
+    justify-content: center !important;
+}
+
+.slds-dueling-list__options [aria-selected=true]{
+    border-left: 2px solid #D90000;
+}
+
+.slds-form-element__label{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+}

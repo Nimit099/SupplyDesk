@@ -1,0 +1,11 @@
+.THIS .slds-file__crop {
+    height:100px;
+    width:200px;
+}
+/*.THIS img{*/
+/*    height:400px;*/
+/*    width:auto;*/
+/*}*/
+.THIS .slds-file--card{
+    border: none!important;
+}

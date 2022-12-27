@@ -1,0 +1,24 @@
+<apex:page standardController="TR1__Job_Board_Application__c" extensions="ConvertToApplicationController">
+<apex:form >
+    <apex:pageBlock title="Reject and Refer">
+        <apex:pageMessages ></apex:pageMessages>
+        <apex:pageBlockSection >
+           <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Rejection Action"/>
+                <apex:inputField value="{!jobBoardApplication.Rejection_Reason__c}" required="true"/>
+            </apex:pageBlockSectionItem>
+             <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Rejection Comment"/>
+                <apex:inputField value="{!jobBoardApplication.Rejection_Comment__c}" required="true"/>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="User"/>
+                <apex:inputField value="{!jobBoardApplication.TR1__Job__r.OwnerId}"/>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+        <apex:pageBlockButtons location="bottom">
+            <apex:commandButton value="Refer Contact" action="{!rejectAndRefer}"/>
+        </apex:pageBlockButtons>
+    </apex:pageBlock>
+</apex:form>
+</apex:page>

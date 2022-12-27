@@ -1,0 +1,792 @@
+.main {
+    position: relative;
+    width: 100%;
+}
+
+hr {
+    margin: 1rem 0 0.5rem 0;
+}
+
+.cndt-user-client {
+    display: none;
+}
+
+.header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 3vw;
+}
+
+.appRejBtn {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    width: 30%;
+}
+
+.appRejBtn .top-header-btn-icon {
+    margin-top: 0;
+}
+
+.header h1 {
+    font-weight: 700;
+    font-size: 25px;
+    color: #D90000;
+}
+
+.top-header {
+    height: 8%;
+    display: flex;
+    border-bottom: 0.5px solid rgba(103, 104, 104, 0.6);
+    align-items: center;
+}
+
+.tableData,
+.client-details-div {
+    margin-inline: 2%;
+    margin: auto;
+    width: 90%;
+}
+
+.back-navigation {
+    height: 7%;
+    font-size: large;
+    font-weight: 700;
+}
+
+.top-header h1 {
+    color: rgb(217, 0, 0);
+    font-size: x-large;
+    font-weight: 700;
+    margin-inline: 1%;
+}
+
+.approve-btn {
+    background-color: rgb(103, 104, 104);
+    color: rgb(255, 255, 255);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 30%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-inline: 1%;
+    padding-inline: 15px;
+    font-size: larger;
+    padding: 1.5% 4%;
+    min-width: 110px;
+}
+
+.reject-btn {
+    background-color: rgb(217, 0, 0);
+    color: rgb(255, 255, 255);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 30%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding-inline: 15px;
+    font-size: larger;
+    padding: 1.5% 4%;
+    min-width: 110px;
+}
+
+.top-header-btn-icon {
+    margin-right: 5px;
+    margin-top: 6%;
+}
+
+.user-information {
+    background: rgb(246, 246, 246);
+    height: 23%;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.user-information-table {
+    height: 100%;
+    overflow: auto;
+}
+
+.cndt-profile {
+    height: 100%;
+}
+
+.cndt-info {
+    padding: 2%;
+    border-bottom: 1px solid rgba(103, 104, 104, 0.6);
+    width: 80%;
+}
+
+.week-table {
+    margin-top: 1%;
+    height: 70%;
+}
+
+.first-row {
+    background: rgb(246, 246, 246);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    height: 40px;
+    align-items: center;
+}
+
+.table-row {
+    height: 40px;
+    align-items: center;
+}
+
+.popup-header {
+    background: rgb(217, 0, 0);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.modal-body {
+    text-align: center;
+}
+
+.reason-div {
+    background: rgb(246, 246, 246);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 5px 0px 0px 0px inset rgb(217, 0, 0);
+    padding: 12px 35px 15px 25px;
+    width: 80%;
+    margin: 1% auto;
+}
+
+.send-btn {
+    background: rgb(217, 0, 0);
+    color: white;
+    margin-top: 5%;
+    width: 20%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.pop-apprv-ttl {
+    color: rgb(217, 0, 0);
+    font-size: x-large;
+    font-weight: 700;
+}
+
+.pop-apprv-rsn-div {
+    margin-top: 3%;
+    /* height: 15vh; */
+    /* padding-top: 6%; */
+}
+
+.pop-apprv-sbm-btn {
+    background-color: rgb(103, 104, 104);
+    color: rgb(255, 255, 255);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 20%;
+    cursor: pointer;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    margin-inline: 0% 5%;
+    padding-inline: 15px;
+    font-size: larger;
+}
+
+.pop-rjct-sbm-btn {
+    background-color: rgb(217, 0, 0);
+    color: rgb(255, 255, 255);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 20%;
+    cursor: pointer;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    padding-inline: 15px;
+    font-size: larger;
+}
+
+.pop-apprv-footer-btn {
+    display: flex;
+    margin-top: 1%;
+    /* height: 10vh; */
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.pop-apprv-rating-div {
+    margin-top: 2%;
+    /* height: 17vh;
+     */
+    /* padding-top: 6%; */
+}
+
+.emg-excel {
+    background: rgb(255, 255, 255);
+    box-shadow: 0px 4px 4px rgba(8, 171, 5, 0.68);
+    cursor: pointer;
+}
+
+.emg-very-good {
+    background: rgb(255, 255, 255);
+    box-shadow: 0px 4px 4px rgba(133, 255, 75, 0.68);
+    cursor: pointer;
+}
+
+.emg-good {
+    background: rgb(255, 255, 255);
+    box-shadow: 0px 4px 4px rgba(249, 200, 28, 0.68);
+    cursor: pointer;
+}
+
+.emg-ri {
+    background: rgb(255, 255, 255);
+    box-shadow: 0px 4px 4px rgba(252, 93, 4, 0.68);
+    cursor: pointer;
+}
+
+.emg-unsetisfy {
+    background: rgb(255, 255, 255);
+    box-shadow: 0px 4px 4px rgba(252, 0, 0, 0.68);
+    cursor: pointer;
+}
+
+.pop-apprv-header {
+    padding-top: 4%;
+    /* height: 10vh; */
+    /* background: #d90000; */
+}
+
+.rqst-call {
+    display: flex;
+    align-items: center;
+    margin-top: 2%;
+}
+
+.profImg {
+    border-radius: 50%;
+    height: 8rem;
+    width: 8rem;
+}
+
+.send-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-inline: 20%;
+    background: rgb(255, 255, 255);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.candidate-profile {
+    height: 12vh;
+    width: 12vh;
+    border-radius: 50%;
+    margin-top: 10px;
+}
+
+.usr-inf-usr-name {
+    font-weight: 700;
+}
+
+.brdr-rds {
+    border-radius: 50%;
+}
+
+.candidateInfo {
+    border-left: 0.5px solid rgba(103, 104, 104, 0.6);
+}
+
+
+/* =================== Spinner =================== */
+
+.spinner-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner-ts {
+    --size: 85px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    perspective: 800px;
+}
+
+.inner {
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid transparent;
+}
+
+.inner.one {
+    left: 0;
+    top: 0;
+    animation: rotate-one 1s linear infinite;
+    border-bottom: 3px solid #999999;
+}
+
+.inner.two {
+    right: 0;
+    top: 0;
+    animation: rotate-two 1s linear infinite;
+    border-right: 3px solid #000000;
+}
+
+.inner.three {
+    right: 0;
+    bottom: 0;
+    animation: rotate-three 1s linear infinite;
+    border-top: 3px solid #d90000;
+}
+
+.clientRejectedHeader h1 {
+    font-size: large;
+    font-weight: 700;
+}
+
+.clientRejectedMessage p {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.messageIcon {
+    width: 4%;
+}
+
+.messageIconDiv {
+    display: flex;
+}
+
+@keyframes rotate-one {
+    0% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+    }
+    100% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotate-two {
+    0% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+    }
+    100% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotate-three {
+    0% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+    }
+    100% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+    }
+}
+
+
+/* ======= approved popup model ====== */
+
+.emg-excel {
+    box-shadow: 0px 4px 4px rgba(8, 171, 5, 0.68);
+}
+
+.emg-very-good {
+    box-shadow: 0px 4px 4px rgba(133, 255, 75, 0.68);
+}
+
+.emg-good {
+    box-shadow: 0px 4px 4px rgba(249, 200, 28, 0.68);
+}
+
+.emg-ri {
+    box-shadow: 0px 4px 4px rgba(252, 93, 4, 0.68);
+}
+
+.emg-unsetisfy {
+    box-shadow: 0px 4px 4px rgba(252, 0, 0, 0.68);
+}
+
+.emoji_rating {
+    background: rgb(255, 255, 255);
+    cursor: pointer;
+}
+
+.rqst-call {
+    display: flex;
+    align-items: center;
+}
+
+.pop-apprv-sbm-btn {
+    background-color: rgb(103, 104, 104);
+    color: rgb(255, 255, 255);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 20%;
+    cursor: pointer;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    margin-inline: 0% 5%;
+    padding-inline: 15px;
+    font-size: larger;
+}
+
+.pop-apprv-sbm-btn img {
+    margin-top: 0;
+}
+
+.pop-rjct-sbm-btn {
+    background-color: rgb(217, 0, 0);
+    color: rgb(255, 255, 255);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 20%;
+    cursor: pointer;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    padding-inline: 15px;
+    font-size: larger;
+}
+
+.pop-rjct-sbm-btn img {
+    margin-top: 0;
+    width: 23px;
+}
+
+.pop-apprv-footer-btn {
+    display: flex;
+    margin-top: 15px;
+    /* height: 10vh; */
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.popup-header img {
+    width: 20px;
+}
+
+.top-header-btn-icon {
+    margin-right: 5px;
+}
+
+.pop-apprv-ttl {
+    color: rgb(217, 0, 0);
+    font-size: x-large;
+    font-weight: 700;
+}
+
+.pop-apprv-header {
+    padding-top: 4%;
+}
+
+.feedbackModal {
+    background-color: #F6F6F6;
+}
+
+
+/* =================== Spinner =================== */
+
+@media (max-width: 1400px) {
+    .tableData,
+    .client-details-div {
+        margin-inline: 2%;
+        margin: auto;
+        width: 87%;
+    }
+    .pop-apprv-rating-div {
+        /* height: 20vh; */
+        /* padding-top: 8%; */
+    }
+}
+
+@media (max-width: 1240px) {
+    .tableData,
+    .client-details-div {
+        margin-inline: 2%;
+        margin: 0 0 0 5rem;
+        width: 90%;
+    }
+    .appRejBtn {
+        width: 45%;
+    }
+}
+
+@media (max-width: 820px) {
+    .tableData,
+    .client-details-div {
+        width: 88%;
+        margin-left: 5rem;
+    }
+    .cndt-info,
+    .send-message,
+    .usr-inf-usr-name {
+        font-weight: normal;
+        font-size: medium;
+    }
+    .user-information {
+        height: 24vh;
+    }
+    .header {
+        margin-left: 2rem;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .timesheet-header-div {
+        height: 50px;
+        margin-top: 10px;
+    }
+    .timesheet_btn_text {
+        margin: 7px 0;
+    }
+    .main {
+        padding: 0px 30px 30px 30px;
+    }
+    .pop-apprv-footer-btn {
+        margin-top: 0px;
+        height: 6vh;
+    }
+    .pop-apprv-rating-div {
+        /* height: 6vh; */
+        padding-top: 0%;
+    }
+    .tableData,
+    .client-details-div {
+        width: 92%;
+        margin-left: 1rem;
+    }
+    .approve-btn {
+        background-color: rgb(103, 104, 104);
+        color: rgb(103, 104, 104);
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        width: 13%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        margin-inline: 1%;
+        padding-inline: 15px;
+        font-size: larger;
+        padding: 2% 4%;
+        overflow: hidden;
+        min-width: auto;
+    }
+    .reject-btn {
+        background-color: rgb(217, 0, 0);
+        color: rgb(217, 0, 0);
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        width: 13%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        padding-inline: 15px;
+        font-size: larger;
+        padding: 2% 4%;
+        overflow: hidden;
+        min-width: auto;
+    }
+    .user-information {
+        height: 25vh;
+    }
+    .header {
+        margin-left: -3%;
+    }
+    .slds-modal__container {
+        max-width: 100%;
+        min-width: 20rem;
+        width: 70%;
+    }
+    .rqst-call {
+        margin-top: 2%;
+    }
+}
+
+@media only screen and (max-width: 540px) {
+    .cndt-info,
+    .send-message,
+    .usr-inf-usr-name,
+    .tableDiv {
+        font-weight: normal;
+        font-size: 12px;
+    }
+    .header {
+        margin-left: 1%;
+    }
+}
+
+@media only screen and (max-width: 414px) {
+    .rqst-call {
+        margin-top: 5%;
+    }
+    .approve-btn {
+        padding: 2% 3%;
+        width: 20%;
+    }
+    .reject-btn {
+        padding: 2% 3%;
+        margin-right: 3rem;
+        margin-left: 1rem;
+        width: 20%;
+    }
+    .header {
+        width: 100%;
+        margin-left: 1%;
+        height: auto;
+    }
+    .header h1 {
+        font-size: large;
+        color: #D90000;
+        font-weight: 700;
+    }
+    .tableData,
+    .client-details-div {
+        margin-inline: 2%;
+        margin: 0 0 0 1rem;
+        width: 92%;
+    }
+    .cndt-info,
+    .send-message,
+    .usr-inf-usr-name,
+    .tableDiv {
+        font-weight: normal;
+        font-size: 12px;
+    }
+    .user-information {
+        height: 30vh;
+    }
+    .tableMain {
+        overflow-x: auto;
+    }
+    table {
+        width: 140vw;
+    }
+    .userClient {
+        display: none;
+    }
+    .cndt-user-client {
+        display: block;
+    }
+}
+
+@media (max-width: 430px) {
+    .main {
+        padding: 0px 15px 15px 15px;
+    }
+    .active-timesheet-btn {
+        min-width: 155px;
+    }
+    .historical-timesheet-btn {
+        min-width: 155px;
+    }
+    .pop-apprv-sbm-btn {
+        background-color: rgb(103, 104, 104);
+        color: rgb(255, 255, 255);
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        cursor: pointer;
+        height: 28px;
+        width: 37%;
+        display: flex;
+        align-items: center;
+        margin-inline: 0% 5%;
+        padding-inline: 15px;
+    }
+    .pop-rjct-sbm-btn {
+        background-color: rgb(217, 0, 0);
+        color: rgb(255, 255, 255);
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        width: 37%;
+        cursor: pointer;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        padding-inline: 15px;
+    }
+    .pop-apprv-footer-btn {
+        justify-content: space-around;
+        margin-top: 15px;
+    }
+    .pop-apprv-footer-btn img {
+        height: 60%;
+        justify-content: space-around;
+    }
+}
+
+@media(max-width: 620px) {
+    .pop-apprv-sbm-btn {
+        background-color: rgb(103, 104, 104);
+        color: rgb(255, 255, 255);
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        cursor: pointer;
+        height: 28px;
+        width: 37%;
+        max-width: 100px;
+        display: flex;
+        align-items: center;
+        margin-inline: 0% 5%;
+        padding-inline: 15px;
+    }
+    .pop-rjct-sbm-btn {
+        background-color: rgb(217, 0, 0);
+        color: rgb(255, 255, 255);
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        width: 37%;
+        max-width: 100px;
+        cursor: pointer;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        padding-inline: 15px;
+    }
+    .pop-apprv-footer-btn {
+        justify-content: flex-end;
+        margin-top: 15px;
+    }
+    .pop-apprv-footer-btn img {
+        height: 60%;
+        justify-content: space-around;
+    }
+}
+
+
+/* ======= approved popup model ====== */
+
+@media (max-width: 1024px) {
+    .timesheet-header-div {
+        height: 4%;
+    }
+    .main {
+        padding: 0px 30px 30px 30px;
+    }
+    .timesheet_scroll {
+        overflow-x: scroll;
+    }
+    .timesheet-table {
+        width: 1200px;
+    }
+    .timesheet-header-div {
+        height: 50px;
+    }
+    .timesheet_btn_text {
+        margin: 7px 0;
+    }
+    .pop-apprv-sbm-btn {
+        width: 110px;
+    }
+    .pop-rjct-sbm-btn {
+        width: 110px;
+    }
+    .pop-apprv-footer-btn {
+        margin-top: 15px;
+    }
+}
+
+
+/* ===============popup=============== */

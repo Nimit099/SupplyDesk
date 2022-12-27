@@ -1,0 +1,590 @@
+<apex:page renderAs="pdf" showHeader="false">
+<apex:stylesheet value="{!URLFOR($Resource.SDstyles, 'SDstyles/supplydesk.css')}"/>
+    <html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <title>Conf of Checks Temp</title>
+            <style>
+                .tableheading {
+                background-color: #d2232a;
+                color: #fff;
+                font-family: "Roboto Slab", Arial, serif;
+                font-weight: bold;
+                }
+                body{
+                font-family: Arial, Helvetica, sans-serif;
+                color: #333;
+                }
+            </style>
+        </head>
+        <body>
+            <table width="100%" cellpadding="10">
+                <tr>
+                    <td colspan="2" valign="top" align="center">
+                        <!--<img src="http://www.supplydesk.co.uk/wp-content/themes/supplydesk/images/logo.png" />-->
+                        <img src="{!URLFOR($Resource.SDlogo)}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">
+                        Jude Wheeler<br />
+                        Hern Bay High School<br />
+                        Bullock Stone Road<br />
+                        Hern Bay<br />
+                        Kent<br />
+                        CT6 7NS
+                    </td>
+                    <td width="50%" align="right" valign="top">
+                        11 October 2016
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" valign="top">
+                        <br />
+                        Dear Jude,<br />
+                        Thank you for choosing Supply Desk to provide your supply staff. Please find below details of the candidate who will be working with you.
+                    </td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="10">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <strong>Details: </strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Candidate Name:
+                    </td>
+                    <td width="50%" valign="top"><strong>Stephen Cross
+                        </strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Date of Birth:
+                    </td>
+                    <td width="50%" valign="top"><strong>23/07/1961
+                        </strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" valign="top">
+                        <br />
+                        <strong> The following checks have been completed by Supply Desk on the above named candidate. </strong>
+                    </td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="10">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">
+                        <strong>Identity Check </strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Documents Checked</td>
+                    <td width="50%" valign="top">Group 1 ID Type – pull all selected</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">&nbsp;</td>
+                    <td width="50%" valign="top">Group 2a ID Type – pull all selected</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">&nbsp;</td>
+                    <td width="50%" valign="top">Group 2b ID Type – pull all selected</td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="10">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">Clear Barred List Check<strong></strong></td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Date</td>
+                    <td width="50%" valign="top">Barred List Date Checked</td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="10">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">Enhanced DBS Check<strong></strong></td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Certificate Valid Date</td>
+                    <td width="50%" valign="top">DBS Issue Date</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Disclosure Number</td>
+                    <td width="50%" valign="top">DBS Disclosure ID Number</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Date of DBS Update Service Check</td>
+                    <td width="50%" valign="top">DBS Checked Online Date</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Clear</td>
+                    <td width="50%" valign="top">Clear DBS? Yes / No<br />
+                        <br />
+                        <em>If 'No', automatically include the following wording:</em><br />
+                        [Name of Candidate] has been asked to disclose DBS certificate to [name of client].
+                    </td>
+                </tr>
+            </table>
+            <p>&nbsp;</p>
+            <table width="100%" cellpadding="10">
+                <tr>
+                    <td valign="top" align="center">
+                        <strong>Prohibition from Teaching Check</strong> 
+                    </td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="10">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">Qualified Teacher NCTL<strong></strong></td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Teacher Reference Number</td>
+                    <td width="50%" valign="top">NCTL number</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Check Date</td>
+                    <td width="50%" valign="top">NCTL checked date</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">QTS Date</td>
+                    <td width="50%" valign="top">QTS Awarded date</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Introduction Completed</td>
+                    <td width="50%" valign="top">NQT Introduction Complete – Yes / No / NA</td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="10">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">FE SET (formerly IFL)<strong></strong></td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">SET Number</td>
+                    <td width="50%" valign="top">SET number</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Check Date</td>
+                    <td width="50%" valign="top">SET checked date</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">QTLS</td>
+                    <td width="50%" valign="top">QTLS – Yes / No</td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="10">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">Overseas Check<strong></strong></td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Overseas Police Check Clear</td>
+                    <td width="50%" valign="top">Overseas Police Check – Yes / No / NA</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Letter of Good Conduct</td>
+                    <td width="50%" valign="top">Letter of Good Conduct Received – Yes / No / NA</td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="10">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">Right to Work<strong></strong></td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Overseas Police Check Clear</td>
+                    <td width="50%" valign="top">Overseas Police Check – Yes / No / NA</td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Letter of Good Conduct</td>
+                    <td width="50%" valign="top">Letter of Good Conduct Received – Yes / No / NA</td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="10">
+                <tr>
+                    <td colspan="2" valign="top" class="tableheading">Disqualification by Association<strong></strong></td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">Disqualification by Association Check Clear</td>
+                    <td width="50%" valign="top">Yes / No</td>
+                </tr>
+                <tr>
+                    <td colspan="2" valign="top">If No, add the following wording: Supply Desk will inform [name of client] of any relevant restrictions that apply. </td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="10">
+                <tr>
+                    <td width="100%" valign="top" class="tableheading">Other Checks That Have Been Carried Out<strong></strong></td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        <p>Mental and physical fitness to work in the role of [Job title] verified. Compentency based interview completed.</p>
+                        <p>Employment history verified and references obtained in accordance with DfE guidance. </p>
+                    </td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="10">
+                <tr>
+                    <td width="100%" valign="top">
+                        <p>Yours sincerely, </p>
+                        <p>Consultant Name<br />
+                            SD Branch<br />
+                            Branch Tel. No.
+                        </p>
+                        <hr />
+                    </td>
+                </tr>
+            </table>
+            <BR />
+            <table width="100%" cellpadding="10">
+                <tr>
+                    <td width="100%" valign="top">
+                        <h3>SUPPLY DESK LIMITED: CLIENT TERMS OF BUSINESS FOR THE SUPPLY OF AGENCY WORKERS</h3>
+                        <p><strong>Applicable from 6 April 2016</strong></p>
+                        <p><strong>1. DEFINITIONS AND INTERPRETATION</strong>
+                        </p>
+                        <blockquote>
+                            <p>1.1 In these Terms the following definitions apply:</p>
+                            <p>&ldquo;<strong>Agency Worker</strong>&rdquo;<br />
+                                means the individual who is Introduced by the Employment Business to provide services to the Hirer;
+                            </p>
+                            <p><strong>&ldquo;Agency Workers Regulations&rdquo;       <br />
+                                </strong>means the Agency Workers Regulations 2010;
+                            </p>
+                            <p><strong>&ldquo;Assignment&rdquo;                                       <br />
+                                </strong>means  assignment services to be performed by  the Agency Worker for the Hirer for a period of time during which the Agency Worker is supplied by the Employment Business to work temporarily for and under the supervision and direction of the Hirer;
+                            </p>
+                            <p><strong>&ldquo;Assignment Confirmation&rdquo;<br />
+                                </strong>means written confirmation of the assignment details agreed with the Hirer prior to commencement of the Assignment;
+                            </p>
+                            <p><strong>&ldquo;AWR Claim&rdquo;                                    <br />
+                                </strong>means any complaint or claim to a tribunal or court made by or on behalf of the Agency Worker against the Hirer and/or the Employment Business for any breach of the Agency Workers Regulations;
+                            </p>
+                            <p><strong>&ldquo;Calendar Week&rdquo;                             <br />
+                                </strong>means any period of seven days starting with  the same day as the first day of the First Assignment;
+                            </p>
+                            <p><strong>&ldquo;Charges&rdquo;                                        <br />
+                                </strong>means the hourly charges of the Employment Business calculated in accordance with clause 6.1 and as may be varied from time to time in accordance with these Terms;
+                            </p>
+                            <p><strong>&ldquo;Comparable Employee&rdquo;                 <br />
+                                </strong>means as defined in Schedule 1 to these Terms;
+                            </p>
+                            <p><strong>&ldquo;Conduct Regulations&rdquo;                    <br />
+                                </strong>means the Conduct of Employment Agencies and Employment Businesses Regulations 2003 as amended;
+                            </p>
+                            <p><strong>&ldquo;Confidential Information&rdquo;               <br />
+                                </strong>means any and all confidential commercial, financial, marketing, technical or other information or data of whatever nature relating to the Hirer or Employment Business or their business or affairs (including but not limited to these Terms, data, records, reports, agreements, software, programs, specifications, know- how, trade secrets and other information concerning the Assignment) in any form or medium whether disclosed or granted access to whether in writing, orally or by any other means, provided to the Agency Worker or  any third party in relation to the Assignment by the Hirer or the Employment Business or by a third party on behalf  of the Hirer whether before or after the date of these Terms together with any reproductions of such information in any form or medium or any part(s) of  such information;
+                            </p>
+                            <p><strong>&ldquo;Control&rdquo;                                          <br />
+                                </strong>means (a) the legal or beneficial ownership, directly or indirectly, of more than 50% of the issued share capital or similar right of ownership; or (b) the power to direct or cause the direction of the affairs and/or  general management of the company, partnership,  statutory  body or other entity in question, whether through the ownership of voting capital, by contract or  otherwise, and &quot;Controls&quot; and &quot;Controlled&quot; shall be construed  accordingly;
+                            </p>
+                            <p><strong>&ldquo;Data Protection Laws&rdquo;                   <br />
+                                </strong>means the Data Protection Act 1998, any applicable statutory or regulatory provisions and all European  Directives and regulations in force from time  to  time  relating to the protection and transfer of personal data;
+                            </p>
+                            <p><strong>&ldquo;Employment Business&rdquo;                 <br />
+                                </strong>Supply Desk  Limited, Company  number 3725732, registered office 2nd Floor, Sir Wilfrid Newton House, Thorncliffe Park, Chapeltown, Sheffield, S35 2PH (including the trading divisions &lsquo;Synarbor Education&rsquo; and &lsquo;Teachin&rsquo;);
+                            </p>
+                            <p><strong>&ldquo;Engagement&rdquo;                                  <br />
+                                </strong>means   the   engagement,   employment   or   use    of   the Candidate by the Client or by any third party to whom the Candidate has been introduced by the Client, on a permanent or temporary basis, whether under a contract of service or for services; under an agency, licence, franchise or partnership agreement; or any other engagement; or through a limited company of which the Candidate is an officer, employee or other representative; and &ldquo;Engage&rdquo;, &ldquo;Engages&rdquo; and &ldquo;Engaged&rdquo; shall be construed accordingly;
+                            </p>
+                            <strong>&ldquo;First Assignment&rdquo;<br />
+                            </strong>means:
+                        </blockquote>
+                        <ol>
+                            <ol>
+                                <ol>
+                                    <li>the relevant Assignment; or</li>
+                                    <li>
+                                        if, prior to the relevant Assignment:
+                                        <ul>
+                                            <li>the Agency Worker has worked in any assignment in the same role with the relevant Hirer as the role in which the Agency Worker works in the relevant Assignment; and</li>
+                                            <li>the relevant  Qualifying  Period commenced in any such assignment,</li>
+                                        </ul>
+                                    </li>
+                                </ol>
+                                <blockquote>
+                                    <p>that assignment (an assignment being (for the purpose of this defined term) a period of  time  during which the Agency Worker is supplied by one or more Temporary Work Agencies to the relevant Hirer to work temporarily for and under the supervision  and  direction  of  the  relevant Hirer);</p>
+                                </blockquote>
+                            </ol>
+                        </ol>
+                        <blockquote>
+                            <p><strong>&ldquo;Hirer&rdquo;                                             <br />
+                                </strong>means the person, firm or corporate body together  with any subsidiary or associated person, firm or corporate body (as the case may be) to whom the Agency Worker is Introduced;
+                            </p>
+                            <p><strong>&ldquo;Hirer's Group&rdquo;                                <br />
+                                </strong>means  (a)  any  individual,  company, partnership, statutory body or other entity which from time to time Controls the Hirer, including (but not limited  to)  as  a  holding company as defined in section 1159 of the Companies Act 2006 and   a local authority or council; and (b) any company, partnership,  statutory  body or other entity which from time to time is Controlled by or  is under common Control with the Hirer, including (but not limited to) as a subsidiary or holding company as defined in section 1159 of the Companies Act 2006 and a local authority or council;
+                            </p>
+                            <p><strong>&ldquo;Introduction&rdquo;                                   <br />
+                                </strong>means (i) the passing to the Client of a  curriculum vitæ or information which identifies the Candidate or (ii) the Client&rsquo;s interview of a Candidate (in person, by telephone or by any other means), following the Client&rsquo;s instruction to the Agency to search for a Candidate;  and, in either case, which leads to an Engagement of the Candidate; and &ldquo;Introduces&rdquo; and &ldquo;Introduced&rdquo; shall be construed accordingly;
+                            </p>
+                            <p><strong>&ldquo;Losses&rdquo;                                         <br />
+                                </strong>means all losses, liabilities, damages,   costs, expenses whether direct, indirect, special or consequential (including, without limitation, any economic loss or other loss of profits, business or goodwill, management time and reasonable legal fees) and charges, including such items arising out of or resulting from actions, proceedings, claims and demands;
+                            </p>
+                            <p><strong>&ldquo;Period of Extended Hire&rdquo;               <br />
+                                </strong>means any additional period that the  Hirer wishes the Agency Worker to be supplied for beyond the duration  of the original Assignment or series of Assignments as an alternative to paying a Transfer Fee;
+                            </p>
+                            <p><strong>&ldquo;Qualifying Period&rdquo;                         <br />
+                                </strong>means 12 continuous Calendar Weeks during the whole or part of which the Agency Worker is supplied by one or more Temporary Work Agencies to the relevant Hirer to work temporarily for and under the supervision and direction of the relevant Hirer in the same role, and as further defined in Schedule 1 to these Terms;      
+                            </p>
+                            <p><strong>&ldquo;Relevant Period&rdquo;                            <br />
+                                </strong>means whichever of the following periods ends later: (a) the period of 8 weeks commencing on the day after the <u>last </u>day on which the Agency Worker worked for the Hirer having been supplied by the Employment Business; or (b) the period of 14 weeks commencing on the <u>first </u>day on which the Agency Worker worked for the Hirer having been supplied by the Employment Business or 14 weeks from the first day of the most recent Assignment where there has been a break of more than 6 weeks (42 days) since any previous assignment;
+                            </p>
+                            <p><strong>&ldquo;Relevant Terms and Conditions&rdquo;   <br />
+                                </strong>means terms and conditions relating to:
+                            </p>
+                            <ol>
+                                <li>pay;</li>
+                                <li>the duration of working time;</li>
+                                <li>night work;</li>
+                                <li>rest periods;</li>
+                                <li>rest breaks; and</li>
+                                <li>annual leave</li>
+                            </ol>
+                            <p>that are ordinarily included in the contracts of employees or workers (as appropriate) of the Hirer whether   by  collective   agreement   or   otherwise and including (for the avoidance of doubt and without limitation) such terms and conditions that have become contractual by virtue of custom and practice, including copies of all relevant documentation;</p>
+                            <p><strong>&ldquo;Remuneration&rdquo;                               <br />
+                                </strong>includes gross  base salary or  fees, guaranteed and/or anticipated bonus and commission earnings, allowances, inducement payments, the benefit of a company car and all other payments and taxable (and, where applicable, non-taxable) emoluments payable to or receivable by the Agency Worker for services provided to or on behalf of the Hirer or any third party.;
+                            </p>
+                            <p><strong>&ldquo;Temporary Work Agency&rdquo;              <br />
+                                </strong>means as defined in Schedule 1 to these Terms;
+                            </p>
+                            <p><strong>&ldquo;Terms&rdquo;                                           <br />
+                                </strong>means these terms of business (including  the attached schedules) together with any applicable Assignment Confirmation;
+                            </p>
+                            <p><strong>&ldquo;Transfer Fee&rdquo;                                 <br />
+                                </strong>means the fee payable in accordance with clause    8 of these Terms and Regulation 10 of the Conduct Regulations;
+                            </p>
+                            <p><strong>&ldquo;Vulnerable Person&rdquo;                       <br />
+                                </strong>means  any  person  who  by  reason  of  age,  infirmity, illness, disability or any other circumstance is in need of care or attention, and includes any person under the  age of eighteen; and
+                            </p>
+                            <p><strong>&ldquo;Working Time Regulations&rdquo;           <br />
+                                </strong>means the Working Time Regulations 1998.
+                            </p>
+                            <ol>
+                                <ol>
+                                    <li>Unless the context otherwise requires, references to the singular include the plural and references to the masculine include the feminine and vice versa.      </li>
+                                    <li>The headings contained in these Terms are for convenience only and do not affect their interpretation.</li>
+                                    <li>Any reference, express or implied, to an enactment includes a reference to that enactment as from time to time amended, modified, extended, re-enacted, replaced or applied by or under any other enactment (whether before or after the date of these Terms) and all subordinate legislation made (before or after these Terms) under it from time to time.</li>
+                                </ol>
+                                <blockquote>
+                                    <p>&nbsp;</p>
+                                </blockquote>
+                            </ol>
+                            <p><strong>2. THE CONTRACT</strong><strong></strong></p>
+                            <p>2.1. These Terms constitute the contract between the Employment Business and the Hirer for the supply of the Agency Worker&rsquo;s services by the Employment Business to the Hirer and are deemed to be accepted by the Hirer by virtue of its request for, interview with or Engagement of the Agency Worker, or the passing of any information by the Hirer about an Agency Worker to any third party following an Introduction.</p>
+                            <p>2.2. These Terms contain the entire agreement between the parties and unless otherwise agreed in writing by the Employment Business, these Terms prevail over any terms of business or purchase conditions (or similar) put forward by the Hirer.</p>
+                            <p>2.3. Subject to clause 6.2, no variation or alteration to these Terms shall be valid unless the details of such variation are agreed between the Employment Business and the Hirer and are set out in writing and a copy of the varied Terms is given to the Hirer stating the date on or after which such varied Terms shall apply.</p>
+                            <p>2.4.  The Employment Business shall act as an employment business (as defined in Section 13(3) of the Employment Agencies Act 1973) when Introducing Agency Workers for Assignments with the Hirer.      </p>
+                            <p>&nbsp;</p>
+                            <p><strong>3. HIRER OBLIGATIONS</strong></p>
+                            <p>3.1. To enable the Employment Business to comply with its obligations under the Conduct Regulations the Hirer undertakes to provide to the Employment Business details of  the position which the Hirer seeks to fill, including the following:</p>
+                            <blockquote>
+                                <p>3.1.1. the type of work that the Agency Worker would be required to do;        </p>
+                                <p>3.1.2. the location and hours of work;</p>
+                                <p>3.1.3. the experience, training, qualifications and any authorisation which the Hirer considers necessary or which are required by law or any professional body  for  the  Agency  Worker  to  possess  in  order  to  work in  the  position;</p>
+                                <p>3.1.4. any risks to health or safety known to the Hirer and what steps the Hirer has taken to prevent or control such risks</p>
+                                <p>3.1.5. the date the Hirer requires the Agency Worker to commence the Assignment;</p>
+                                <p>3.1.6. the duration or likely duration of the Assignment.</p>
+                            </blockquote>
+                            <p>3.2. The Hirer will assist the Employment Business in complying with the Employment Business' duties under the Working Time Regulations by supplying any relevant information about the Assignment requested by the Employment Business and the Hirer will not do anything to cause the Employment Business to be in breach of its obligations under these Regulations. If the Hirer requires the services of an Agency Worker for more than 48 hours in any week during the course of an Assignment, the Hirer must notify the Employment Business of this requirement before the commencement of the Assignment or at the very latest, where this is not reasonably practicable, before the commencement of the week in which the Hirer requires the Agency Worker to work in excess of 48 hours.</p>
+                            <p>3.3. The Hirer will comply with its obligations under Regulation 12 (Rights of agency workers in relation to access to collective facilities and amenities) and 13 (Rights of agency workers in relation to access to employment) of the Agency Workers Regulations.</p>
+                            <p>3.4. To enable the Employment Business to comply with its obligations under the Agency Workers Regulations, the Hirer undertakes as soon as possible prior to the commencement of each Assignment and during each Assignment (as appropriate) and at any time at the Employment Business' request:</p>
+                            <blockquote>
+                                <p>3.4.1. to inform the Employment Business of any Calendar Weeks since 1 October 2011 in which the relevant Agency Worker has worked in the same or a similar role with the Hirer via any third party prior to the date of commencement of the relevant Assignment and/or during the relevant Assignment which count or may count towards the Qualifying Period;</p>
+                                <p>3.4.2. if, since 1 October 2011, the Agency Worker has worked in the same or a similar role with the Hirer via any third party prior to the date of commencement of the relevant Assignment and/or works in the same or a similar role with the Hirer via any third party during the relevant Assignment, to provide the Employment Business with all the details of such work, including (without limitation) details of where, when and the period(s)  during which such work was undertaken and any other details requested by the Employment Business;</p>
+                                <p>3.4.3. to inform the Employment Business if, since 1 October 2011, the Agency Worker has prior to the date of commencement of the relevant Assignment and/or during the relevant Assignment:</p>
+                                <blockquote>
+                                    <p>3.4.3.1. completed two or more assignments with the Hirer;</p>
+                                    <p>3.4.3.2. completed at least one assignment with the Hirer and one or  more earlier assignments with any member of the Hirer's Group; and/or</p>
+                                    <p>3.4.3.3. worked in more than two roles during an assignment with the Hirer and on at least two occasions worked in a role that was not the same role as the previous role;</p>
+                                </blockquote>
+                                <p>3.4.4. save where the Agency Worker will not complete the Qualifying Period during the term of the Assignment, to:</p>
+                                <blockquote>
+                                    <p>3.4.4.1. provide the Employment Business with written details of the basic working and employment conditions the Agency Worker would be entitled to for doing the same job if the Agency Worker had been recruited directly by the Hirer as an employee or worker at the time the Qualifying Period commenced or with those of a Comparable Employee, such basic working and employment conditions being the Relevant Terms and Conditions;</p>
+                                    <p>3.4.4.2. inform the Employment Business in writing whether the Relevant Terms and Conditions provided are those of a hypothetical directly recruited employee or worker or those of a Comparable Employee;</p>
+                                    <p>3.4.4.3. if the Relevant Terms and Conditions provided are those of a Comparable Employee, provide the Employment Business with a written explanation of the basis on which the Hirer considers that the relevant individual is a Comparable Employee; and</p>
+                                    <p>3.4.4.4 inform the Employment Business in writing of any variations in  the Relevant Terms and Conditions made at any time during the relevant Assignment after the Qualifying Period commenced; and</p>
+                                </blockquote>
+                                <p>3.4.5. save where the Agency Worker will not complete the Qualifying Period during the term of the Assignment, to provide the Employment Business with written details of its pay and benefits structures and appraisal processes and any variations of the same.</p>
+                            </blockquote>
+                            <p>3.5. In addition, for the purpose of awarding any bonus to which the Agency Worker may be entitled under the Agency Workers Regulations, the Hirer will:</p>
+                            <blockquote>
+                                <p>3.5.1. integrate the Agency Worker into its relevant performance appraisal system;</p>
+                                <p>3.5.2. assess the Agency Worker's performance;</p>
+                                <p>3.5.3. provide the Employment Business with copies of all documentation relating to any appraisal of the Agency Worker, including without limitation written  details of the outcome of any appraisal and the amount of any bonus awarded; and</p>
+                                <p>3.5.4. provide the Employment Business with all other assistance the Employment Business may request in connection with the assessment of the Agency Worker's performance for the purpose of awarding any bonus.</p>
+                            </blockquote>
+                            <p>3.6. The Hirer will comply with all the Employment Business' requests for information and any other requirements to enable the Employment Business to comply with the Agency Workers Regulations.</p>
+                            <p>3.7. The Hirer warrants that:</p>
+                            <blockquote>
+                                <p>3.7.1. all information and documentation supplied to the Employment Business in accordance with clauses 3.4, 3.5 and 3.6 is complete, accurate and up-to- date; and</p>
+                                <p>3.7.2. it will, during the term of the relevant Assignment, immediately inform the Employment Business in writing of any subsequent change in any information or documentation provided in accordance with clauses 3.4, 3.5 and 3.6;</p>
+                            </blockquote>
+                            <p>3.8. Without prejudice to clauses 14.7 and 14.8, the Hirer shall inform the Employment Business in writing of any:      </p>
+                            <blockquote>
+                                <p>3.8.1. oral or written complaint the Agency Worker makes to the Hirer which is or may be a complaint connected with rights under the Agency Workers Regulations; and</p>
+                                <p>3.8.2. written request for information relating to the Relevant Terms and Conditions that the Hirer receives from the Agency Worker</p>
+                            </blockquote>
+                            <p>      as soon as possible but no later than 7 calendar days from the day on which any such oral complaint is made to or written complaint or request is received by the Hirer and the Hirer will take such action and give such information and assistance as the Employment Business may request, and within any timeframe requested by the Employment Business, in order to resolve any such complaint or to provide any such information in a written statement to the Agency Worker within 28 days of the Hirer's receipt of such a request in accordance with Regulation 16 of the Agency Workers Regulations and the Hirer will provide the Employment Business with a copy of any such written statement.        </p>
+                            <p>3.9 The Hirer undertakes that it knows of no reason why it would be detrimental to the interests of the Agency Worker for the Agency Worker to fill the Assignment.</p>
+                            <p>&nbsp;</p>
+                            <p><strong>4. INFORMATION TO BE PROVIDED BY THE EMPLOYMENT BUSINESS TO THE HIRER</strong>      </p>
+                            <p>4.1. When Introducing an Agency Worker to the Hirer the Employment Business shall inform the Hirer:</p>
+                            <blockquote>
+                                <p>4.1.1. of the identity of the Agency Worker;</p>
+                                <p>4.1.2. that the Agency Worker has the necessary or required experience, training, qualifications and any authorisation required by law or a professional body to work in the Assignment;</p>
+                                <p>4.1.3. that the Agency Worker is willing to work in the Assignment; and</p>
+                                <p>4.1.4. the Charges.</p>
+                            </blockquote>
+                            <p>4.2. Where such information is not given in paper form or by electronic means it shall be confirmed by such means by the end of the third business day (excluding Saturday, Sunday and any Public or Bank Holiday) following, save where the Agency Worker is Introduced for an Assignment in the same position as one in which  the Agency Worker had previously been supplied within the previous 5 business days and such information has already been given to the Hirer, unless the Hirer requests that the information be resubmitted.</p>
+                            <p>&nbsp;</p>
+                            <p><strong>5. TIMESHEETS</strong></p>
+                            <p>5.1. At the end of each week of an Assignment (or at the end of the Assignment where it is for a period of 1 week or less) the Hirer shall approve the Employment Business' timesheet on its e-timesheeting system, verifying the number of hours / days worked by the Agency Worker during that week.</p>
+                            <p>5.2. Approval of the timesheet by the Hirer (either by signing a paper timesheet or authorising a timesheet on the e-timesheeting) is confirmation of the number of days / hours worked. If the Hirer is unable to sign / authorise a timesheet produced for authentication by the Agency Worker because the Hirer disputes the hours claimed, the Hirer shall inform the Employment Business as soon as is reasonably practicable either via the e-timesheeting system or direct with the branch and shall co-operate fully and in a timely fashion with the Employment Business to enable the Employment Business to establish what hours, if any, were worked by the Agency Worker. <strong>Failure to sign / authorise the timesheet does not absolve the Hirer of its obligation to pay the Charges in respect of the hours worked.</strong></p>
+                            <p>5.3. The Hirer shall not be entitled to decline to sign a timesheet on the basis that it is dissatisfied with the work performed by the Agency Worker. In the event that the Hirer is dissatisfied with the Agency Worker the provisions of clause 10.1 below shall apply.      </p>
+                            <p>&nbsp;</p>
+                            <p><strong>6. CHARGES</strong></p>
+                            <p>6.1. The Hirer agrees to pay the Charges as notified to and agreed with the Hirer. The Charges are calculated according to the number of hours worked by the Agency Worker (to the nearest quarter hour) and comprise the following:</p>
+                            <blockquote>
+                                <p>6.1.1. the Agency Worker&rsquo;s hourly rate of pay;</p>
+                                <p>6.1.2. an amount equal to any paid holiday leave to which the Agency Worker is entitled under the Working Time Regulations and, where applicable, the Agency Workers Regulations and which is accrued during the course of an Assignment;</p>
+                                <p>6.1.3. any other amounts to which the Agency Worker is entitled under the Agency Workers Regulations, where applicable;</p>
+                                <p>6.1.4. employer&rsquo;s National Insurance contributions;</p>
+                                <p>6.1.5. any travel, hotel or other expenses as may have been agreed with the Hirer or, if there is no such agreement, such expenses as are reasonable; and</p>
+                                <p>6.1.6. the Employment Business' commission, which is calculated as a percentage of the Agency Worker&rsquo;s hourly rate.</p>
+                            </blockquote>
+                            <p>6.2. The Employment Business reserves the right to vary the Charges agreed with the Hirer, by giving written notice to the Hirer:</p>
+                            <blockquote>
+                                <p>6.2.1. in order to comply with any additional liability imposed by statute or other  legal requirement or entitlement, including but not limited to the Agency Workers Regulations; and/or</p>
+                                <p>6.2.2. if there is any variation in the Relevant Terms and Conditions.</p>
+                            </blockquote>
+                            <p>6.3. The Charges are invoiced to the Hirer on a weekly basis and are payable within 14 days.</p>
+                            <p>6.4. In addition to the Charges, the Hirer will pay the Employment Business an amount equal to any bonus that the Hirer awards to the Agency Worker in accordance with clause 3.5 immediately following any such award and the Employment Business will pay any such bonus to the Agency Worker. For the avoidance of doubt, the Hirer will also pay any employer&rsquo;s National Insurance Contributions and the Employment Business' commission on the bonus (calculated using the same percentage rate as that used under clause 6.1.6) in addition to any bonus payable to the Agency Worker.</p>
+                            <p>6.5. VAT is payable at the applicable rate on the entirety of the Charges and all sums payable under clause 6.4.</p>
+                            <p>6.6. The Employment Business reserves the right to charge interest under the Late Payment of Commercial Debts (Interest) Act 1998 on invoiced amounts unpaid by the due date at the rate of 8% per annum above the base rate from time to time of the Bank of England from the due date until the date of payment.</p>
+                            <p>6.7. No refunds are payable in respect of the Charges of the Employment Business.</p>
+                            <p>6.8. The Hirer&rsquo;s obligations under this clause 6 shall be performed without any right of the Hirer to invoke set-off, deductions, withholdings or other similar rights.</p>
+                            <p>&nbsp;</p>
+                            <p><strong>7. PAYMENT OF THE AGENCY WORKER</strong></p>
+                            <p>The Employment Business assumes responsibility for paying the Agency Worker and where appropriate, for the deduction and payment of National Insurance Contributions and PAYE Income Tax applicable to the Agency Worker pursuant to sections 44-47 of the Income Tax (Earnings and Pensions) Act 2003.</p>
+                            <p>&nbsp;</p>
+                            <p><strong>8. TRANSFER FEES</strong>      </p>
+                            <p>8.1. The Hirer shall be liable to pay a Transfer Fee if the Hirer Engages an Agency Worker Introduced by the Employment Business other than via the Employment Business or introduces the Agency Worker to a third party and such introduction results in an Engagement of the Agency Worker by the third party other than via the Employment Business and:</p>
+                            <blockquote>
+                                <p>8.1.1. where the Agency Worker has been supplied by the Employment Business, such Engagement takes place during the Assignment or within the Relevant Period; or</p>
+                                <p>8.1.2. where the Agency Worker has not been supplied, such Engagement takes place within 8 months from the date of the Introduction to the Hirer.</p>
+                            </blockquote>
+                            <p>The Transfer Fee will be calculated in accordance with Schedule 2.</p>
+                            <p>8.2. If the Hirer wishes to Engage the Agency Worker other than via the Employment Business without liability to pay a Transfer Fee, the Hirer may, on giving one week&rsquo;s written notice to the Employment Business, engage the Agency Worker for the Period of Extended Hire specified in Schedule 2.</p>
+                            <p>8.3. During such Period of Extended Hire the Employment Business shall supply the Agency Worker on the same terms on which s/he has or would have been supplied during the Assignment and in any case on terms no less favourable than those terms which applied immediately before the Employment Business received the notice in clause 8.2; and the Hirer shall continue to pay the Charges set out in clause 6. If the Employment Business is unable to supply the Agency Worker for any reason outside its control for the whole or any part of the Period of Extended Hire; or the Hirer does not wish to hire the Agency Worker on the same terms as the Assignment; but the Agency Worker is Engaged by the Hirer, the Hirer shall pay the Transfer Fee, reduced pro-rata to reflect any Charges paid by the Hirer during any part of the Period of Extended Hire worked by the Agency Worker before being Engaged by the Hirer. If  the Hirer fails to give notice of its intention to Engage the Agency Worker other than via the Employment Business before such Engagement commences, the parties  agree that the Transfer Fee shall be due in full.</p>
+                            <p>8.4. Where prior to the commencement of the Hirer's Engagement other than via the Employment Business the Employment Business and the Hirer agree that such Engagement will be on the basis of a fixed term of less than 12 months, the Employment Business may, in its absolute discretion, reduce the Transfer Fee as calculated in accordance with Schedule 2 pro-rata. Such reduction is subject to the Hirer Engaging the Agency Worker for the agreed fixed term. Should the Hirer extend the Agency Worker&rsquo;s Engagement or re-Engage the Agency Worker within 12 months from the commencement of the initial Engagement the Employment Business  reserves the right to recover the balance of the Transfer Fee.</p>
+                            <p>8.5. No refund of the Transfer Fee will be paid in the event that the Engagement of the Agency Worker other than via the Employment Business by the Hirer or by a third party to which the Hirer introduces the Agency Worker terminates or  terminates  before the end of the fixed term referred to in clause 8.4.</p>
+                            <p>8.6. VAT is payable in addition to any Transfer Fee due.</p>
+                            <ol>
+                            </ol>
+                            <p><strong>9. SUITABILITY CHECKS AND INFORMATION TO BE PROVIDED IN SPECIAL SITUATIONS</strong></p>
+                            <p><strong>&nbsp;</strong>9.1. Where:</p>
+                            <blockquote>
+                                <p>9.1.1. the Agency Worker is required by law, or any professional body to have any qualifications or authorisations to work on the Assignment, the Employment Business will take all reasonably practicable steps to obtain and offer to provide to the Hirer copies of any relevant qualifications or authorisations of the Agency Worker; and</p>
+                                <p>9.1.2. in addition, where the Assignment involves working with, caring for or attending one or more Vulnerable Persons, the Employment Business will take all reasonably practicable steps to obtain and offer to provide copies to the Hirer of two references from persons who are not relatives of the Agency Worker and who have agreed that the references they provide may be disclosed to the Hirer;</p>
+                            </blockquote>
+                            <p>      and such other reasonably practicable steps as are required to confirm that the Agency Worker is suitable for the Assignment. If the Employment Business has taken all reasonably practicable steps to obtain the information above and has been unable to do so fully it shall inform the Hirer of the steps it has taken to obtain this information in any event.</p>
+                            <p>9.2. The Hirer shall advise the Employment Business at the time of instructing the Employment Business to supply an Agency Worker whether during the course of the Assignment, the Agency Worker will be required to work with, care for or attend one   or more Vulnerable Persons or engage in activity or otherwise be working in a position covered by the Safeguarding Vulnerable Groups Act 2006 or the Protecting  Vulnerable Groups (Scotland) Act 2007 as applicable.</p>
+                            <p>9.3. The Hirer shall assist the Employment Business by providing any information required to allow the Employment Business to comply with its statutory obligations under the Safeguarding Vulnerable Groups Act 2006 or the Protecting Vulnerable Groups (Scotland) Act 2007 as applicable and to allow the Employment Business to select a suitable Agency Worker for the Assignment.</p>
+                            <p>9.4. In particular in the event that the Hirer removes an Agency Worker from an Assignment in circumstances which would require the Employment Business to provide information to the Independent Safeguarding Authority (or the equivalent authority) under the Safeguarding Vulnerable Groups Act 2006 or the Protecting Vulnerable Groups (Scotland) Act 2007, the Hirer will provide sufficient information to the Employment Business to allow it to discharge its statutory obligations.</p>
+                            <p>&nbsp;</p>
+                            <p><strong>10. UNSUITABILITY OF THE AGENCY WORKER</strong>      </p>
+                            <p>10.1. The Hirer undertakes to supervise the Agency Worker sufficiently to ensure the Hirer&rsquo;s satisfaction with the Agency Worker&rsquo;s standards of work. If the Hirer reasonably considers that the services of the Agency Worker are unsatisfactory, the Hirer may terminate the Assignment either by instructing the Agency Worker to leave the Assignment immediately, or by directing the Employment Business to remove the Agency Worker. The Employment Business may, in its absolute discretion, in such circumstances, reduce or cancel the Charges for the time worked by that Agency Worker, provided that the Hirer has notified the Employment Business immediately that they have asked the Agency Worker to leave the Assignment or the Assignment terminates.</p>
+                            <blockquote>
+                                <p>10.1.1. within 4 hours of the Agency Worker commencing the Assignment where the Assignment is for more than 7 hours; or</p>
+                                <p>10.1.2. within 2 hours for Assignments of 7 hours or less;</p>
+                            </blockquote>
+                            <p>      and provided that notification of the unsuitability of the Agency Worker is confirmed in writing to the Employment Business within 48 hours of the termination of the Assignment.</p>
+                            <p>10.2. The Employment Business shall notify the Hirer immediately if it receives or otherwise obtains information which gives the Employment Business reasonable grounds to believe that any Agency Worker supplied to the Hirer is unsuitable for the Assignment and shall be entitled to terminate the Assignment forthwith without prior notice and without liability. Notwithstanding, the Hirer shall remain liable for all Charges incurred prior to the termination of the Assignment.</p>
+                            <p>10.3. The Hirer shall notify the Employment Business immediately and without delay and in any event within 1 hour if the Agency Worker fails to attend work or has notified the Hirer that they are unable to attend work for any reason.</p>
+                            <ol>
+                            </ol>
+                            <p><strong>11. TERMINATION OF THE ASSIGNMENT</strong>      </p>
+                            <p>11.1. Any of the Hirer, the Employment Business or the Agency Worker may terminate an Assignment at any time without prior notice and without liability (except in the case of termination by the Hirer, who shall be liable for any Charges due under clause 6  above and clause 11.2 below).</p>
+                            <p>11.2. In the event that a Client's premises or business is closed in full or in part for a period of time (the &quot;<strong>Affected Period</strong>&quot;) as a result of any adverse events including (but not limited to) adverse weather conditions (including snow and flooding), failure in the Client's heating/plumbing or electricity systems, issues affecting the provision of utility services to the Client (including electricity, gas and water), or issues affecting the Client's personnel (including any lock-out, strike or other industrial action), the  charges applicable to any Temporary Worker booked in advance by the Client must  be paid for in full for the duration of the Affected Period whether or not the Temporary Worker has been utilised by the Client during the Affected Period. For the purposes   of Clause 3.1, the Temporary Worker shall be deemed to have worked on each day during the Affected Period that the Temporary Worker would have worked had the Affected Period not occurred.</p>
+                            <p>&nbsp;</p>
+                            <p><strong>12. CONFIDENTIALITY AND DATA PROTECTION</strong></p>
+                            <p>12.1. All information relating to an Agency Worker is confidential and subject to the Data Protection Laws and is provided solely for the purpose of providing work-finding services to the Hirer. Such information must not be used for any other purpose nor divulged to any third party and the Hirer undertakes to abide by the provisions of the Data Protection Laws in receiving and processing the data at all times.</p>
+                            <p>12.2. The Employment Business undertakes to keep confidential all Relevant Terms and Conditions that the Hirer discloses to the Employment Business and not to use such information except for the purposes of compliance with the Agency Workers Regulations (including, for the avoidance of doubt and without limitation, when dealing with any request for information or complaint made by any Agency Worker or any AWR Claim).</p>
+                            <p>12.3. Information relating to the Employment Business' business which is capable of being confidential must be kept confidential and not divulged to any third party, except information which is in the public domain.      </p>
+                            <p>&nbsp;</p>
+                            <p><strong>13. INTELLECTUAL PROPERTY RIGHTS</strong></p>
+                            <p>All copyright, trademarks, patents and other intellectual property rights deriving from the Assignment shall belong to the Hirer. Accordingly the Employment Business shall use its reasonable endeavours to ensure that the Agency Worker shall execute all such documents and do all such acts in order to give effect to the Hirer&rsquo;s rights pursuant to this clause.</p>
+                            <p>&nbsp;</p>
+                            <p><strong>14. LIABILITY</strong></p>
+                            <p>14.1. Whilst reasonable efforts are made by the Employment Business to give satisfaction  to the Hirer by ensuring reasonable standards of skill, integrity and reliability from the Agency Worker and to provide the same in accordance with the Assignment details as provided by the Hirer, no liability is accepted by the Employment Business for any loss, expense, damage or delay arising from any failure to provide any Agency  Worker for all or part of the Assignment or from the negligence, dishonesty, misconduct or lack of skill of the Agency Worker or if the Agency Worker terminates the Assignment for any reason. For the avoidance of doubt, the Employment  Business does not exclude liability for death or personal injury arising from its own negligence or for any other loss which it is not permitted to exclude under law.</p>
+                            <p>14.2. Agency Workers supplied by the Employment Business pursuant to these Terms are engaged under contracts for services. They are not the employees of the Employment Business but are deemed to be under the supervision and direction of the Hirer from the time they report to take up duties and for the duration of the Assignment. The  Hirer agrees to be responsible for all acts, errors or omissions of the Agency Worker, whether wilful, negligent or otherwise as though the Agency Worker was on the  payroll of the Hirer.</p>
+                            <p>14.3. The Hirer shall advise the Employment Business of any special health and safety matters about which the Employment Business is required to inform the Agency Worker and about any requirements imposed by law or by any professional body, which must be satisfied if the Agency Worker is to fill the Assignment.</p>
+                            <p>14.4. The Hirer will also comply in all respects with all statutory provisions as are in force from time to time including, for the avoidance of doubt, but not limited to the Working Time Regulations, Health and Safety At Work etc. Act 1974, the Management of Health and Safety at Work Regulations 1999, by-laws, codes of practice and legal requirements to which the Hirer is ordinarily subject in respect of the Hirer&rsquo;s own staff (excluding  the  matters  specifically  mentioned  in  clause  7  above),   including     in particular the provision of adequate Employer&rsquo;s and Public Liability Insurance cover for the Agency Worker during all Assignments.</p>
+                            <p>14.5.        The Hirer undertakes not to request the supply of an Agency Worker to perform the duties normally performed by a worker who is taking part in official industrial action or duties normally performed by a worker who has been transferred by the Hirer to perform the duties of a person on strike or taking official industrial action.</p>
+                            <p>14.6. The Hirer shall indemnify and keep indemnified the Employment Business against any Losses incurred by the Employment Business arising out of any Assignment or arising out of any non-compliance with, and/or as a result of any breach of, these Terms by the Hirer.</p>
+                        </blockquote>
+                        <blockquote>
+                            <p>14.7. The Hirer shall inform the Employment Business in writing of any AWR Claim which comes to the notice of the Hirer as soon possible but no later than 7 calendar days from the day on which any such AWR Claim comes to the notice of the Hirer.</p>
+                            <p>14.8. If the Agency Worker brings, or threatens to bring, any AWR Claim, the Hirer undertakes to take such action and give such information and assistance as the Employment Business may request, and within any timeframe requested by the Employment Business and at the Hirer&rsquo;s own cost, to avoid, dispute, resist, mitigate, compromise or defend any such AWR Claim and to appeal against any judgment given in respect thereof.</p>
+                            <p>&nbsp;</p>
+                            <p><strong>15. NOTICES</strong></p>
+                            <p>All notices which are required to be given in accordance with these Terms shall be in writing and may be delivered personally or by first class prepaid post to the registered office of the party upon whom the notice is to be served or any other address that the party has notified the other party in writing, by email or facsimile transmission. Any such notice shall be deemed to have been served: if by hand when delivered, if by first class post 48 hours following posting and if by email or facsimile transmission, when that email or facsimile is sent.</p>
+                            <p>&nbsp;</p>
+                            <p><strong>16. SEVERABILITY</strong>      </p>
+                            <p>If any of the provisions of these Terms shall be determined by any competent authority to be unenforceable to any extent, such provision shall, to that extent, be severed from the  remaining Terms, which shall continue to be valid to the fullest extent permitted by applicable laws.</p>
+                            <p>&nbsp;</p>
+                            <p><strong>17. GOVERNING LAW AND JURISDICTION</strong></p>
+                            <p>These Terms are governed by the law of England &amp; Wales/Scotland and are subject to the exclusive jurisdiction of the Courts of England &amp; Wales/Scotland.</p>
+                            <br clear="all" />
+                            <p><strong>SCHEDULE 1: &quot;COMPARABLE EMPLOYEE&quot;, &quot;QUALIFYING PERIOD&quot; AND &quot;TEMPORARY WORK AGENCY&quot;</strong></p>
+                            <p>&quot;Comparable Employee&quot; means as defined in Regulation 5(4) of the Agency Workers Regulations being an employee of the Hirer who:</p>
+                            <ol type="a">
+                                <li>works for and under the supervision of the Hirer and is engaged in the same or broadly similar work as the Agency Worker having regard, where relevant, to whether the employee and the Agency Worker have a similar level of qualification and skill; and</li>
+                                <li>works or is based at the same establishment as the Agency Worker or, where there is no comparable employee working or based at that establishment who satisfies the requirements of (a) above, works or is based at a different establishment and satisfies those requirements.</li>
+                            </ol>
+                            <p>For the purpose of the definition of &quot;Qualifying Period&quot; in clause 1.1. of these Terms, when calculating whether any weeks completed with the Hirer count as continuous towards the Qualifying Period, where:</p>
+                            <ol type="a">
+                                <li>the Agency Worker has started working during an assignment and there is a break, either between assignments or during an assignment, when the Agency Worker is not working;</li>
+                                <li>the break is:</li>
+                                <ol type="I">
+                                    <li>for any reason and not more than six Calendar Weeks;</li>
+                                    <li>wholly due to the fact that the Agency Worker is incapable of working in consequence of sickness or injury and the break is 28 Calendar Weeks or less; paragraph III does not apply; and, if required to do so by the Employment  Business, the Agency Worker has provided such written medical evidence as may reasonably be required;</li>
+                                    <li>related to pregnancy, childbirth or maternity and is at a time in a protected period, being a period beginning at the start of the pregnancy and ending at the end of the 26 weeks beginning with childbirth (being the birth of a living child or the birth of a child whether living or dead after 24 weeks of pregnancy) or, if earlier, when the Agency Worker returns to work;</li>
+                                    <li>wholly for the purpose of taking time off or leave, whether statutory or contractual, to which the Agency Worker is otherwise entitled which is:</li>
+                                    <ol type="i">
+                                        <li>ordinary, compulsory or additional maternity leave;</li>
+                                        <li>ordinary or additional adoption leave;</li>
+                                        <li>ordinary or additional paternity leave;</li>
+                                        <li>time off or other leave not listed in paragraphs (IV)i, ii, or iii above; or</li>
+                                        <li>for more than one of the reasons listed in paragraphs (IV)i, ii, iii to iv above;</li>
+                                    </ol>
+                                    <li>wholly due to the fact that the Agency Worker is required to attend at any place in pursuance to being summoned for service as a juror and the break is 28 Calendar Weeks or less;</li>
+                                    <li>wholly due to a temporary cessation in the Hirer's requirement for any worker to be present at the establishment and work in a particular role for a pre-determined  period of time according to the established custom and practices of the Hirer;</li>
+                                    <li>wholly due to a strike, lock-out or other industrial action at the Hirer's establishment; or</li>
+                                    <li>wholly due to more than one of the reasons listed in paragraphs II, III, IV, V, VI or VII; and</li>
+                                </ol>
+                                <li>the Agency Worker returns to work in the same role with the Hirer,</li>
+                            </ol>
+                            <p>any weeks during which the Agency Worker worked for the Hirer before the break shall be carried forward and treated as counting towards the Qualifying Period with any weeks during which the Agency Worker works for the Hirer after the break. In addition, when calculating the number of weeks during which the Agency Worker has worked, where the Agency Worker has started working in a role during an Assignment and is unable to continue working for a reason described in paragraph (b)(III) or (b)(IV)i., ii, or iii., for the period that is covered by one or more such reasons, the Agency Worker shall be deemed to be working in that role with the Hirer for the original intended duration or likely duration of the relevant Assignment, whichever is the longer. For the avoidance of doubt, time spent by the Agency Worker working during an assignment before 1 October 2011 does not count for the purposes of the definition of &quot;Qualifying Period&quot;.</p>
+                            <p>&quot;Temporary Work Agency&quot; means as defined in Regulation 4 of the Agency Workers Regulations being a person engaged in the economic activity, public or private, whether or not operating for profit, and whether or not carrying on such activity in conjunction with others, of:</p>
+                            <ol type="a">
+                                <li>supplying individuals to work temporarily for and under the supervision and direction of hirers; or</li>
+                                <li>paying for, or receiving or forwarding payment for, the services of individuals who are supplied to work temporarily for and under the supervision and direction of hirers.</li>
+                            </ol>
+                            <p>Notwithstanding paragraph (b) of this definition a person is not a Temporary Work Agency if the person is engaged in the economic activity of paying for, or receiving or forwarding payments for, the services of individuals regardless of whether the individuals are supplied to work for hirers. For the purpose of this definition, a &quot;hirer&quot; means a person engaged in economic activity, public  or private, whether or not operating for profit, to whom individuals are supplied, to work temporarily for and under the supervision and direction of that person.</p>
+                        </blockquote>
+                    </td>
+                </tr>
+            </table>
+        </body>
+    </html>
+</apex:page>

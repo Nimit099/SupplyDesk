@@ -1,0 +1,441 @@
+<template>
+    <!-- ======= Spinner ======= -->
+
+    <template if:true={isSpinner}>
+        <div class="slds-spinner_container spinner-center" style="overflow: hidden;">
+            <div class="spinner-ts">
+                <div class="inner one"></div>
+                <div class="inner two"></div>
+                <div class="inner three"></div>
+            </div>
+        </div>
+    </template>
+
+    <!-- ======= Spinner ======= -->
+
+    <c-ts_-tost-notification></c-ts_-tost-notification>
+
+    <!--================================    Client Rejection Popup Modal    ================================-->
+
+    <template if:true={isClientRejectedModalOpen}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open ">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header popup-header">
+                    <div class="slds-float_right cursor-pointer" title="Close" onclick={closeRejectModal}>
+                        <img src={popupCloseBtnIcon} alt="closeIcon" title="Close" class="">
+                    </div>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium modal-body" id="modal-content-id-1">
+                    <!-- For Candidate Side -->
+                    <template if:true={checkCandidate}>
+                        <div class="clientRejectedHeader">
+                            <h1>Candidate Rejection</h1>
+                        </div>
+                        <div class="clientRejectedMessage">
+                            <p>Are you sure you want to reject this?</p>
+                        </div>
+                        <div class="clientRejectedMessage">
+                            <p>Please enter your reason below.</p>
+                        </div>
+                    </template>
+                    <!-- For Candidate Side -->
+
+
+                    <!-- For Client Side -->
+                    <template if:false={checkCandidate}>
+                        <div class="clientRejectedHeader">
+                            <h1>Client Rejected</h1>
+                        </div>
+                        <div class="clientRejectedMessage">
+                            <p>Are you sure you want to reject this?</p>
+                        </div>
+                        <div class="clientRejectedMessage">
+                            <p>Please enter your reason below.</p>
+                        </div>
+                    </template>
+                    <!-- For Client Side -->
+
+
+                    <div class="reason-div">
+                        <div class="messageIconDiv">
+                            <img src={message} alt='Message' class="messageIcon slds-m-right_large"><b>Reason</b>
+                        </div>
+                        <lightning-textarea name="input2" placeholder="Type" value={rejectionNotes}
+                            onchange={saveRejectionNotes}>
+                        </lightning-textarea>
+                    </div>
+                    <div class="send-btn slds-align_absolute-center cursor-pointer" title="Send"
+                        onclick={rejectTimesheet}>
+                        <img src={popupSendBtnIcon} alt="sendIcon" title="Send" class="top-header-btn-icon"> Send
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+
+    <!--================================    Client Rejection Popup Modal    ================================-->
+
+    <div class="main" onclick={check}>
+        <div class="top-header">
+            <h1>Timesheet / </h1>
+            <template if:false={checkCandidate}>
+                <h1 class="redHeader">CLIENT</h1>
+            </template>
+            <template if:true={checkCandidate}>
+                <h1 class="redHeader">CANDIDATE</h1>
+            </template>
+        </div>
+
+        <div class="timesheet-header-div">
+            <div class="active-timesheet-btn timesheet-btn-active" onclick={displayActiveTimesheet}>
+                <div class="timesheet_btn_text">
+                    Active Timesheet
+                </div>
+            </div>
+            <div class="historical-timesheet-btn" onclick={displayHistoricalTimesheet}>
+                <div class="timesheet_btn_text">
+                    Historical Timesheet
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- for desktop -->
+        <div class="timesheet_scroll tablefordesktop">
+            <div class="timesheet-table">
+                <div class="slds-grid slds-wrap table-row ">
+                    <div class="slds-col slds-size_1-of-12 table_col colHead">
+                        <div>Week Ending</div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12 table_col colHead">
+                        <div>Client Name</div>
+                    </div>
+                    
+                    <div class="slds-col slds-size_1-of-12 table_col colHead">
+                        <div>Vacancy Name</div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12 table_col colHead">
+                        <div>Candidate Name</div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12 table_col colHead">
+                        <div>Client Status</div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12 table_col colHead">
+                        <div>Candidate Status</div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12 table_col colHead">
+                        <div>Status</div>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12 table_col txt-bld slds-grid slds-wrap">
+                        <div class="slds-col slds-size_3-of-12">
+                            <div>Total Hours</div>
+                        </div>
+                        <div class="slds-col slds-size_3-of-12">
+                            <div>Total Days</div>
+                        </div>
+                        <div class="slds-col slds-size_3-of-12">
+                            <div>Total Half Days</div>
+                        </div>
+                        <div class="slds-col slds-size_3-of-12">
+                            <template if:true={checkCandidate}>
+                                <div>Total Reported Pay</div>
+                            </template>
+                            <template if:false={checkCandidate}>
+                                <div>Total Reported Charge</div>
+                            </template>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_2-of-12 slds-grid slds-wrap table_col txt-bld hdr_view">
+                        <div class="slds-col slds-size_3-of-12" >View</div>
+                        <div class="slds-col slds-size_3-of-12">Download</div>
+                        <div class="slds-col slds-size_3-of-12">Approve</div>
+                        <div class="slds-col slds-size_3-of-12">Reject</div>
+                    </div>
+                </div>
+                <template if:true={isNoTimesheetRecord}>
+                    <div class="no-data-div">
+                        <div class="no-data-txt">There are currently no timesheets to approve</div>
+                    </div>
+                </template>
+                <template for:each={activeTimeSheet} for:item="ts">
+                    <div class="slds-grid slds-wrap table-row" key={ts.Id}>
+                        <div class="slds-col slds-size_1-of-12 table_col">{ts.TR1__Week_Ending__c}</div>
+                        <div class="slds-col slds-size_1-of-12 table_col">{ts.TR1__Client_Name__c}</div>
+                        <div class="slds-col slds-size_1-of-12 table_col">{ts.TR1__Job_Order__r.Name}</div>
+                        <div class="slds-col slds-size_1-of-12 table_col">{ts.TR1__Consultant_Name__c}</div>
+                        <div class="slds-col slds-size_1-of-12 table_col">{ts.Client_Status__c}</div>
+                        <div class="slds-col slds-size_1-of-12 table_col">{ts.Candidate_Status__c}</div>
+                        <div class="slds-col slds-size_1-of-12 table_col">{ts.TR1__Status__c}</div>
+                        <div class="slds-col slds-size_3-of-12 table_col slds-grid slds-wrap">
+
+                            <div class="slds-col slds-size_3-of-12 table_col">{ts.TR1__Total_Regular_Hours__c}</div>
+                            <div class="slds-col slds-size_3-of-12 table_col">{ts.Total_Days__c}</div>
+                            <div class="slds-col slds-size_3-of-12 table_col">{ts.Total_Half_Days__c}</div>
+                            <div class="slds-col slds-size_3-of-12 table_col currency">
+                                <template if:true={checkCandidate}>
+                                    <div>{ts.Total_Reported_Pay__c}</div>
+                                </template>
+                                <template if:false={checkCandidate}>
+                                    <div>{ts.Total_Reported_Charge__c}</div>
+                                </template>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_2-of-12 table_col slds-grid slds-wrap">
+                            <div class="slds-col slds-size_3-of-12">
+                                <div class="table-icon" title="View">
+                                    <img src={viewIcon} alt="viewIcon" title="View" data-name="View" data-id={ts.Id}
+                                        onclick={navigatepage}>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_3-of-12">
+                                <div class="table-icon" title="Print">
+                                    <img src={printIcon} alt="printIcon" title="Print" data-name="Print" data-id={ts.Id}
+                                        onclick={navigatepage}>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_3-of-12">
+                                <div class="table-icon" title="Approve">
+                                    <img src={approveIcon} alt="approveIcon" title="Approve" data-name="Approve"
+                                        data-id={ts.Id} onclick={navigatepage}>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_3-of-12">
+                                <div class="table-icon" title="Reject">
+                                    <img src={rejectIcon} alt="approveIcon" title="Reject" data-name="Reject"
+                                        data-id={ts.Id} onclick={navigatepage}>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </template>
+
+
+                <!--================================    Client Approve Popup Modal    ================================-->
+
+                <template if:true={isClientApproveModalOpen}>
+                    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+                        class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3"
+                                style="background:#F6F6F6">
+                                <!-- For Candidate Side -->
+                                <template if:true={checkCandidate}>
+                                    <div class="pop-apprv-header">
+                                        <div class="pop-apprv-ttl">Give Feedback</div>
+                                        <div class="slds-p-top_small">
+                                            {feedbackCandidateHeading}
+                                        </div>
+                                    </div>
+                                </template>
+                                <!-- For Client Side -->
+                                <template if:false={checkCandidate}>
+                                    <div class="pop-apprv-header">
+                                        <div class="pop-apprv-ttl">Give Feedback</div>
+                                        <div class="slds-p-top_small">
+                                            {feedbackHeading}
+                                        </div>
+                                    </div>
+                                </template>
+                                <div class="pop-apprv-rating-div slds-grid slds-wrap">
+                                    <div class="slds-size_1-of-5">
+                                        <div data-id="Unsatisfactory" onclick={selectRating}
+                                            class="emoji_rating slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                                            <img src={unsetisfyEmg} alt="unsetisfyEmg" title="Unsatisfactory"
+                                                class="top-header-btn-icon">
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-5">
+                                        <div data-id="Requires Improvement" onclick={selectRating}
+                                            class=" emoji_rating slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                                            <img src={requireImprovmentsEmg} alt="requireImprovmentsEmg"
+                                                title="Requires Improvement" class="top-header-btn-icon">
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-5">
+                                        <div data-id="Good" onclick={selectRating}
+                                            class="emoji_rating slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                                            <img src={goodEmg} alt="goodEmg" title="Good" class="top-header-btn-icon">
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-5">
+                                        <div data-id="Very Good" onclick={selectRating}
+                                            class="emoji_rating slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                                            <img src={VeryGoodEmg} alt="VeryGoodEmg" title="Very Good"
+                                                class="top-header-btn-icon">
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-5">
+                                        <div data-id="Excellent" onclick={selectRating}
+                                            class="emoji_rating slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                                            <img src={excelentEmg} alt="excelentEmg" title="Excellent"
+                                                class="top-header-btn-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="rqst-call">
+                                    <div class="slds-m-right_x-small">Request Quality Call</div>
+                                    <lightning-input type="checkbox" name="requestCall" onchange={requestCheck}>
+                                    </lightning-input>
+                                </div>
+                                <div class="pop-apprv-rsn-div">
+                                    <lightning-textarea name="input2" required={text_area_required} placeholder="Type"
+                                        label="What are the main reasons for your rating?" value={approveNotes}
+                                        onchange={saveApproveNotes}>
+                                    </lightning-textarea>
+                                </div>
+                                <div class="pop-apprv-footer-btn">
+                                    <div class="pop-apprv-sbm-btn" title="Approve" onclick={approveTimesheet}>
+                                        <img src={approveBtnIcon} alt="approveIcon" title="Approve"
+                                            class="top-header-btn-icon"> Submit
+                                    </div>
+                                    <div class="pop-rjct-sbm-btn" title="Reject" onclick={closeApproveModal}>
+                                        <img src={rejectBtnIcon} alt="rejectIcon" title="Reject"
+                                            class="top-header-btn-icon"> Cancel
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+                </template>
+                <!--================================    Client Approve Popup Modal    ================================-->
+            </div>
+        </div>
+
+        <!-- for mobile -->
+        <div class="tableformobile">
+            <div class="w100">
+                <div class="slds-grid slds-wrap table-row slds-size_12-of-12">
+                    <div class="colHead w33">
+                        <div>Week Ending</div>
+                    </div>
+                    <div class="colHead w33">
+                        <div>Client Name</div>
+                    </div>
+                    <div class="colHead  w33 txt-bld">
+                        <div>View</div>
+                    </div>
+                </div>
+                <template if:true={isNoTimesheetRecord}>
+                    <div class="no-data-div">
+                        <div class="no-data-txt">There are currently no timesheets to approve</div>
+                    </div>
+                </template>
+                <template for:each={activeTimeSheet} for:item="ts">
+                    <div class="slds-grid slds-wrap table-row" key={ts.Id}>
+                        <div class="slds-col slds-size_4-of-12 table_col">{ts.TR1__Week_Ending__c}</div>
+                        <div class="slds-col slds-size_4-of-12 table_col">{ts.TR1__Client_Name__c}</div>
+                        <div class="slds-col slds-size_4-of-12 table_col slds-grid slds-wrap">
+                            <div class="slds-col slds-size_12-of-12">
+                                <div class="table-icon" title="View">
+                                    <img src={viewIcon} alt="viewIcon" title="View" data-name="View" data-id={ts.Id}
+                                        onclick={navigatepage}>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+
+                <!--================================    Client Approve Popup Modal    ================================-->
+
+                <template if:true={isClientApproveModalOpen}>
+                    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+                        class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-4"
+                                style="background:#F6F6F6">
+                                <!-- For Candidate Side -->
+                                <template if:true={checkCandidate}>
+                                    <div class="pop-apprv-header">
+                                        <div class="pop-apprv-ttl">Give Feedback</div>
+                                        <div class="slds-p-top_small">
+                                            {feedbackCandidateHeading}
+                                        </div>
+                                    </div>
+                                </template>
+                                <!-- For Client Side -->
+                                <template if:false={checkCandidate}>
+                                    <div class="pop-apprv-header">
+                                        <div class="pop-apprv-ttl">Give Feedback</div>
+                                        <div class="slds-p-top_small">
+                                            {feedbackHeading}
+                                        </div>
+                                    </div>
+                                </template>
+                                <div class="pop-apprv-rating-div slds-grid slds-wrap">
+                                    <div class="slds-size_1-of-5">
+                                        <div data-id="Unsatisfactory" onclick={selectRating}
+                                            class="emoji_rating slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                                            <img src={unsetisfyEmg} alt="unsetisfyEmg" title="Unsatisfactory"
+                                                class="top-header-btn-icon">
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-5">
+                                        <div data-id="Requires Improvement" onclick={selectRating}
+                                            class=" emoji_rating slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                                            <img src={requireImprovmentsEmg} alt="requireImprovmentsEmg"
+                                                title="Requires Improvement" class="top-header-btn-icon">
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-5">
+                                        <div data-id="Good" onclick={selectRating}
+                                            class="emoji_rating slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                                            <img src={goodEmg} alt="goodEmg" title="Good" class="top-header-btn-icon">
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-5">
+                                        <div data-id="Very Good" onclick={selectRating}
+                                            class="emoji_rating slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                                            <img src={VeryGoodEmg} alt="VeryGoodEmg" title="Very Good"
+                                                class="top-header-btn-icon">
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-5">
+                                        <div data-id="Excellent" onclick={selectRating}
+                                            class="emoji_rating slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                                            <img src={excelentEmg} alt="excelentEmg" title="Excellent"
+                                                class="top-header-btn-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="rqst-call">
+                                    <div class="slds-m-right_x-small">Request Quality Call</div>
+                                    <lightning-input type="checkbox" name="requestCall" onchange={requestCheck}>
+                                    </lightning-input>
+                                </div>
+                                <div class="pop-apprv-rsn-div">
+                                    <lightning-textarea name="input2" required={text_area_required} placeholder="Type"
+                                        label="What are the main reasons for your rating?" value={approveNotes}
+                                        onchange={saveApproveNotes}>
+                                    </lightning-textarea>
+                                </div>
+                                <div class="pop-apprv-footer-btn">
+                                    <div class="pop-apprv-sbm-btn" title="Approve" onclick={approveTimesheet}>
+                                        <img src={approveBtnIcon} alt="approveIcon" title="Approve"
+                                            class="top-header-btn-icon"> Submit
+                                    </div>
+                                    <div class="pop-rjct-sbm-btn" title="Reject" onclick={closeApproveModal}>
+                                        <img src={rejectBtnIcon} alt="rejectIcon" title="Reject"
+                                            class="top-header-btn-icon"> Cancel
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+                </template>
+                <!--================================    Client Approve Popup Modal    ================================-->
+            </div>
+        </div>
+    </div>
+
+    <c-ts_-error-component reloadpage={reloadpage}>
+    </c-ts_-error-component>
+</template>

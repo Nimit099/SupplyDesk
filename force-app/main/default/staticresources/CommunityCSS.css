@@ -1,0 +1,80 @@
+.input_cls .slds-input {
+    background-color: white;
+    outline: none;
+    border: none;
+    line-height: 1;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.input_cls .slds-input:focus {
+    box-shadow: none;
+}
+
+.input_cls button {
+    background: none;
+    outline: none;
+    border: none;
+    line-height: 1;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 10px 0 0 0;
+}
+
+.input_cls label {
+    display: none;
+}
+
+.input_cls button:focus {
+    box-shadow: none;
+}
+
+.input-field .slds-input::placeholder {
+    font-weight: 500;
+}
+
+.nextIcon .slds-button__icon,
+.previousIcon .slds-button__icon {
+    fill: #cf4e4e;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.nextIcon .slds-button__icon:hover,
+.previousIcon .slds-button__icon:hover {
+    fill: #cf4e4e;
+    border: none;
+}
+
+.nextIcon .slds-button__icon:focus,
+.previousIcon .slds-button__icon:focus {
+    fill: #cf4e4e;
+    border: none;
+}
+
+.input-field .slds-button__icon {
+    fill: black;
+}
+
+.job .slds-truncate {
+    margin: 5px 0 0 0;
+}
+
+.job .input_cls button {
+    margin: 0px;
+}
+.previewIcon .slds-button:focus {
+      box-shadow: none;
+      outline: 0;
+}
+.previewIcon {
+    border: none;
+}
+.previewIcon .slds-button{
+    border: none;
+}
+
+/* For hiding microsoft edge password revil (eye) icon  */
+input[name^="password"]::-ms-reveal{
+    display: none;
+}

@@ -1,0 +1,329 @@
+<apex:page controller="FB_AQReportCtr" sidebar="false" tabStyle="Contact" readOnly="true" lightningStylesheets="true" >
+    <style>
+        .table-containe {
+        width: 1200px;
+        overflow: auto;
+        }
+        
+        #fixedHeader{
+        position: relative;
+        width: auto;
+        background-color: rgba(243, 237, 237, 0.26);
+        overflow: hidden;
+        border-collapse: collapse;
+        }
+        
+        #fixedHeader, #fixedHeader th, #fixedHeader td {
+            border: 1px solid black;
+            padding: 2px;
+        }
+        
+        #fixedHeader tr.header-row{
+        font-weight: bold;
+        background-color: lightgray;
+        }
+        
+        /*thead*/
+        #fixedHeader thead {
+        position: relative;
+        width: auto;
+        overflow: visible;
+        }
+        
+        #fixedHeader thead th {
+            border: 1px solid #222;
+        	color:#5e8ea9;
+        }
+        
+        /*tbody*/
+        #fixedHeader tbody {
+            position: relative;
+            width: auto;
+            height: auto;
+            overflow: scroll;
+        }
+        
+        #fixedHeader tbody td {
+            border: 1px solid #222;
+        	min-width: 75px;
+        }
+        
+        .status-message {
+        background-color: #dcdc56;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #2d2d0b;
+        margin: 10px;
+        max-width: 700px;
+        }
+        
+        .Page-Header {
+        padding: 10px;
+        margin: 10px;
+        max-width: 700px;
+        font-color : black;
+        }
+        
+        .lookupInput2 a{
+        position: relative;
+        vertical-align: bottom !important;
+        width: 33px !important; 
+        margin-left: 2px;
+        }
+        
+        .lookupInput {
+        padding-left: 0.25rem;
+        width: 50% !important;
+        }
+        
+        .custom-lookup .lookupInput {
+        width: 100% !important;
+        }
+        
+        .custom-lookup .lookupInput a{
+        position: static !important;
+        border: 0px !important;
+        }
+        
+        .lookupInput input[type="text"]{
+        width: 100% !important;
+        }
+        
+        .custom-without-border .slds-input{
+        border: 0px !important;
+        }
+        
+        .slds-scope .slds-input{
+        padding: 0 !important;
+        }
+        
+        .slds-form-element__control .slds-input select{
+        width: 50% !important;
+        }
+        
+        .bPageBlock{
+        border: none !important;
+        border-radius: 0px !important;
+        box-shadow: none !important;
+        }
+        
+        .Page-Header{
+        max-width: unset !important;
+        }
+        
+        .slds-button_brand {
+        	background-color: rgba(27, 82, 151, 1) !important;
+            border-color: rgba(27, 82, 151, 1) !important;
+            color: rgb(255, 255, 255) !important;
+        }
+        
+        .slds-form-element__label{
+        	font-weight: bold !important;
+        }
+        
+        .dateFormat {
+        	display: none !important;
+        }
+        
+    </style>
+    <apex:includeScript value="{!URLFOR($Resource.TB_JS, '/jQuery-1.11.3.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.TB_JS, '/jquery-ui-1.11.3.js')}" />
+    
+    <apex:form id="frm">
+        <apex:slds />
+        <apex:actionFunction name="doGenerateContinuseAF" action="{!doGenerateContinuse}" rerender="dynamicRun, dynamicStatus" status="aStatus">
+            <apex:param id="aname" name="iStart" value="" />
+        </apex:actionFunction>
+        
+        <div class="slds-container">
+            <apex:pageBlock id="pb1">
+                <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                    <div class="slds-size_2-of-2">
+                        <div class="slds-page-header Page-Header">
+                            <div class="slds-page-header__row">
+                                <div class="slds-page-header__col-title">
+                                    <div class="slds-media">
+                                        <div class="slds-media__body">
+                                            <div class="slds-page-header__name">
+                                                <div class="slds-page-header__name-title">
+                                                    <h1>
+                                                        <span class="slds-page-header__title slds-truncate " title="Compliance Dashboard">Compliance Dashboard</span>
+                                                    </h1>
+                                                    <div class="slds-page-header__name-meta">A View of all candidate associated qualifications</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div></div><br/>
+                    <div class="slds-size_1-of-2">
+                        <div class=" slds-m-around_x-small ">
+                            <div class="slds-form-element ">
+                                <div class="slds-form-element__control">
+                                    <label class="slds-form-element__label" for="text-input-id-1">Compliance Status</label>
+                                    <apex:selectCheckboxes value="{!selectedcmplianceStatus}" label="Compliance Status" layout="pageDirection">
+                                        <apex:selectOptions value="{!complianceStatusList}"/><br/>
+                                    </apex:selectCheckboxes>
+                                   <!-- <c:MultiselectPicklist leftLabel="Compliance Status"
+                                                           leftOption="{!complianceStatusList}"
+                                                           rightLabel="Selected Compliance"
+                                                           rightOption="{!selectedcmplianceStatus}"
+                                                           size="10"
+                                                           width="220px"/>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-size_1-of-2">
+                        <div class="slds-m-around_x-small">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="text-input-id-1">Branch</label>
+                                <div class="slds-form-element">  
+                                    <apex:inputField value="{!con.Division__c}" styleClass="slds-form-element__control slds-select"/>  
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-size_1-of-2">
+                        <div class="slds-m-around_x-small">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="text-input-id-1">Compliance Owner</label>
+                                <div class="slds-form-element__control custom-without-border">
+                                    <apex:inputField value="{!con.Compliance_Owner__c}" styleClass="slds-p-top_xx-small slds-form-element__control slds-input" style="background:none;"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-size_1-of-2">
+                        <div class="slds-m-around_x-small">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="text-input-id-1">Person Owner</label>
+                                <div class="slds-form-element__control custom-lookup">
+                                    <apex:inputField value="{!con.OwnerId}" styleClass="slds-form-element__control slds-select" id="pbOwner" required="false"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-size_1-of-2">
+                        <div class="slds-m-around_x-small">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="text-input-id-1">Closing Report Start Date</label>
+                                <div class="slds-form-element__control">
+                                    <apex:inputField value="{!con.Placement_Start_Date__c}" styleClass="slds-form-element__control slds-input" style="width: 100%;"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-size_1-of-2">
+                        <div class="slds-m-around_x-small">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="text-input-id-1">Resourcer</label>
+                                <div class="slds-form-element__control custom-without-border">
+                                    <apex:inputField value="{!con.TR1__Secondary_Owner__c}" styleClass="slds-p-top_xxxx-small slds-form-element__control slds-input" style="background:none;"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <apex:pageBlockButtons location="bottom">
+                    <apex:commandButton action="{!dogenerate}" value="Generate Report" reRender="resultTable" status="aStatus" styleClass="slds-button slds-button_brand" />
+                    <apex:actionStatus stopText="" id="aStatus">
+                        <apex:facet name="start">
+                            <img src="/img/loading.gif" />
+                        </apex:facet>
+                    </apex:actionStatus>
+                </apex:pageBlockButtons>
+            </apex:pageBlock>
+            
+            
+            <apex:pageBlock id="pb2">
+                <apex:outputPanel id="resultTable">
+                    <center>
+                        <apex:outputPanel rendered="{!candidateCounts == 0}">
+                            <div class="slds-notify_container slds-is-relative">
+                                <div class="slds-notify slds-notify_toast slds-theme_warning" role="status">
+                                    <span class="slds-assistive-text">warning</span>
+                                    <div class="slds-notify__content">
+                                        <h2 class="slds-text-heading_small ">
+                                            No record found, Please refine your criteria
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+                        <apex:outputPanel id="dynamicStatus">
+                            <apex:pageMessages />
+                            <apex:outputPanel rendered="{!AND(candidateCounts > 0, needToCallAgain)}">
+                                <div class="slds-notify_container slds-is-relative">
+                                    <div class="slds-notify slds-notify_toast slds-theme_warning" role="status">
+                                        <span class="slds-assistive-text">warning</span>
+                                        <div class="slds-notify__content">
+                                            <h2 class="slds-text-heading_small ">
+                                                Report Generation is in process, so far we have processed {!iStart+pageSize} 
+                                                out of {!candidateCounts} candidates
+                                            </h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </apex:outputPanel>   
+                    </center>
+                    <apex:outputPanel rendered="{!candidateCounts > 0}">
+                        <div class="table-container slds-p-left_medium">
+                            <table id="fixedHeader">
+                                <thead>
+                                    <tr class="header-row">
+                                        <th class="slds-p-around_xx-small slds-text-heading_small">SR#</th>
+                                        <th class="slds-p-around_xx-small slds-text-heading_small">Candidate Name</th>
+                                        <th class="slds-p-around_xx-small slds-text-heading_small">Compliance Owner</th>
+                                        <apex:repeat value="{!aqNames}" var="aq">
+                                            <th class="slds-p-around_xx-small slds-text-heading_small" title="{!aq.Name}">{!aq.Abbreviation__c}</th>
+                                        </apex:repeat>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <apex:outputPanel id="dynamicRun">
+                            <script type="text/javascript">
+                            var pb = document.getElementById('pbOwner');
+                            var table = document.getElementById('fixedHeader').getElementsByTagName('tbody')[0];
+                            var rowCount = table.rows.length;
+                            <apex:repeat value="{!lstAQWrapper}" var="wr">
+                                var row = table.insertRow(rowCount);
+                            var cell0 = row.insertCell(0);
+                            cell0.innerHTML = rowCount+1;
+                            rowCount = rowCount +1;
+                            
+                            var cell = row.insertCell(1);
+                            cell.innerHTML = "<a href=\"/{!wr.candidateId}\" class=\"{!wr.complianceStatus}\"> {!wr.candidateName} </a>";
+                            
+                            var cell1 = row.insertCell(2);
+                            cell1.innerHTML = "<a href=\"mailto:{!wr.complianceOwnerEmail}\"> {!wr.complianceOwnerEmail} </a>";
+                            
+                            var iCounter = 3;
+                            <apex:repeat value="{!aqNames}" var="aq">
+                                var cell2 = row.insertCell(iCounter);
+                            cell2.innerHTML = '{!wr.mapAssociateQalification[aq.Abbreviation__c]}';
+                            iCounter = iCounter + 1;
+                            </apex:repeat>
+                            </apex:repeat>
+                            if({!needToCallAgain}){
+                                console.log('================= {!(iStart+pageSize+1)}');
+                                doGenerateContinuseAF('{!(iStart+pageSize)}');
+                            }
+                            var x = document.getElementsByClassName("dateFormat");
+                            for (i = 0; i < x.length; i++) { 
+                                x[i].style.display ='none';
+                            }
+                            </script>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+            </apex:pageBlock>
+        </div>
+    </apex:form>
+</apex:page>

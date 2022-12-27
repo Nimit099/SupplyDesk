@@ -1,0 +1,522 @@
+<template>
+    <!-- Toast component -->
+    <c-ts_-tost-notification></c-ts_-tost-notification>
+    <!-- Toast component -->
+
+
+    <!-- ======= Spinner ======= -->
+
+    <template if:true={isSpinner}>
+        <div class="slds-spinner_container spinner-center" style="overflow: hidden;">
+            <div class="spinner-ts">
+                <div class="inner one"></div>
+                <div class="inner two"></div>
+                <div class="inner three"></div>
+            </div>
+        </div>
+    </template>
+
+    <!-- ======= Spinner ======= -->
+
+    <!--================================    Client Rejection Popup Modal    ================================-->
+
+    <template if:true={isClientRejectedModalOpen}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open ">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header popup-header">
+                    <div class="slds-float_right cursor-pointer" title="Close" onclick={closeRejectModal}>
+                        <img src={popupCloseBtnIcon} alt="closeIcon" title="Close" class="">
+                    </div>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium modal-body" id="modal-content-id-1">
+
+                    <!-- For Client Side -->
+                    <template if:true={isUserClient}>
+                        <div class="clientRejectedHeader">
+                            <h1>Client Rejected</h1>
+                        </div>
+                        <div class="clientRejectedMessage">
+                            <p>Are you sure you want to reject this?</p>
+                        </div>
+                        <div class="clientRejectedMessage">
+                            <p> Please tell us the reason below.</p>
+                        </div>
+                    </template>
+                    <!-- For Client Side -->
+
+
+                    <!-- For Candidate Side -->
+                    <template if:false={isUserClient}>
+                        <div class="clientRejectedHeader">
+                            <h1>Candidate Rejection</h1>
+                        </div>
+                        <div class="clientRejectedMessage">
+                            <p>Are you sure you want to reject this?</p>
+                        </div>
+                        <div class="clientRejectedMessage">
+                            <p>Please enter your reason below.</p>
+                        </div>
+                    </template>
+                    <!-- For Candidate Side -->
+
+
+                    <div class="reason-div">
+                        <div class="messageIconDiv">
+                            <img src={message} alt='Message' class="messageIcon slds-m-right_large"><b>Reason</b>
+                        </div>
+                        <lightning-textarea name="input2" placeholder="Type" value={rejectionNotes}
+                            onchange={saveRejectionNotes}>
+                        </lightning-textarea>
+                    </div>
+                    <div class="send-btn slds-align_absolute-center cursor-pointer" title="Send"
+                        onclick={rejectTimesheet}>
+                        <img src={popupSendBtnIcon} alt="sendIcon" title="Send" class="top-header-btn-icon">
+                        <!-- <img src={popupSendBtnIcon} alt="sendIcon" title="Send" class=""> -->
+                        Send
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+
+    <!--================================    Client Rejection Popup Modal    ================================-->
+
+
+    <!--================================    Client Approve Popup Modal    ================================-->
+
+
+    <template if:true={isClientApproveModalOpen}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <div class="slds-modal__content slds-p-around_medium feedbackModal" id="modal-content-id-3" style="background:#F6F6F6;
+        box-shadow: 0px 4px;">
+
+                    <!-- For Candidate Side -->
+                    <template if:false={isUserClient}>
+                        <div class="pop-apprv-header">
+                            <div class="pop-apprv-ttl">Give Feedback</div>
+
+                            <div class="slds-p-top_small">
+                                {feedbackCandidateHeading}
+                                <!-- Please rate your overall satisfaction with Supply Desk.  This could include feedback on how you’re going with the work we have given you, service from our consultants or something else. -->
+                            </div>
+                        </div>
+                    </template>
+
+
+                    <!-- For Client Side -->
+                    <template if:true={isUserClient}>
+                        <div class="pop-apprv-header">
+                            <div class="pop-apprv-ttl">Give Feedback</div>
+
+                            <div class="slds-p-top_small">
+                                {feedbackHeading}
+                                <!-- Please rate your overall satisfaction with Suppy Desk. This could include quality of teachers, service from our consultants or something else. -->
+                            </div>
+                        </div>
+                    </template>
+                    <div class="pop-apprv-rating-div slds-grid slds-wrap">
+                        <div class="slds-size_1-of-5">
+                            <div data-id="Unsatisfactory" onclick={selectRating}
+                                class=" emoji_rating slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                                <img src={unsetisfyEmg} alt="unsetisfyEmg" title="Unsatisfactory"
+                                    class="top-header-btn-icon">
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-5">
+                            <div data-id="Requires Improvement" onclick={selectRating}
+                                class="requireImprovement slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                                <img src={requireImprovmentsEmg} alt="requireImprovmentsEmg"
+                                    title="Requires Improvement" class="top-header-btn-icon">
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-5">
+                            <div data-id="Good" onclick={selectRating}
+                                class=" emoji_rating slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                                <img src={goodEmg} alt="goodEmg" title="Good" class="top-header-btn-icon">
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-5">
+                            <div data-id="Very Good" onclick={selectRating}
+                                class=" emoji_rating slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                                <img src={VeryGoodEmg} alt="VeryGoodEmg" title="Very Good" class="top-header-btn-icon">
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-5">
+                            <div data-id="Excellent" onclick={selectRating}
+                                class=" emoji_rating slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                                <img src={excelentEmg} alt="excelentEmg" title="Excellent" class="top-header-btn-icon">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rqst-call">
+                        <div class="slds-m-right_x-small">Request Quality Call</div>
+                        <lightning-input type="checkbox" name="requestCall" checked={requesteQualityCall}
+                            onchange={requestCheck}></lightning-input>
+                    </div>
+
+                    <div class="pop-apprv-rsn-div">
+                        <lightning-textarea name="input2" required={text_area_required} placeholder="Type"
+                            label="What are the main reasons for your rating?" value={approveNotes}
+                            onchange={saveApproveNotes}>
+                        </lightning-textarea>
+                    </div>
+                    <div class="pop-apprv-footer-btn">
+                        <div class="pop-apprv-sbm-btn" title="Approve" onclick={approveTimesheet}>
+                            <img src={approveBtnIcon} alt="approveIcon" title="Approve" class="top-header-btn-icon">
+                            Submit
+                        </div>
+                        <div class="pop-rjct-sbm-btn" title="Close" onclick={closeRejectModal}>
+                            <img src={rejectBtnIcon} alt="rejectIcon" title="Reject" class="top-header-btn-icon"> Cancel
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+    <!--================================    Client Approve Popup Modal    ================================-->
+
+
+
+    <!--================================    Send Message Popup Modal    ================================-->
+
+    <template if:true={isSendMessageModalOpen}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header popup-header">
+                    <div class="slds-float_right cursor-pointer" title="Close" onclick={closeRejectModal}>
+                        <img src={popupCloseBtnIcon} alt="closeIcon" title="Close" class="">
+                    </div>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium modal-body" id="modal-content-id-2">
+                    <div class="slds-text-heading_medium">
+                        <h1>Send Message</h1>
+                    </div>
+
+                    <div class="reason-div">
+                        <lightning-textarea name="input2" placeholder="Type" value={messageToJobOwner}
+                            onchange={saveMessageForJobOwner}>
+                        </lightning-textarea>
+                    </div>
+                    <div class="send-btn slds-align_absolute-center cursor-pointer" title="Send Message"
+                        onclick={sendMessage}>
+                        <img src={popupSendBtnIcon} alt="sendIcon" title="Send Message" class="top-header-btn-icon">
+                        <!-- <img src={popupSendBtnIcon} alt="sendIcon" title="Send" class=""> -->
+                        Send
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+
+    <!--================================    Send Message Popup Modal    ================================-->
+
+    <div class="slds-grid slds-grid_vertical main slds-m-top_xx-large " onclick={check}>
+        <div class="slds-col slds-size_1-of-1 header slds-m-top_x-large">
+            <h1>Timesheet Details</h1>
+            <div class="appRejBtn">
+                <div class="approve-btn " title="Approve" onclick={openApproveModal}>
+                    <img src={approveBtnIcon} alt="approveIcon" title="Approve" class="top-header-btn-icon "> Approve
+                </div>
+                <div class="reject-btn slds-m-left_x-large" title="Reject" onclick={openRejectModal}>
+                    <img src={rejectBtnIcon} alt="rejectIcon" style="width: 23px;" title="Reject"
+                        class="top-header-btn-icon"> Reject
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="slds-col slds-size_1-of-1 client-details-div">
+            <div class="back-navigation">
+                <div style="display: flex; flex-direction:row">
+                    <lightning-button-icon onclick={navigateToTimeSheet} icon-name="utility:back" variant="bare"
+                        alternative-text="back" title="back"></lightning-button-icon>
+                    <p>Timesheet</p>
+                </div>
+                <div class="user-information slds-p-bottom_medium">
+                    <div class="slds-grid slds-wrap user-information-table ">
+                        <div
+                            class="slds-col slds-small-size_3-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12  cndt-profile slds-p-vertical_large">
+                            <div class="candidate-profile slds-align_absolute-center">
+                                <img class="brdr-rds" src={profImgUrl}>
+                            </div>
+
+                            <div class="slds-align_absolute-center slds-m-top_x-small usr-inf-usr-name">{userName}</div>
+                            <div class="send-message" onclick={openMessageModal}>
+                                <p>Send Message</p>
+                            </div>
+                        </div>
+                        <div
+                            class="candidateInfo slds-col slds-small-size_3-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12 slds-p-vertical_large">
+                            <div class="cndt-info">
+                                <div>Week Ending</div>
+                                <!-- <div>{tsObj.TR1__Week_Ending__c}</div> -->
+                                <div>{weekEndingDate}</div>
+                            </div>
+                            <div class="cndt-info">
+                                <div>Candidate Name</div>
+                                <div>{tsObj.TR1__Consultant_Name__c}</div>
+                            </div>
+                            <div class="cndt-info">
+                                <div>Status</div>
+                                <div>{tsObj.TR1__Status__c}</div>
+                            </div>
+                            <div class="slds-m-top_x-small cndt-info cndt-user-client">
+                                <template if:true={isUserClient}>
+                                    <div class="cndt-info">
+                                        <div>Day Charge Rate</div>
+                                        <div>{tsObj.Charge_Rate_1__c}</div>
+                                    </div>
+                                    <div class="cndt-info">
+                                        <div>Half Day Charge Rate</div>
+                                        <div>{tsObj.Charge_Rate_2__c}</div>
+                                    </div>
+                                    <div class="cndt-info">
+                                        <div>Hour Charge Rate</div>
+                                        <div>{tsObj.Charge_Rate_3__c}</div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                        <div
+                            class="slds-col slds-small-size_3-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12 slds-p-vertical_large">
+                            <div class="cndt-info">
+                                <div>Timesheet Week</div>
+                                <div>{tsObj.Timesheet_Week__c}</div>
+                            </div>
+
+                            <div class="cndt-info">
+                                <div>Vacancy Name</div>
+                                <div>{vacancyName}</div>
+                            </div>
+
+
+
+
+                        </div>
+                        <div
+                            class="userClient slds-col slds-small-size_3-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12 slds-p-vertical_large">
+                            <template if:true={isUserClient}>
+                                <div class="cndt-info">
+                                    <div>Day Charge Rate</div>
+                                    <div>{tsObj.Charge_Rate_1__c}</div>
+                                </div>
+                                <div class="cndt-info">
+                                    <div>Half Day Charge Rate</div>
+                                    <div>{tsObj.Charge_Rate_2__c}</div>
+                                </div>
+                                <div class="cndt-info">
+                                    <div>Hour Charge Rate</div>
+                                    <div>{tsObj.Charge_Rate_3__c}</div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-col slds-size_1-of-1 tableData ">
+            <!-- <div class="week-table"> -->
+            <div class="table-data slds-m-top_medium tableMain">
+                <table class="tableDiv">
+                    <thead>
+                        <tr class="slds-grid slds-wrap table-row first-row">
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center">Day</th>
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center">Date</th>
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center">Hours</th>
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center">Working Days</th>
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center">Half Day</th>
+                            <!-- <th class="slds-col slds-size_2-of-12 slds-text-align_center">Total Charges</th> -->
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center">
+                                <!-- For Client Side -->
+                                <template if:true={isUserClient}>
+                                    Total Charges
+                                </template>
+                                <!-- For Client Side -->
+
+                                <!-- For Candidate Side -->
+                                <template if:false={isUserClient}>
+                                    Total Pay
+                                </template>
+                                <!-- For Candidate Side -->
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <template if:false={isUserClient} for:each={tsdLst} for:item="tsd">
+                            <tr class="slds-grid slds-wrap table-row" key={tsd.Id}>
+                                <th class="slds-col slds-size_2-of-12 slds-text-align_center">{tsd.TR1__Day__c}</th>
+                                <th class="slds-col slds-size_2-of-12 slds-text-align_center">{tsd.TR1__Date__c}
+                                </th>
+                                <th class="slds-col slds-size_2-of-12 slds-text-align_center">
+                                    {tsd.TR1__Regular_Hours__c}</th>
+                                <th class="slds-col slds-size_2-of-12 slds-text-align_center">
+                                    <lightning-input type="checkbox" name="days" checked={tsd.DayShift__c} disabled>
+                                    </lightning-input>
+                                </th>
+                                <th class="slds-col slds-size_2-of-12 slds-text-align_center">
+                                    <lightning-input type="checkbox" name="days" checked={tsd.Half_Day__c} disabled>
+                                    </lightning-input>
+                                </th>
+                                <th class="slds-col slds-size_2-of-12 slds-text-align_center"></th>
+                            </tr>
+                        </template>
+
+                        <tr class="slds-grid slds-wrap table-row first-row">
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center">Total</th>
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center"></th>
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center">
+                                {tsObj.TR1__Total_Regular_Hours__c} hours</th>
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center">{tsObj.Total_Days__c} day(s)
+                            </th>
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center">{tsObj.Total_Half_Days__c}
+                                half day(s)
+                            </th>
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center">
+                                <template if:true={isUserClient}>
+                                    {tsObj.Total_Reported_Charge__c}
+                                </template>
+                                <template if:false={isUserClient}>
+                                    {tsObj.Total_Reported_Pay__c}
+                                </template>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- </div> -->
+        </div>
+    </div>
+    <!-- 
+<div class="main">
+    <div class="top-header">
+        <h1>Timesheet Details</h1>
+        <div class="approve-btn" title="Approve" onclick={openApproveModal}>
+            <img src={approveBtnIcon} alt="approveIcon" title="Approve" class="top-header-btn-icon"> Approve
+        </div>
+        <div class="reject-btn" title="Reject" onclick={openRejectModal}>
+            <img src={rejectBtnIcon} alt="rejectIcon" title="Reject" class="top-header-btn-icon"> Reject
+        </div>
+    </div>
+    <div class="client-details-div">
+        <div class="back-navigation">
+            <p>Timesheet</p>
+        </div>
+        <div class="user-information">
+            <div class="slds-grid slds-wrap user-information-table">
+                <div class="slds-col slds-size_3-of-12 cndt-profile">
+                    <div class="candidate-profile slds-align_absolute-center">
+                        <img class="brdr-rds" src={profImgUrl}>
+                    </div>
+                   
+                    <div class="slds-align_absolute-center slds-m-top_x-small usr-inf-usr-name">{userName}</div>
+                    <div class="send-message" onclick={openMessageModal}>
+                        <p>Send Message</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_3-of-12">
+                    <div class="cndt-info">
+                        <div>Week Ending</div>
+                        <div>{tsObj.TR1__Week_Ending__c}</div>
+                    </div>
+                    <div class="cndt-info">
+                        <div>Candidate Name</div>
+                        <div>{tsObj.TR1__Consultant_Name__c}</div>
+                    </div>
+                    <div class="cndt-info">
+                        <div>Status</div>
+                        <div>{tsObj.TR1__Status__c}</div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_3-of-12">
+                    <div class="cndt-info">
+                        <div>Timesheet Week</div>
+                        <div>{tsObj.Timesheet_Week__c}</div>
+                    </div>
+
+                    <div class="cndt-info">
+                        <div>Vacancy Name</div>
+                        <div>{vacancyName}</div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_3-of-12">
+                    <template if:true={isUserClient}>
+                            <div class="cndt-info">
+                                <div>Day Charge Rate</div>
+                                <div>$15</div>
+                            </div>
+                            <div class="cndt-info">
+                                <div>Half Day Charge Rate</div>
+                                <div>$13</div>
+                            </div>
+                            <div class="cndt-info">
+                                <div>Hour Charge Rate</div>
+                                <div>$13</div>
+                            </div>
+                        </template>
+                </div>
+            </div>
+        </div>
+        <div class="week-table">
+            <div class="table-data">
+                <table class="">
+                    <thead>
+                        <tr class="slds-grid slds-wrap table-row first-row">
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center">Day</th>
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center">Date</th>
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center">Hours</th>
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center">Working Days</th>
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center">Half Day</th>
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center">Total Charges</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <template for:each={tsdLst} for:item="tsd">
+                                <tr class="slds-grid slds-wrap table-row" key={tsd.Id}>
+                                    <th class="slds-col slds-size_2-of-12 slds-text-align_center">{tsd.TR1__Day__c}</th>
+                                    <th class="slds-col slds-size_2-of-12 slds-text-align_center">{tsd.TR1__Date__c}
+                                    </th>
+                                    <th class="slds-col slds-size_2-of-12 slds-text-align_center">
+                                        {tsd.TR1__Regular_Hours__c}</th>
+                                    <th class="slds-col slds-size_2-of-12 slds-text-align_center">
+                                        <lightning-input type="checkbox" name="days" checked={tsd.DayShift__c} disabled>
+                                        </lightning-input>
+                                    </th>
+                                    <th class="slds-col slds-size_2-of-12 slds-text-align_center">
+                                        <lightning-input type="checkbox" name="days" checked={tsd.Half_Day__c} disabled>
+                                        </lightning-input>
+                                    </th>
+                                    <th class="slds-col slds-size_2-of-12 slds-text-align_center"></th>
+                                </tr>
+                            </template>
+
+                        <tr class="slds-grid slds-wrap table-row first-row">
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center">Total</th>
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center"></th>
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center">
+                                {tsObj.TR1__Total_Regular_Hours__c}</th>
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center">{tsObj.Total_Days__c}</th>
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center">{tsObj.Total_Half_Days__c}
+                            </th>
+                            <th class="slds-col slds-size_2-of-12 slds-text-align_center"></th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+    <c-ts_-error-component reloadpage={reloadpage}>
+    </c-ts_-error-component>
+
+
+</template>
