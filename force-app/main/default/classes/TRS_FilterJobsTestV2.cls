@@ -215,7 +215,7 @@ public class TRS_FilterJobsTestV2 {
             system.currentPageReference().getParameters().put('Job1', job1.id);
             fCandt.endDate = date.Today().addDays(-9);
             fCandt.startDateStr = strDate;
-            fCandt.endDateStr =endDatenew;
+            fCandt.endDateStr = endDatenew; 
             fCandt.openDialogForClosingReport();
             fCandt.endDateEnterred = endDatenew;
             fCandt.startDateEnterred = strDate;
@@ -250,9 +250,18 @@ public class TRS_FilterJobsTestV2 {
 
             fCandt.nextWeek();
             fCandt.previousWeek();
-            // Nimit
+            
+            // Nimit================================
+           
+// For updateweek method --
+            strDate = endDatenew;
+            fCandt.startDateStr = strDate;
             fCandt.updateWeek();
-            // Nimit
+// updateweek method --
+
+            // Nimit=======================
+
+
             List<String> strweek= fCandt.weekHeader;
             
             List<SelectOption> so = fCandt.whichVacancyOptions;
@@ -314,7 +323,7 @@ public class TRS_FilterJobsTestV2 {
             fCandt.saveEditVacancyRecord();
             fCandt.cancelEditVacancyCreation();
             fCandt.deleteEditVacancyCreation();
-        
+           
         Test.stopTest();
         }
     }
