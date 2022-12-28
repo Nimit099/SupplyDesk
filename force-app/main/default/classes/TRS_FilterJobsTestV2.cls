@@ -173,7 +173,7 @@ public class TRS_FilterJobsTestV2 {
             fCandt.saveCreateVacancyRecord();
             fCandt.cancelVacancyCreation();
             fCandt.vacRecord = new TR1__Job__c ();
-            
+       
             fCandt.getCandidateDetails();
             //Filter Results
             fCandt.VacRec.TR1__Regional_Area__c = 'Barnet';
@@ -218,7 +218,7 @@ public class TRS_FilterJobsTestV2 {
             fCandt.endDateStr = endDatenew; 
             fCandt.openDialogForClosingReport();
             fCandt.endDateEnterred = endDatenew;
-            fCandt.startDateEnterred = strDate;
+            fCandt.startDateEnterred = endDatenew;//strDate; Nimit
             fCandt.closingReport.Comparator_Full_Time_Annual_Salary__c = 0.00;
             fCandt.closingReport.TR1__Person_Placed__c=con.id;
             fCandt.closingReport.School_Working_Days__c = 0.00;
@@ -258,6 +258,19 @@ public class TRS_FilterJobsTestV2 {
             fCandt.startDateStr = strDate;
             fCandt.updateWeek();
 // updateweek method --
+// weekdayFunction --
+            fCandt.vacRecord.Applicable_Days__c='Monday';
+            fCandt.weekdayFunction();
+            
+            fCandt.vacRecord.Applicable_Days__c= null;
+            fCandt.weekdayFunction();
+// weekdayFunction --
+
+            fCandt.vacRecord.Applicable_Days__c='Monday';
+            fCandt.vacRecord.Selected_Week_Days__c = true;
+            fCandt.saveCreateVacancyRecord();
+
+           
 
             // Nimit=======================
 
@@ -323,6 +336,7 @@ public class TRS_FilterJobsTestV2 {
             fCandt.saveEditVacancyRecord();
             fCandt.cancelEditVacancyCreation();
             fCandt.deleteEditVacancyCreation();
+           
            
         Test.stopTest();
         }
@@ -486,13 +500,19 @@ public class TRS_FilterJobsTestV2 {
         Vacancy_D2D__c[] vacancyAvailabilitylist = new Vacancy_D2D__c[]{jsd1,jsd2,jsd3};  
 
         insert vacancyAvailabilitylist;
-            
+
+       
         ApexPages.StandardController stdController = new ApexPages.StandardController(con); 
         Test.setCurrentPage(page.TRS_FilterJobs);
 
         TRS_FilterJobs fCandt = new TRS_FilterJobs(stdController);
             fCandt.vacRecord = new TR1__Job__c ();
+            // Nimit --
+            fCandt.vD2D = vacancyAvailabilitylist[0];
+            fCandt.deleteEditVacancyCreation();
+            // Nimit --
             
+
             fCandt.getResourceAvailability();
             //Filter Results
             fCandt.VacRec.TR1__Regional_Area__c = 'Barnet';
