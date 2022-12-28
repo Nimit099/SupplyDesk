@@ -14,6 +14,8 @@ public class TRS_VacancyHelper {
     
     public static Boolean EXECUTED_UPDATE_D2D_VACANCY = false;
     public static Boolean EXECUTED_UPDATE_VACANCY = false;
+
+    public static boolean boolcheck = true;
     
     /************************************************************************************************************************ 
     Method Name:       insertD2DVacancy
@@ -24,101 +26,108 @@ public class TRS_VacancyHelper {
     ************************************************************************************************************************/
     public static void insertD2DVacancy(List<TR1__Job__c> vacancyListFromTrigger){
 
-        //List to hold the Vacancy records of Consulting record type.
-        List<TR1__Job__c> vacancyList = new List<TR1__Job__c>();
-        
-        set<id> vacancyIdset = new set<id>();
-        Map<Id, List<TR1__Job__c>> AccJobMap = new Map<Id ,List<TR1__Job__c>>();
-        
-        //Looping through the new Vacancy records and adding to the vacancyList as per the record type.    
-        for(TR1__Job__c vacancy : vacancyListFromTrigger){
-            if(vacancy.RecordTypeId == CONSULTING_RTID){
-                vacancyList.add(vacancy);
-                vacancyIdset.add(vacancy.id);
-                List<TR1__Job__c> tempList = new List<TR1__Job__c>();
-                if(AccJobMap.containsKey(vacancy.TR1__Account__c)){
-                    tempList = AccJobMap.get(vacancy.TR1__Account__c);
-                    tempList.add(vacancy);
-                    AccJobMap.put(vacancy.TR1__Account__c ,tempList);
+
+        if(boolcheck){
+
+            //List to hold the Vacancy records of Consulting record type.
+            List<TR1__Job__c> vacancyList = new List<TR1__Job__c>();
+            
+            set<id> vacancyIdset = new set<id>();
+            Map<Id, List<TR1__Job__c>> AccJobMap = new Map<Id ,List<TR1__Job__c>>();
+            
+            //Looping through the new Vacancy records and adding to the vacancyList as per the record type.    
+            for(TR1__Job__c vacancy : vacancyListFromTrigger){
+                if(vacancy.RecordTypeId == CONSULTING_RTID){
+                    vacancyList.add(vacancy);
+                    vacancyIdset.add(vacancy.id);
+                    List<TR1__Job__c> tempList = new List<TR1__Job__c>();
+                    if(AccJobMap.containsKey(vacancy.TR1__Account__c)){
+                        tempList = AccJobMap.get(vacancy.TR1__Account__c);
+                        tempList.add(vacancy);
+                        AccJobMap.put(vacancy.TR1__Account__c ,tempList);
+                    }
+                    else{
+                        tempList.add(vacancy);
+                        AccJobMap.put(vacancy.TR1__Account__c ,tempList);                   
+                    }
                 }
-                else{
-                    tempList.add(vacancy);
-                    AccJobMap.put(vacancy.TR1__Account__c ,tempList);                   
+            }
+            
+            
+            
+            //Calling the helper class.    
+            if(!vacancyList.isEmpty()){
+                //List to hold the records which needs to be inserted.
+                List<Vacancy_D2D__c> d2dVacancyInsertList = new List<Vacancy_D2D__c>();
+                
+                //Base saturday date used for Calculation.    
+                Date oldDate = DATE.newInstance(2000, 1, 1);
+            
+                //Looping through the new vacancy list  
+                for(TR1__Job__c vacancy : vacancyList){
+                    
+                    //Adding the applicable days to the set.
+                    Set<String> applicableDaysSet = new Set<String>();//Set to hold the values of applicable days.
+                    if(vacancy.Applicable_Days__c != null && vacancy.TR1__Estimated_Start_Date__c != null && vacancy.TR1__Estimated_End_Date__c != null){
+                        applicableDaysSet.addAll(vacancy.Applicable_Days__c.split(';'));    
+                        
+                        //Checking whether there are any applicable days selected by the user.  
+                        if(applicableDaysSet.size() > 0){
+                            //Calculating the number of days between start date and end date.   
+                            Integer actualNoOfDays = vacancy.TR1__Estimated_Start_Date__c.daysBetween(vacancy.TR1__Estimated_End_Date__c);
+                            
+                            //Looping through all the days between start date and end date.
+                            for(Integer i = 0; i <= actualNoOfDays; i++){
+                                Date startDateNew = vacancy.TR1__Estimated_Start_Date__c + i;
+                                DateTime startDateTimeNew = DateTime.newInstance(startDateNew,Time.newInstance(0,0,0,0));
+                                String dayOfWeek = startDateTimeNew.format('EEEE');
+                                
+                                //Checking if the day is there in applicable days selected by the user and creating the d2dVacancy record.  
+                                if(applicableDaysSet.contains(dayOfWeek) && String.isNotBlank(vacancy.Start_Time__c) && String.isNotBlank(vacancy.End_Time__c)){
+                                    
+                                if(formatDateTimefromDate(startDateNew, vacancy.Start_Time__c) > formatDateTimefromDate(startDateNew, vacancy.End_Time__c)){
+                                        d2dVacancyInsertList.add(new Vacancy_D2D__c(
+                                                                                        Vacancy__c=vacancy.Id,
+                                                                                        Status__c='Open',
+                                                                                        Start_Date_Time__c = formatDateTimefromDate(startDateNew,vacancy.Start_Time__c),
+                                                                                        End_Date_Time__c = formatDateTimefromDate(startDateNew+1,vacancy.End_Time__c),
+                                                                                        Vacancy_Date__c = startDateNew,
+                                                                                        Shift__c = vacancy.Shift__c
+                                                                                    )
+                                                                );
+                                    }else{
+                                            d2dVacancyInsertList.add(new Vacancy_D2D__c(
+                                                                                        Vacancy__c=vacancy.Id,
+                                                                                        Status__c='Open',
+                                                                                        Start_Date_Time__c = formatDateTimefromDate(startDateNew,vacancy.Start_Time__c),
+                                                                                        End_Date_Time__c = formatDateTimefromDate(startDateNew,vacancy.End_Time__c),
+                                                                                        Vacancy_Date__c = startDateNew,
+                                                                                        Shift__c = vacancy.Shift__c
+                                                                                    )
+                                                                        );
+                                    }
+                                    /*  Vacancy_D2D__c d2dVacancy = new Vacancy_D2D__c(
+                                                                                        Vacancy__c=vacancy.Id,
+                                                                                        Status__c='Open',
+                                                                                        Start_Date_Time__c = formatDateTimefromDate(startDateNew,vacancy.Start_Time__c),
+                                                                                        End_Date_Time__c = formatDateTimefromDate(startDateNew,vacancy.End_Time__c),
+                                                                                        Vacancy_Date__c = startDateNew,
+                                                                                        Shift__c = vacancy.Shift__c
+                                                                                    );*/
+                                    // d2dVacancyInsertList.add(d2dVacancy);
+                                }   
+                            }
+                        } 
+                    }       
+                }
+                //Inserting d2dVacancy records  
+                if(!d2dVacancyInsertList.isEmpty()){
+                    Database.SaveResult[] srList = Database.insert(d2dVacancyInsertList, true);
                 }
             }
         }
-        
-        
-        
-        //Calling the helper class.    
-        if(!vacancyList.isEmpty()){
-            //List to hold the records which needs to be inserted.
-            List<Vacancy_D2D__c> d2dVacancyInsertList = new List<Vacancy_D2D__c>();
-            
-            //Base saturday date used for Calculation.    
-            Date oldDate = DATE.newInstance(2000, 1, 1);
-        
-            //Looping through the new vacancy list  
-            for(TR1__Job__c vacancy : vacancyList){
-                
-                //Adding the applicable days to the set.
-                Set<String> applicableDaysSet = new Set<String>();//Set to hold the values of applicable days.
-                if(vacancy.Applicable_Days__c != null && vacancy.TR1__Estimated_Start_Date__c != null && vacancy.TR1__Estimated_End_Date__c != null){
-                    applicableDaysSet.addAll(vacancy.Applicable_Days__c.split(';'));    
-                    
-                    //Checking whether there are any applicable days selected by the user.  
-                    if(applicableDaysSet.size() > 0){
-                        //Calculating the number of days between start date and end date.   
-                        Integer actualNoOfDays = vacancy.TR1__Estimated_Start_Date__c.daysBetween(vacancy.TR1__Estimated_End_Date__c);
-                        
-                        //Looping through all the days between start date and end date.
-                        for(Integer i = 0; i <= actualNoOfDays; i++){
-                            Date startDateNew = vacancy.TR1__Estimated_Start_Date__c + i;
-                            DateTime startDateTimeNew = DateTime.newInstance(startDateNew,Time.newInstance(0,0,0,0));
-                            String dayOfWeek = startDateTimeNew.format('EEEE');
-                            
-                            //Checking if the day is there in applicable days selected by the user and creating the d2dVacancy record.  
-                            if(applicableDaysSet.contains(dayOfWeek) && String.isNotBlank(vacancy.Start_Time__c) && String.isNotBlank(vacancy.End_Time__c)){
-                            	
-						    if(formatDateTimefromDate(startDateNew, vacancy.Start_Time__c) > formatDateTimefromDate(startDateNew, vacancy.End_Time__c)){
-						              d2dVacancyInsertList.add(new Vacancy_D2D__c(
-                                                                                    Vacancy__c=vacancy.Id,
-                                                                                    Status__c='Open',
-                                                                                    Start_Date_Time__c = formatDateTimefromDate(startDateNew,vacancy.Start_Time__c),
-                                                                                    End_Date_Time__c = formatDateTimefromDate(startDateNew+1,vacancy.End_Time__c),
-                                                                                    Vacancy_Date__c = startDateNew,
-                                                                                    Shift__c = vacancy.Shift__c
-                                                                                   )
-						               						);
-						        }else{
-						                d2dVacancyInsertList.add(new Vacancy_D2D__c(
-                                                                                    Vacancy__c=vacancy.Id,
-                                                                                    Status__c='Open',
-                                                                                    Start_Date_Time__c = formatDateTimefromDate(startDateNew,vacancy.Start_Time__c),
-                                                                                    End_Date_Time__c = formatDateTimefromDate(startDateNew,vacancy.End_Time__c),
-                                                                                    Vacancy_Date__c = startDateNew,
-                                                                                    Shift__c = vacancy.Shift__c
-                                                                                   )
-						            								);
-						        }
-                                  /*  Vacancy_D2D__c d2dVacancy = new Vacancy_D2D__c(
-                                                                                    Vacancy__c=vacancy.Id,
-                                                                                    Status__c='Open',
-                                                                                    Start_Date_Time__c = formatDateTimefromDate(startDateNew,vacancy.Start_Time__c),
-                                                                                    End_Date_Time__c = formatDateTimefromDate(startDateNew,vacancy.End_Time__c),
-                                                                                    Vacancy_Date__c = startDateNew,
-                                                                                    Shift__c = vacancy.Shift__c
-                                                                                   );*/
-                                   // d2dVacancyInsertList.add(d2dVacancy);
-                            }   
-                        }
-                    } 
-                }       
-            }
-            //Inserting d2dVacancy records  
-            if(!d2dVacancyInsertList.isEmpty()){
-                Database.SaveResult[] srList = Database.insert(d2dVacancyInsertList, true);
-            }
+        else{
+            System.debug('BYPass Trigger');
         }
     }
 
