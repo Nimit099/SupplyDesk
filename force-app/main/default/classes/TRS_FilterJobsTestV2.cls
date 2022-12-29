@@ -48,7 +48,7 @@ public class TRS_FilterJobsTestV2 {
         
         insert acc;
         Id conCandidId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Candidate').getRecordTypeId();
-        
+      
         Contact con = new Contact(
             AccountId = acc.id,
             LastName = 'portalTestUser',
@@ -253,24 +253,26 @@ public class TRS_FilterJobsTestV2 {
             
             // Nimit================================
            
+            fCandt.isMidNight = false;
+            fCandt.weekdays = false;
 // For updateweek method --
             strDate = endDatenew;
             fCandt.startDateStr = strDate;
             fCandt.updateWeek();
 // updateweek method --
+
 // weekdayFunction --
             fCandt.vacRecord.Applicable_Days__c='Monday';
             fCandt.weekdayFunction();
-            
             fCandt.vacRecord.Applicable_Days__c= null;
             fCandt.weekdayFunction();
 // weekdayFunction --
 
+// saveCreateVacancyRecord --
             fCandt.vacRecord.Applicable_Days__c='Monday';
             fCandt.vacRecord.Selected_Week_Days__c = true;
             fCandt.saveCreateVacancyRecord();
-
-           
+// saveCreateVacancyRecord --
 
             // Nimit=======================
 
