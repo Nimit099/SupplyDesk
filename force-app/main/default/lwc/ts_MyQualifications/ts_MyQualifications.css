@@ -42,7 +42,7 @@
 }
 
 .textd {
-    font-weight: 300;
+    /* font-weight: 300; */
     font-size: 15px;
 }
 
@@ -125,6 +125,7 @@ h1 {
         padding: 12px 15px;
     }
     .textd {
+        /* font-weight: 550;        Nimit */
         font-size: 11px;
     }
     .text1 {
