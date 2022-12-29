@@ -1661,6 +1661,7 @@ public with sharing class TRS_FilterJobs {
 
                 vacRecord.End_Time__c = '3:00 PM';
                 vacRecord.Start_Time__c = '1:00 PM';
+                vacRecord.weekDaysTime__c = JSON.serialize(weekData);
 
                 insert vacRecord;
 

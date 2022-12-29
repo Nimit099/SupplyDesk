@@ -574,7 +574,16 @@ private class TRS_FilterCandidatesTest {
                                                TR1__Hiring_Manager__c = acc.Payroll_Primary_Hiring_Manager__c,  TR1__Regional_Area__c='Barnet',
                                                Sector1__c='Junior', Selected_Week_Days__c = true, Applicable_Days__c = 'Monday;Tuesday;');
 
-            insert job1;       
+            insert job1;     
+            
+            TR1__Job__c job11 = new TR1__Job__c(RecordTypeId=consultingid,TR1__Account__c=acc.Id,Name='Job 2', 
+                                               Booking_Type__c = 'Daily', TR1__Estimated_Start_Date__c=todayDate,
+                                               TR1__Estimated_End_Date__c=todayDate.addDays(7),TR1__Minimum_Pay_Rate__c=100,
+                                               TR1__Maximum_Bill_Rate__c=100, Year_Key_Stage__c ='KS1', SEN_Experience__c='ADHD',
+                                               TR1__State_Area__c = 'UK', End_Time__c = '07:00 PM', Shift__c = 'Hourly',Job_Title__c = 'cdce',
+                                               School_Type__c = 'College (6th)', TR1__Contact__c = con.Id,
+                                               TR1__Hiring_Manager__c = con.Id,  TR1__Regional_Area__c='Barnet',
+                                               Sector1__c='Junior', Selected_Week_Days__c = true, Applicable_Days__c = 'Monday;Tuesday;');
             
             Contact candidate1 = new Contact(RecordTypeId = conCandidId, LastName = 'Candidate 1', Candidate_Type__c = 'Qualified Teacher', Qualificaitons__c = 'EYFS',Email='test@test.com', Subject__c ='Art');
             Contact candidate2 = new Contact(RecordTypeId = conCandidId, LastName = 'Candidate 2',Email='test@test.com', Subject__c ='Art',Job_Titles__c = 'Senior Leader');
@@ -624,89 +633,22 @@ private class TRS_FilterCandidatesTest {
             TRS_FilterCandidates obj = new TRS_FilterCandidates (stdController);
             double offvar =  obj.offset;
             boolean isweekDayMapPopulate =  obj.isweekDayMapPopulated;
-            // obj.startDate = System.today();
-            // obj.endDate = system.today().addDays(+10);
-            // obj.isSortingByDistances = true;
-            // obj.dummyFunction();
-            // obj.getVacancyDetails();
-            // obj.resetFilters();
-            // obj.getWeek();
-            // obj.nextWeek();
-            // obj.previousWeek();
-            // obj.getvacancyStartDate();
-            // obj.setvacancyStartDate('27/05/2019');
-            // system.debug('obj.setvacancyStartDate() @@@@@ : '+ obj.startDateEnterred);
-            // System.debug(obj.isMidNight);
             
-            // obj.startDateStr = '27/05/2019';
-            // try{
-            //     obj.updateWeek();
-            // }
-            // catch(exception e){
-                
-            // }
-            
-            // obj.sortDirection ='DSEC';
-            // obj.contact1 = con.Id;
-            // obj.MassSMSmethod();
-            // obj.AllSelectcandidate();
-            // string sExp = obj.sortExpression;
-            // obj.gettimeSelectList();
-            // obj.getSortDirection();
-            // obj.sortExpression = null;
-            // obj.getSortDirection();
-            // obj.setSortDirection('5');
+            Map<String,  Map<String, String>> temp_t = new Map<String, Map<String, String>>();
+            Map<String, String> temp_map = new Map<String, String>();
+            temp_map.put('ST', '12:00 AM');
+            temp_map.put('ET', '01:00 AM');
 
-            // obj.openEditVacancyRecordDialog();
-            // obj.cancelEditVacancyCreation();
-            
-            // List<SelectOption> listSelectoption = new List<SelectOption>();
-            
-            // List<SelectOption> listSelectoption1 = new List<SelectOption>();
+            temp_t.put('Monday', temp_map);
+            temp_t.put('Tuesday', temp_map);
 
-            // // listSelectoption1 = obj.getDeselectedValues;
-            
-            // List<string> weekHeaderlst = new List<string>();
-            // weekHeaderlst = obj.weekHeader;
-            // Try{
-            //     obj.matchCSDJSDslots();
-            // }Catch(exception e){
-            //     system.debug('Exception is --->'+e);
-            // }
+            obj.weekData = temp_t;
 
-            // Set<String> test = new Set<String>();
-            // test = obj.leftValues;
-            // test = obj.picklistValues;
-            
-            // obj.vacRecord.Shift__c = 'Hourly';
-            // obj.dummyFunction();
-            
-            // obj.vacRecord.Shift__c = 'AM';
-            // obj.dummyFunction();
-            
-            // obj.vacRecord.Shift__c = 'PM';
-            // obj.dummyFunction();
-            obj.saveEditVacancyRecord(); 
+            obj.vacRecord = job11;
+            obj.clonevacancy = false; 
+            // obj.saveEditVacancyRecord(); 
             obj.saveCreateVacancyRecord(); 
-            
-            // TRS_FilterCandidates.CSDJSDwrap obt = new TRS_FilterCandidates.CSDJSDwrap(null,null,null);
-            // TRS_FilterCandidates.dayDetail obD = new TRS_FilterCandidates.dayDetail(System.today(), '');
-            // TRS_FilterCandidates.ShiftClass sc = new TRS_FilterCandidates.ShiftClass();
-            // obj.previouspaginaton();
-            // obj.nextpaginaton();
-            // obj.changeListsize();
-            
-            // obj.saveCreateVacancyRecord();
-            // obj.refresh();
-            // obj.openCreateVacancyRecordDialog();
-            // obj.openCloneVacancyrecordDialog();
-            // obj.cancelVacancyCreation();
-            // obj.saveClosingReport();
-            // obj.deleteEditVacancyCreation();
-            // // obj.weekdayFunction();
-            
-            // cr1.Maximum_Day_Pay_Rate__c = null;
-            // obj.saveCreateVacancyRecord();
+
 
             TRS_FilterCandidates.DayDetailWrapper obddw = new TRS_FilterCandidates.DayDetailWrapper();
         }       

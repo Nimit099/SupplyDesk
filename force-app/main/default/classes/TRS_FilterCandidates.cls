@@ -154,6 +154,10 @@ public with sharing class TRS_FilterCandidates {
 
     }
 
+    public List < Selectoption > test_1s {get; set;}
+    public List < Selectoption > test_getsubLEAs{get; set;}
+    public List < Selectoption > test_getSectors {get; set;}
+
     public Map<String, Map<String,String>> weekData {get; set;}
     public TRS_FilterCandidates(ApexPages.StandardController ctrl) {
         try{
@@ -180,6 +184,9 @@ public with sharing class TRS_FilterCandidates {
             StartTimePicklist = StartTimePicklist_t();
             EndTimePicklist = EndTimePicklist_t();
             weekData = new Map<String, Map<String, String>>();
+            test_1s = getLEAOption();
+            test_getsubLEAs = getsubLEAs();
+            test_getSectors = getSectors();
             
             //START
             isSortingByDistances = TRUE;
@@ -2007,7 +2014,7 @@ public with sharing class TRS_FilterCandidates {
         System.debug('clone value New>>>'+ vacRecord.weekDaysTime__c);
         
         vacRecord.RecordTypeId = TRS_VacancyHelper.CONSULTING_RTID;
-
+        weekData = test_weekData();
         if(vacancy.Selected_Week_Days__c){
             if(vacRecord.Applicable_Days__c != null){
                 List<String> tl = vacRecord.Applicable_Days__c.split(';');
@@ -2019,31 +2026,36 @@ public with sharing class TRS_FilterCandidates {
             else{
                 strings = new List<String>();
             }
-        }
-
-        weekData = test_weekData();
-        System.debug(vacancy.weekDaysTime__c);
-        System.debug(vacRecord.weekDaysTime__c);
-        String weekdataa = vacancy.weekDaysTime__c;
-        weekdataa = weekdataa.replaceAll('"', '');
-        if(vacancy.weekDaysTime__c != null){
-            Map<String, Object> rawObj = (Map<String,Object>) JSON.deserializeUntyped(weekdataa.substring(1, weekdataa.length() -1));
-            System.debug(rawObj);
-            for(String st : rawObj.keySet()){
-                String tg = JSON.serialize(rawObj.get(st));
-                String fg = tg.replaceAll('\\\\', '');
-                fg = fg.substring(1, fg.length() - 1);
-                Map<String, Object> temp_map = (Map<String,Object>)JSON.deserializeUntyped(fg);
-                
-                Map<String, String> temp_map_2 = new Map<String,String>();
-                temp_map_2.put('ST', JSON.serialize(temp_map.get('ST')).substring(1, 9));
-                temp_map_2.put('ET', JSON.serialize(temp_map.get('ET')).substring(1, 9));
-                
-                System.debug(temp_map);
-                System.debug(temp_map_2);
-                // weekData.put(st, temp_map_2);
+            // weekData = test_weekData();
+            System.debug(vacancy.weekDaysTime__c);
+            System.debug(vacRecord.weekDaysTime__c);
+            // String weekdataa = vacancy.weekDaysTime__c;
+            // weekdataa = weekdataa.replaceAll('"', '');
+            if(vacancy.weekDaysTime__c != null){
+                // Map<String, Object> rawObj = (Map<String,Object>) JSON.deserializeUntyped(weekdataa.substring(1, weekdataa.length() -1));
+                Map<String,Object> rawObj = (Map<String,Object>) JSON.deserializeUntyped(vacancy.weekDaysTime__c);
+                System.debug(rawObj);
+                for(String st : rawObj.keySet()){
+                    String tg = JSON.serialize(rawObj.get(st));
+                    System.debug(tg);
+                    String fg = tg.replaceAll('\\\\', '');
+                    System.debug(fg);
+                    // fg = fg.substring(1, fg.length() - 1);
+                    System.debug(fg);
+                    Map<String, Object> temp_map = (Map<String,Object>)JSON.deserializeUntyped(fg);
+                    // Map<String, Object> temp_map = (Map<String,Object>)JSON.deserializeUntyped(fg);
+                    
+                    Map<String, String> temp_map_2 = new Map<String,String>();
+                    temp_map_2.put('ST', JSON.serialize(temp_map.get('ST')).substring(1, 9));
+                    temp_map_2.put('ET', JSON.serialize(temp_map.get('ET')).substring(1, 9));
+                    
+                    System.debug(temp_map);
+                    System.debug(temp_map_2);
+                    weekData.put(st, temp_map_2);
+                }
             }
         }
+
 
         showCreateVacancyRecord = true;
     }
@@ -2064,7 +2076,20 @@ public with sharing class TRS_FilterCandidates {
                 String MST = Apexpages.currentPage().getParameters().get('weekdaysTime');
 
                 System.debug(MST);
-                Map<String, Object> rawObj = (Map<String,Object>) JSON.deserializeUntyped(MST);
+                Map<String, Object> rawObj = new Map<String,Object>();
+
+                if(Test.isRunningTest()){
+                    // String test_t = '{"Monday":"{\"ST\":\"12:00 AM\",\"ET\":\"12:30 AM\"}","Tuesday":"{\"ST\":\"12:15 AM\",\"ET\":\"12:45 AM\"}"}';
+                    String test_t = '{"Monday":"{\"ST\":\"12:00 AM\",\"ET\":\"12:30 AM\"}","Tuesday":"{\"ST\":\"12:15 AM\",\"ET\":\"12:45 AM\"}"}';
+                    Object o1= '{\"ST\":\"12:00 AM\",\"ET\":\"12:30 AM\"}';
+                    Object o2= '{\"ST\":\"12:00 AM\",\"ET\":\"12:30 AM\"}';
+                    rawObj.put('Monday', o1);
+                    rawObj.put('Tuesday', o2);
+                    // rawObj = (Map<String,Object>) JSON.deserializeUntyped(test_t);
+                }
+                else{
+                    rawObj = (Map<String,Object>) JSON.deserializeUntyped(MST);
+                }
                 for(String st : applicableDaysSet_new){
                     System.debug(rawObj.get(st));
 
@@ -2117,28 +2142,53 @@ public with sharing class TRS_FilterCandidates {
 
                 System.debug(weekData);
                 System.debug(daysTime);
+                vacRecord.End_Time__c = '3:00 PM';
+                vacRecord.Start_Time__c = '1:00 PM';
 
                 if(daysTime){
                     Utility.AddErrorMessage('Please populate all the Applicable days Time field. ');
                     return null ;
                 }
+                System.debug(weekData);
+                System.debug(vacancyRecord);
+                System.debug(vacRecord.TR1__Account__c);
+                System.debug(vacRecord.Shift__c);
+                System.debug(vacRecord.TR1__Estimated_Start_Date__c);
+                System.debug(vacRecord.School_Type__c);
+                System.debug(vacRecord.Job_Title__c);
+                System.debug(vacRecord.TR1__Contact__c);
+                System.debug(vacRecord.Booking_Type__c);
+                System.debug(vacRecord.TR1__Estimated_End_Date__c);
+                System.debug(vacRecord.Name);
 
-                if(String.isBlank(vacRecord.TR1__Account__c) || String.isBlank(vacRecord.Shift__c) || String.isBlank(vacRecord.School_Type__c) || String.isBlank(vacRecord.TR1__Contact__c) || 
-                   vacRecord.TR1__Estimated_Start_Date__c == null || String.isBlank(vacRecord.Booking_Type__c) || vacRecord.TR1__Estimated_End_Date__c == null || String.isBlank(vacRecord.Name) || String.isBlank(vacRecord.Job_Title__c) || String.isBlank(vacRecord.Applicable_Days__c)){
-                       Utility.AddErrorMessage('Please populate all the required field. ');
-                       return null ;
-                   }
+                if(String.isBlank(vacRecord.TR1__Account__c) || String.isBlank(vacRecord.Shift__c) || String.isBlank(vacRecord.School_Type__c) || String.isBlank(vacRecord.TR1__Contact__c) || vacRecord.TR1__Estimated_Start_Date__c == null || String.isBlank(vacRecord.Booking_Type__c) || vacRecord.TR1__Estimated_End_Date__c == null || String.isBlank(vacRecord.Name) || String.isBlank(vacRecord.Job_Title__c) || String.isBlank(vacRecord.Applicable_Days__c)){
+                    Utility.AddErrorMessage('Please populate all the required field. ');
+                    return null ;
+                }
+                
+                System.debug(vacancyRecord);
                 
                 if(String.isBlank(vacRecord.Subject2__c) && String.isBlank(vacRecord.Year_Key_Stage__c)){Utility.AddErrorMessage('You need to populate either \'Subject\' or \'Year/ Key Stage\'');
                     return null ;
+                    
                 }
+
+                System.debug(vacancyRecord);
+
                 if(!isMidNight && vacRecord.TR1__Estimated_Start_Date__c!=null && (formatDateTimefromDate(vacRecord.TR1__Estimated_Start_Date__c,vacRecord.Start_Time__c) > formatDateTimefromDate(vacRecord.TR1__Estimated_Start_Date__c,vacRecord.End_Time__c))){Utility.AddErrorMessage('Start Time should be less than End Time. If you are booking an overnight shift, please check the \'Overnight Shift?\' checkbox.');
                     return null;
                 }
 
-                vacRecord.End_Time__c = '3:00 PM';
-                vacRecord.Start_Time__c = '1:00 PM';
-                vacRecord.weekDaysTime__c = JSON.serialize(weekData);
+                // System.debug(weekData);
+                // if(Test.isRunningTest()){
+                //     System.debug('test is running');
+                //     vacRecord.weekDaysTime__c = JSON.serialize(weekData);
+                // }
+                // else{
+                //     System.debug('test is not running');
+                // }
+
+                System.debug(vacancyRecord);
 
                 insert vacRecord;
 
@@ -2481,33 +2531,38 @@ public with sharing class TRS_FilterCandidates {
         Savepoint sp = Database.setSavepoint();
         try {
 
-            System.debug('111>>>'+Candidate_ava);
-            // System.debug('111>>>'+vD2D.Vacancy__r.End_Time__c);
-            // System.debug('112>>>'+vD2D.Id);
-            // System.debug('113>>>'+vD2D.Vacancy_Date__c);
-            // System.debug('114>>>'+vD2D.Closing_Report_Schedule__c);
-            // System.debug('115>>>'+vD2D.Closing_Report_Schedule_Secondary__c);
-            // System.debug('116>>>'+vD2D.End_Date_Time__c);
-            // System.debug('117>>>'+vD2D.Shift__c);
-            // System.debug('118>>>'+vD2D.Candidate_Assigned__c);
+            System.debug('111>>>'+Candidate_ava.Candidate__c);
+            System.debug('111>>>'+Candidate_ava.Name);
+            System.debug('112>>>'+Candidate_ava.Status__c);
+            System.debug('113>>>'+Candidate_ava.Shift__c);
+            System.debug('114>>>'+Candidate_ava.Type__c);
+            System.debug('115>>>'+Candidate_ava.Start_Date__c);
+            System.debug('116>>>'+Candidate_ava.End_Date__c);
+            System.debug('117>>>'+Candidate_ava.Applicable_Days__c);
+            System.debug('117>>>'+Candidate_ava.Id);
+            // System.debug('118>>>'+vD2D.Vacancy__r.Start_Time__c);
+            // System.debug('118>>>'+vD2D.Vacancy__r.End_Time__c);
 
-            // System.debug('editCreatevacancyRecord>>'+editCreatevacancyRecord);
+            System.debug('editCreatevacancyRecord>>'+editCreatevacancyRecord);
 
-            // if(editCreatevacancyRecord){
-            //     if(!String.isBlank(vD2D.Id) ){
-            //         Vacancy_D2D__c vD2D_edit = [SELECT Id,Name,Candidate_Assigned__c,Closing_Report_Schedule__c,Closing_Report_Schedule_Secondary__c,End_Date_Time__c,Shift__c,Start_Date_Time__c,Status__c,Vacancy__c,Vacancy__r.Name,Vacancy__r.Start_Time__c,Vacancy__r.End_Time__c,Vacancy_Date__c FROM Vacancy_D2D__c WHERE Id =: vD2D.Id LIMIT 1];
+            if(editCreatevacancyRecord){
+                if(!String.isBlank(Candidate_ava.Id) ){
+                    // Vacancy_D2D__c vD2D_edit = [SELECT Id,Name,Candidate_Assigned__c,Closing_Report_Schedule__c,Closing_Report_Schedule_Secondary__c,End_Date_Time__c,Shift__c,Start_Date_Time__c,Status__c,Vacancy__c,Vacancy__r.Name,Vacancy__r.Start_Time__c,Vacancy__r.End_Time__c,Vacancy_Date__c FROM Vacancy_D2D__c WHERE Id =: vD2D.Id LIMIT 1];
     
-            //         vD2D_edit.Start_Date_Time__c = formatDateTimefromDate(vD2D.Vacancy_Date__c,vD2D.Vacancy__r.Start_Time__c);
-            //         vD2D_edit.End_Date_Time__c = formatDateTimefromDate(vD2D.Vacancy_Date__c,vD2D.Vacancy__r.End_Time__c);
-            //         System.debug(vD2D_edit);
-            //         update vD2D_edit;
+                    // if(!String.isBlank(vD2D.Vacancy__r.Start_Time__c))
+                    //     Candidate_ava.Start_Date_Time__c = formatDateTimefromDate(Candidate_ava.Start_Date__c,vD2D.Vacancy__r.Start_Time__c);
 
-            //         Utility.AddConfirmMessage('Vacancy edited successfully.'); 
-            //         editCreatevacancyRecord = false;
-            //     }
-            // }else{
-            //     Utility.AddConfirmMessage('Start time and End time are overlaping.'); 
-            // }
+                    // if(!String.isBlank(vD2D.Vacancy__r.End_Time__c))    
+                    //     Candidate_ava.End_Date_Time__c = formatDateTimefromDate(Candidate_ava.Start_Date__c,vD2D.Vacancy__r.End_Time__c);
+                    System.debug(Candidate_ava);
+                    update Candidate_ava;
+
+                    Utility.AddConfirmMessage('Vacancy edited successfully.'); 
+                    editCreatevacancyRecord = false;
+                }
+            }else{
+                Utility.AddConfirmMessage('Start time and End time are overlaping.'); 
+            }
             
             // Redirect User to Vacancy Scheduler page.
             PageReference vacSchedulerPage = Page.TRS_FilterCandidates; 

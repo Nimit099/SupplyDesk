@@ -595,6 +595,7 @@ hr {
     }
     .user-information {
         height: 25vh;
+        /* height: 50vh; */
     }
     .header {
         margin-left: -3%;
@@ -607,6 +608,7 @@ hr {
     .rqst-call {
         margin-top: 2%;
     }
+    
 }
 
 @media only screen and (max-width: 540px) {
@@ -660,7 +662,8 @@ hr {
         font-size: 12px;
     }
     .user-information {
-        height: 30vh;
+        /* height: 30vh; */
+        height: 50vh;
     }
     .tableMain {
         overflow-x: auto;
@@ -673,6 +676,16 @@ hr {
     }
     .cndt-user-client {
         display: block;
+    }
+    .cndt-profile {
+        height: 50%;
+        width: 100%;
+        padding-top: 15px;
+    }
+    .candidateInfo {
+        /* border-left: 0.5px solid rgba(103, 104, 104, 0.6); */
+        border-left: none;
+        margin-left: 20px;
     }
 }
 

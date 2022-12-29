@@ -23,7 +23,7 @@ nav .vertical-menu {
     font-style: normal;
     font-weight: 400;
     font-size: 25px;
-    font-family: 'Montserrat';
+    /* font-family: 'Montserrat'; */
 }
 
 nav .vertical-menu hr {
@@ -39,7 +39,7 @@ nav .vertical-menu hr {
 .home_img {
     display: flex;
     cursor: pointer;
-    font-family: 'Montserrat';
+    /* font-family: 'Montserrat'; */
 }
 
 .home_img img {
@@ -71,7 +71,8 @@ nav .vertical-menu hr {
 
 .navbar_cls {
     margin: auto 0;
-    font-family: 'Montserrat';
+    /* font-family: 'Montserrat'; */
+    font-family: 'Raleway';
     font-style: normal;
     font-weight: 400;
     font-size: 20px;

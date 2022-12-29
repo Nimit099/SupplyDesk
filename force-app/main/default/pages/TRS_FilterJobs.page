@@ -6,6 +6,7 @@
 
     <apex:stylesheet value="{!URLFOR($Resource.jQuery, 'css/ui-lightness/jquery-ui-1.10.3.custom.min.css')}" />
     <apex:variable var="list" value="{!''}{!strings}" />
+    <apex:variable var="WeekMap" value="{!''}{!weekData}" />
 
     <style>
         .tableStyle {
@@ -326,6 +327,15 @@
 
         .swal-button {
             background: #7cd1f9 !important;
+        }
+
+        .weekcls .weekcls_th1{
+            margin-right: 5px;
+            text-align: center;
+            padding: 2px 5px 2px 0;
+        }
+        .weekcls .weekcls_th2{
+            padding: 2px 0;
         }
     </style>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -1614,7 +1624,12 @@
                             buttons: {
                                 "Save": function () {
                                     if (true) {
-                                        saveCreateVacancyRecord();
+                                        console.log('r>>>>',r_v2);
+                                        var str = Object.fromEntries(r_v2);
+                                        var str1 = JSON.stringify(str);
+                                        console.log(typeof(str1));
+                                        console.log('str>>>',str1);
+                                        saveCreateVacancyRecord(str1);
                                         j$(this).dialog("destroy");
                                     }
                                 },
@@ -1633,9 +1648,29 @@
                         function applyButtonSet() {
                             j$("#selectDaysDiv").buttonset();
                         }
+                        var r = new Map();
+                        var r_v2 = new Map();
+                        function weekdays_Action(elId, day, Time){
+                            var x = document.getElementById(elId);
+                            var r2 = new Map();
+                            if(r.get(day) == undefined){
+                                r2.set(Time, x.value);
+                                r.set(day,r2);
+                            }
+                            else{
+                                r2 = r.get(day);
+                                r2.set(Time,x.value);
+                                var str32 = Object.fromEntries(r2);
+                                r.set(day, r2);
+                                r_v2.set(day, JSON.stringify(str32));
+                            }
+                        }   
+
+
                     </script>
-                    <apex:actionFunction name="saveCreateVacancyRecord" action="{!saveCreateVacancyRecord}" status="searchOverlay" rerender="dialogBoxforVacancy,vacancy_dialog_messages,formId"
-                    />
+                    <apex:actionFunction name="saveCreateVacancyRecord" action="{!saveCreateVacancyRecord}" status="searchOverlay" rerender="dialogBoxforVacancy,vacancy_dialog_messages,formId" >
+                        <apex:param name="weekdaysTime" value="" assignTo="{!enteredText1}" />
+                    </apex:actionFunction>
                     <apex:actionFunction name="cancelVacancyCreation" action="{!cancelVacancyCreation}" status="searchOverlay" rerender="dialogBoxforVacancy"
                         immediate="true" />
 
@@ -1776,11 +1811,11 @@
                                 
                                 <apex:pageBlockSectionItem >
                                     <apex:outputPanel styleClass="requiredInput" id="StartTime_s">
-                                        <apex:outputLabel value="Start Time" for="start__time"  rendered="{!vacRecord.Selected_Week_Days__c = FALSE}"/>
+                                        <apex:outputLabel value="Start Time" for="start__time1"  rendered="{!vacRecord.Selected_Week_Days__c = FALSE}"/>
                                     </apex:outputPanel>
                                     <apex:outputPanel styleClass="requiredInput" layout="block" id="thePageBlock3" >
                                         <apex:outputPanel styleClass="requiredBlock" layout="block" />
-                                        <apex:inputField value="{!vacRecord.Start_Time__c}" id="start__time" tabOrderHint="17" rendered="{!vacRecord.Selected_Week_Days__c = FALSE}"/>
+                                        <apex:inputField value="{!vacRecord.Start_Time__c}" id="start__time1" tabOrderHint="17" rendered="{!vacRecord.Selected_Week_Days__c = FALSE}" onchange="starttime('{!$Component.start__time1}');"/>
                                     </apex:outputPanel>
                                 </apex:pageBlockSectionItem>
                                 
@@ -1794,11 +1829,11 @@
 
                                 <apex:pageBlockSectionItem >
                                     <apex:outputPanel styleClass="requiredInput" id="EndTime_s">
-                                        <apex:outputLabel value="End Time" for="end__time" rendered="{!vacRecord.Selected_Week_Days__c = FALSE}"/>
+                                        <apex:outputLabel value="End Time" for="end__time1" rendered="{!vacRecord.Selected_Week_Days__c = FALSE}"/>
                                     </apex:outputPanel>
                                     <apex:outputPanel styleClass="requiredInput" layout="block" id="thePageBlock4">
                                         <apex:outputPanel styleClass="requiredBlock" layout="block" />
-                                        <apex:inputField value="{!vacRecord.End_Time__c}" id="end__time" tabOrderHint="18" rendered="{!vacRecord.Selected_Week_Days__c = FALSE}"/>
+                                        <apex:inputField value="{!vacRecord.End_Time__c}" id="end__time1" tabOrderHint="18" rendered="{!vacRecord.Selected_Week_Days__c = FALSE}" onchange="endtime('{!$Component.end__time1}');"/>
                                     </apex:outputPanel>
                                 </apex:pageBlockSectionItem>
 
@@ -1819,52 +1854,111 @@
                                     <apex:outputPanel id="weekSection_l">
                                         <apex:outputLabel value="" rendered="{!vacRecord.Selected_Week_Days__c}"/>
                                     </apex:outputPanel>
-                                    <apex:outputPanel id="weekSection_i">
-                                        <table style="display:{!IF(vacRecord.Selected_Week_Days__c, 'block', 'none')}">
-                                            <apex:outputText value="Applicable Days Not Selected" rendered="{!OR(strings.size < 0,AND(vacRecord.Selected_Week_Days__c = TRUE ,strings.size > 0))}"/>
+                                    <apex:outputPanel id="weekSection_i" >
+                                        <table class="weekcls" style="display:{!IF(vacRecord.Selected_Week_Days__c, 'block', 'none')}">
+
+                                            <apex:outputText value="Applicable Days Are Not Selected" style="display:{!IF(vacRecord.Selected_Week_Days__c, '', 'none')}" rendered="{!strings.size = 0}"/>
+
                                             <tr style="display:{!IF(strings.size > 0 , '', 'none')}">
-                                                <th>Day</th>
-                                                <th style="text-align: end; padding-right:10px;">Start Time</th>
-                                                <th style="text-align: center">End Time</th>
+                                                <th >Day</th>
+                                                <th  style="text-align: end; padding-right:10px;">Start Time</th>
+                                                <th  style="text-align: center">End Time</th>
                                             </tr>
                                             <tbody>
                                                 <tr style="display:{!IF(CONTAINS(list, 'Monday') , '', 'none')}">
-                                                    <td><apex:outputLabel value="Monday" /></td>
-                                                    <td><apex:inputField value="{!vacRecord.Start_Time__c}"  tabOrderHint="17" onchange="weekdays_Action();"/></td>
-                                                    <td><apex:inputField value="{!vacRecord.End_Time__c}"  tabOrderHint="17" /></td>
+                                                    <td class="weekcls_th1"><apex:outputLabel value="Monday" /></td>
+                                                    <td class="weekcls_th2" >
+                                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                                        <apex:selectList size="1" multiselect="false" Id="id1_S" styleClass="pickList" onchange="weekdays_Action('{!$Component.id1_S}', 'Monday', 'ST');"> 
+                                                            <apex:selectOptions value="{!StartTimePicklist}"/>  
+                                                        </apex:selectList>
+                                                    </td>
+                                                    <td class="weekcls_th2" >
+                                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                                        <apex:selectList size="1" multiselect="false" Id="id1_E" styleClass="pickList" onchange="weekdays_Action('{!$Component.id1_E}', 'Monday', 'ET');"> 
+                                                            <apex:selectOptions value="{!EndTimePicklist}"/>  
+                                                        </apex:selectList>
+                                                    </td>
                                                 </tr>
                                                 <tr style="display:{!IF(CONTAINS(list, 'Tuesday') , '', 'none')}">
-                                                    <td><apex:outputLabel value="Tuesday" /></td>
-                                                    <td><apex:inputField value="{!vacRecord.Start_Time__c}"  tabOrderHint="17" /></td>
-                                                    <td><apex:inputField value="{!vacRecord.End_Time__c}"  tabOrderHint="17" /></td>
+                                                    <td class="weekcls_th1"><apex:outputLabel value="Tuesday" /></td>
+                                                    <td class="weekcls_th2" > 
+                                                        <apex:selectList size="1" multiselect="false" Id="id2_S" styleClass="pickList" onchange="weekdays_Action('{!$Component.id2_S}', 'Tuesday', 'ST');"> 
+                                                            <apex:selectOptions value="{!StartTimePicklist}"/>  
+                                                        </apex:selectList>
+                                                    </td>
+                                                    <td class="weekcls_th2" >
+                                                        <apex:selectList size="1" multiselect="false" Id="id2_E" styleClass="pickList" onchange="weekdays_Action('{!$Component.id2_E}', 'Tuesday', 'ET');"> 
+                                                            <apex:selectOptions value="{!EndTimePicklist}"/>  
+                                                        </apex:selectList>
+                                                    </td>
                                                 </tr>
                                                 <tr style="display:{!IF(CONTAINS(list, 'Wednesday') , '', 'none')}">
-                                                    <td><apex:outputLabel value="Wednesday" /></td>
-                                                    <td><apex:inputField value="{!vacRecord.Start_Time__c}"  tabOrderHint="17" /></td>
-                                                    <td><apex:inputField value="{!vacRecord.End_Time__c}"  tabOrderHint="17" /></td>
+                                                    <td class="weekcls_th1"><apex:outputLabel value="Wednesday" /></td>
+                                                    <td class="weekcls_th2" >
+                                                        <apex:selectList size="1" multiselect="false" Id="id3_S" styleClass="pickList" onchange="weekdays_Action('{!$Component.id3_S}', 'Wednesday', 'ST');"> 
+                                                            <apex:selectOptions value="{!StartTimePicklist}"/>  
+                                                        </apex:selectList>
+                                                    </td>
+                                                    <td class="weekcls_th2" >
+                                                        <apex:selectList size="1" multiselect="false" Id="id3_E" styleClass="pickList" onchange="weekdays_Action('{!$Component.id3_E}', 'Wednesday', 'ET');"> 
+                                                            <apex:selectOptions value="{!EndTimePicklist}"/>  
+                                                        </apex:selectList>
+                                                    </td>
                                                 </tr>
                                                 <tr style="display:{!IF(CONTAINS(list, 'Thursday') , '', 'none')}">
-                                                    <td><apex:outputLabel value="Thursday" /></td>
-                                                    <td><apex:inputField value="{!vacRecord.Start_Time__c}"  tabOrderHint="17" /></td>
-                                                    <td><apex:inputField value="{!vacRecord.End_Time__c}"  tabOrderHint="17" /></td>
+                                                    <td class="weekcls_th1"><apex:outputLabel value="Thursday" /></td>
+                                                    <td class="weekcls_th2" >
+                                                        <apex:selectList size="1" multiselect="false" Id="id4_S" styleClass="pickList" onchange="weekdays_Action('{!$Component.id4_S}', 'Thursday', 'ST');"> 
+                                                            <apex:selectOptions value="{!StartTimePicklist}"/>  
+                                                        </apex:selectList>
+                                                    </td>
+                                                    <td class="weekcls_th2" >
+                                                        <apex:selectList size="1" multiselect="false" Id="id4_E" styleClass="pickList" onchange="weekdays_Action('{!$Component.id4_E}', 'Thursday', 'ET');"> 
+                                                            <apex:selectOptions value="{!EndTimePicklist}"/>  
+                                                        </apex:selectList>
+                                                    </td>
                                                 </tr>
                                                 <tr style="display:{!IF(CONTAINS(list, 'Friday') , '', 'none')}">
-                                                    <td><apex:outputLabel value="Friday" /></td>
-                                                    <td><apex:inputField value="{!vacRecord.Start_Time__c}"  tabOrderHint="17" /></td>
-                                                    <td><apex:inputField value="{!vacRecord.End_Time__c}"  tabOrderHint="17" /></td>
+                                                    <td class="weekcls_th1"><apex:outputLabel value="Friday" /></td>
+                                                    <td class="weekcls_th2" >
+                                                        <apex:selectList size="1" multiselect="false" Id="id5_S" styleClass="pickList" onchange="weekdays_Action('{!$Component.id5_S}', 'Friday', 'ST');"> 
+                                                            <apex:selectOptions value="{!StartTimePicklist}"/>  
+                                                        </apex:selectList>
+                                                    </td>
+                                                    <td class="weekcls_th2" >
+                                                        <apex:selectList size="1" multiselect="false" Id="id5_E" styleClass="pickList" onchange="weekdays_Action('{!$Component.id5_E}', 'Friday', 'ET');"> 
+                                                            <apex:selectOptions value="{!EndTimePicklist}"/>  
+                                                        </apex:selectList>
+                                                    </td>
                                                 </tr>
                                                 <tr style="display:{!IF(CONTAINS(list, 'Saturday') , '', 'none')}">
-                                                    <td><apex:outputLabel value="Saturday" /></td>
-                                                    <td><apex:inputField value="{!vacRecord.Start_Time__c}"  tabOrderHint="17" /></td>
-                                                    <td><apex:inputField value="{!vacRecord.End_Time__c}"  tabOrderHint="17" /></td>
+                                                    <td class="weekcls_th1"><apex:outputLabel value="Saturday" /></td>
+                                                    <td class="weekcls_th2" >
+                                                        <apex:selectList size="1" multiselect="false" Id="id6_S" styleClass="pickList" onchange="weekdays_Action('{!$Component.id6_S}', 'Saturday', 'ST');"> 
+                                                            <apex:selectOptions value="{!StartTimePicklist}"/>  
+                                                        </apex:selectList>
+                                                    </td>
+                                                    <td class="weekcls_th2" >
+                                                        <apex:selectList size="1" multiselect="false" Id="id6_E" styleClass="pickList" onchange="weekdays_Action('{!$Component.id6_E}', 'Saturday', 'ET');"> 
+                                                            <apex:selectOptions value="{!EndTimePicklist}"/>  
+                                                        </apex:selectList>
+                                                    </td>
                                                 </tr>
                                                 <tr style="display:{!IF(CONTAINS(list, 'Sunday') , '', 'none')}">
-                                                    <td><apex:outputLabel value="Sunday" /></td>
-                                                    <td><apex:inputField value="{!vacRecord.Start_Time__c}"  tabOrderHint="17" /></td>
-                                                    <td><apex:inputField value="{!vacRecord.End_Time__c}"  tabOrderHint="17" /></td>
+                                                    <td class="weekcls_th1"><apex:outputLabel value="Sunday" /></td>
+                                                    <td class="weekcls_th2" >
+                                                        <apex:selectList size="1" multiselect="false" Id="id7_S" styleClass="pickList" onchange="weekdays_Action('{!$Component.id7_S}', 'Sunday', 'ST');"> 
+                                                            <apex:selectOptions value="{!StartTimePicklist}"/>  
+                                                        </apex:selectList>
+                                                    </td>
+                                                    <td class="weekcls_th2" >
+                                                        <apex:selectList size="1" multiselect="false" Id="id7_E" styleClass="pickList" onchange="weekdays_Action('{!$Component.id7_E}', 'Sunday', 'ET');"> 
+                                                            <apex:selectOptions value="{!EndTimePicklist}"/>  
+                                                        </apex:selectList>
+                                                    </td>
                                                 </tr>
                                             </tbody>
-                                            <!-- <apex:actionFunction name="weekdays_Action" action="{!weekdaysAction}" /> -->
                                         </table>
                                     </apex:outputPanel>
                                 </apex:pageBlockSectionItem> 
@@ -1917,12 +2011,10 @@
                         </apex:pageBlock>
                     </div>
 
-
                 </apex:outputPanel>
             </apex:actionRegion>
         </apex:outputPanel>
         <!--CREATE VACANCY DAILOG : END-->
-
 
          <!-- EDIT VACANCY DAILOG : START-->
         <apex:actionFunction name="editVacancy" action="{!openEditVacancyRecordDialog}" status="searchOverlay" rerender="dialogBoxforeditVacancy">

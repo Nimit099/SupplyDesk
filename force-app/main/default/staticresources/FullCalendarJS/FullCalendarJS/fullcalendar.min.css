@@ -25,28 +25,32 @@
 }
 
 .fc-today-button {
-    margin-top: 5vh !important;
+    /* margin-top: 5vh !important; */
+    margin-top: 10px !important;
     margin-right: 2vh !important;
     background: #D9D9D9 !important;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) !important;
 }
 
 .fc-button-group .fc-agendaDay-button {
-    margin-top: 5vh !important;
+    /* margin-top: 5vh !important; */
+    margin-top: 10px !important;
     margin-right: 1vh !important;
     background: #D9D9D9;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .fc-button-group .fc-agendaWeek-button {
-    margin-top: 5vh !important;
+    /* margin-top: 5vh !important; */
+    margin-top: 10px !important;
     margin-right: 1vh !important;
     background: #D9D9D9;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .fc-button-group .fc-month-button {
-    margin-top: 5vh !important;
+    /* margin-top: 5vh !important; */
+    margin-top: 10px !important;
     margin-right: 1vh !important;
     background: #D9D9D9;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -55,6 +59,7 @@
 
 .fc-toolbar .fc-center {
     margin-left: 17vh !important;
+    margin-top: 10px;
 }
 
 .fc-time-grid-event .fc-content {
@@ -104,14 +109,68 @@ tr[data-time^="15:"] td:first-child {
     background: lightgreen;
 }
 
-
+/* * For Tablte Screen * */
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
 
     .fc-toolbar .fc-center {
-        margin-left: 17vh !important;
+        /* margin-left: 17vh !important; */
+        margin-left: 0vh !important;
+        margin-top: 10px !important;
     }
 
+    .fc-today-button {
+        margin-top: 10px !important;
+        margin-right: 1vh !important;
+    }
+
+    .fc-button-group .fc-agendaDay-button {
+        margin-top: 10px !important;
+        margin-right: 1vh !important;
+    }
+
+    .fc-button-group .fc-agendaWeek-button {
+        margin-top: 10px !important;
+        margin-right: 1vh !important;
+    }
+
+    .fc-button-group .fc-month-button {
+        margin-top: 10px !important;
+        margin-right: 1vh !important;
+    }
 }
+
+/* * For Mobile Screen * */
+
+@media screen and (max-width: 767px) {
+
+    .fc-toolbar .fc-center {
+        margin-left: 0vh !important;
+    }
+
+    .fc-today-button {
+        margin-top: 10px !important;
+        margin-right: 1vh !important;
+    }
+
+    .fc-button-group .fc-agendaDay-button {
+        margin-top: 10px !important;
+        margin-right: 1vh !important;
+    }
+
+    .fc-button-group .fc-agendaWeek-button {
+        margin-top: 10px !important;
+        margin-right: 1vh !important;
+    }
+
+    .fc-button-group .fc-month-button {
+        margin-top: 10px !important;
+        margin-right: 1vh !important;
+    }
+
+
+}
+
+
 
 /* table tr {
     height: 2vh !important;

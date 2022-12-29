@@ -267,22 +267,24 @@
                                 <div>Status</div>
                                 <div>{tsObj.TR1__Status__c}</div>
                             </div>
-                            <div class="slds-m-top_x-small cndt-info cndt-user-client">
-                                <template if:true={isUserClient}>
-                                    <div class="cndt-info">
-                                        <div>Day Charge Rate</div>
-                                        <div>{tsObj.Charge_Rate_1__c}</div>
-                                    </div>
-                                    <div class="cndt-info">
-                                        <div>Half Day Charge Rate</div>
-                                        <div>{tsObj.Charge_Rate_2__c}</div>
-                                    </div>
-                                    <div class="cndt-info">
-                                        <div>Hour Charge Rate</div>
-                                        <div>{tsObj.Charge_Rate_3__c}</div>
-                                    </div>
-                                </template>
-                            </div>
+                            <template if:true={isUserClient}>
+                                <div class="slds-m-top_x-small cndt-info cndt-user-client">
+                                    <!-- <template if:true={isUserClient}> -->
+                                        <div class="cndt-info">
+                                            <div>Day Charge Rate</div>
+                                            <div>{tsObj.Charge_Rate_1__c}</div>
+                                        </div>
+                                        <div class="cndt-info">
+                                            <div>Half Day Charge Rate</div>
+                                            <div>{tsObj.Charge_Rate_2__c}</div>
+                                        </div>
+                                        <div class="cndt-info">
+                                            <div>Hour Charge Rate</div>
+                                            <div>{tsObj.Charge_Rate_3__c}</div>
+                                        </div>
+                                    <!-- </template> -->
+                                </div>
+                            </template>
                         </div>
                         <div
                             class="slds-col slds-small-size_3-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12 slds-p-vertical_large">

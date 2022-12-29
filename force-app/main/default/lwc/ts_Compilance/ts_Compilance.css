@@ -335,12 +335,14 @@
         left: 10px;
         top: 110px;
         font-size: 20px;
+        text-align: center;           
     }
 
     .welcomeText p {
         left: 10px;
         top: 150px;
         font-size: 13px;
+        text-align: center;
     }
 
     .no-data-txt {

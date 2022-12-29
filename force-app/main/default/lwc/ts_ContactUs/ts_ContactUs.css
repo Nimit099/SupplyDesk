@@ -323,6 +323,7 @@
         height: 15%;
         justify-content: space-around;
         padding: 0 2% 0 6%;
+        margin-bottom: 16px;
     }
 
     .con_touch {
@@ -341,6 +342,7 @@
     .con_touch p {
         font-size: 20px;
     }
+
     .con_info_div {
         width: 70%;
         margin: 0 15%;
@@ -376,6 +378,7 @@
     .con_info p {
         font-size: 20px;
     }
+
     .contact-footer h1 {
         font-size: 17px;
     }
