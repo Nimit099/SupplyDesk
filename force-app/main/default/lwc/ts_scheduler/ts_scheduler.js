@@ -336,6 +336,7 @@ export default class FullCalendarJs extends LightningElement {
 
                 //To select the time period : https://fullcalendar.io/docs/v3/select-method
                 select: function (startD, endD) {
+                    console.log('select function');
                     self.stRange = startD;
                     self.edRange = endD;
 
@@ -344,12 +345,14 @@ export default class FullCalendarJs extends LightningElement {
                     if (stDate >= today) {
                         self.openModal = true;
                         var sDate = startD.toISOString() + ".000Z";
-                        var sDate_hr = sDate.substring(11, 13) - 1;
+                        var sDate_hr = sDate.substring(11, 13) ;
                         var s = sDate_hr.toString().padStart(2, '0');
 
                         var edate = endD.toISOString() + ".000Z";
-                        var eDate_hr = edate.substring(11, 13) - 1;
+                        var eDate_hr = edate.substring(11, 13) ;
                         var es = eDate_hr.toString().padStart(2, '0');
+
+                        console.log(sDate+'<<>>'+edate);
 
                         if (sDate_hr == -1) {
                             var s = "23";
@@ -360,7 +363,9 @@ export default class FullCalendarJs extends LightningElement {
                             }
                             else {
                                 var eb = Number(ea) - 1;
+                                // var eb = Number(ea) ;
                             }
+
                             if (sDate.substring(14, 16) != "30") {
                                 es = "23";
                                 var fe = edate.substring(0, 8) + eb.toString().padStart(2, '0') + "T" + es + edate.substring(13, edate.length);
@@ -368,9 +373,11 @@ export default class FullCalendarJs extends LightningElement {
                             else {
                                 var fe = edate.substring(0, 8) + eb.toString().padStart(2, '0') + "T" + es + edate.substring(13, edate.length);
                             }
+
                             if (sDate.substring(11, 16) == "00:00" || sDate.substring(11, 16) == "00:30") {
                                 var sa = sDate.substring(8, 10);
                                 var sb = Number(sa) - 1;
+                                // var sb = Number(sa) ;
                                 var fs = sDate.substring(0, 8) + sb.toString().padStart(2, '0') + "T" + s + sDate.substring(13, sDate.length);
                             }
                             else {
@@ -381,22 +388,27 @@ export default class FullCalendarJs extends LightningElement {
                             var fs = sDate.substring(0, 11) + s + sDate.substring(13, sDate.length);
                             var fe = edate.substring(0, 11) + es + edate.substring(13, edate.length);
                         }
+
                         if (sDate.substring(11, 16) == "23:30") {
                             es = "23";
                             var fe = "";
                         }
+                        
                         if (fs.length == 24) {
                             self.startDate = fs;
                         }
                         else {
                             self.startDate = '';
                         }
+
                         if (fe.length == 24) {
                             self.endDate = fe;
                         }
                         else {
                             self.endDate = '';
                         }
+
+                        console.log(self.startDate+'<<>>'+self.endDate);
                     } else {
                         self.template.querySelector('c-ts_-tost-notification').showToast('error', 'Cannot create event for date less than today.', 3000);
                     }
@@ -798,11 +810,11 @@ export default class FullCalendarJs extends LightningElement {
                         if (stime_v == "23") {
                             stime_v = "-1";
                             var stime_up = Number(stime_v) + 1;
-                            var sdt_a = Number(sdt.substring(8, 10)) + 1;
+                            var sdt_a = Number(sdt.substring(8, 10)) ;
                             var final_sdt = sdt.substring(0, 8) + sdt_a.toString().padStart(2, '0') + "T" + stime_up.toString().padStart(2, '0') + sdt.substring(13, sdt.length);
                         }
                         else {
-                            var stime_up = Number(stime_v) + 1;
+                            var stime_up = Number(stime_v);
                             var final_sdt = sdt.substring(0, 11) + stime_up.toString().padStart(2, '0') + sdt.substring(13, sdt.length);
                         }
                         this.startDate = final_sdt;
@@ -822,11 +834,11 @@ export default class FullCalendarJs extends LightningElement {
                         if (etime_v == "23") {
                             etime_v = "-1";
                             var etime_up = Number(etime_v) + 1;
-                            var edt_a = Number(edt.substring(8, 10)) + 1;
+                            var edt_a = Number(edt.substring(8, 10)) ;
                             var final_edt = edt.substring(0, 8) + edt_a.toString().padStart(2, '0') + "T" + etime_up.toString().padStart(2, '0') + edt.substring(13, edt.length);
                         }
                         else {
-                            var etime_up = Number(etime_v) + 1;
+                            var etime_up = Number(etime_v) ;
                             var final_edt = edt.substring(0, 11) + etime_up.toString().padStart(2, '0') + edt.substring(13, edt.length);
                         }
                         this.endDate = final_edt;
@@ -1048,6 +1060,8 @@ export default class FullCalendarJs extends LightningElement {
                     this.bkdbyanthagency = 0;
 
                     for (const res of result) {
+
+                        console.log({res});
                         res["startTime"] = res.Start_Date_Time__c.substring(11, 16) + ' - ' + res.End_Date_Time__c.substring(11, 16);
                         var date1 = new Date(res.Start_Date_Time__c);
                         var date2 = new Date(res.End_Date_Time__c);

@@ -1776,8 +1776,8 @@ public with sharing class TRS_FilterCandidates {
                 closingReport.TR1__Start_Date__c = startdateforcr;
                 closingReport.TR1__End_Date__c = enddateforcr;
                 closingReport.Contract_End_Date__c = enddateforcr;
-                closingReport.TR1__Person_Placed__c = Id.valueOf(contact1);
                 System.debug('========================= Contact 1 value is :'+Id.valueOf(contact1));
+                closingReport.TR1__Person_Placed__c = Id.valueOf(contact1);
                 Contact con = [Select Id, Daily_Rate_Agreed__c, Half_Day_Rate_Agreed__c, Hourly_Rate_Agreed__c FROM Contact where Id =: closingReport.TR1__Person_Placed__c limit 1];
                 
                 if(closingReport.Maximum_Day_Pay_Rate__c != null){
@@ -1943,12 +1943,14 @@ public with sharing class TRS_FilterCandidates {
         }
         catch (DMLException e) {
             Utility.AddErrorMessage('' +e.getDmlMessage(0));
+            System.debug(e.getDmlMessage(0));
             Database.rollback(sp);
             closingreport.id = null;
             return null;
         }
         catch (Exception e) {
             Utility.AddErrorMessage('Closing Report & CRS Save failed. Following Exception occurred: ' + e.getMessage() + ' at line number '+ e.getLineNumber());
+            System.debug(e.getMessage() + ' at line number '+ e.getLineNumber());
             Database.rollback(sp);
             closingReport.id = null;
             return null;
@@ -2026,13 +2028,9 @@ public with sharing class TRS_FilterCandidates {
             else{
                 strings = new List<String>();
             }
-            // weekData = test_weekData();
             System.debug(vacancy.weekDaysTime__c);
             System.debug(vacRecord.weekDaysTime__c);
-            // String weekdataa = vacancy.weekDaysTime__c;
-            // weekdataa = weekdataa.replaceAll('"', '');
             if(vacancy.weekDaysTime__c != null){
-                // Map<String, Object> rawObj = (Map<String,Object>) JSON.deserializeUntyped(weekdataa.substring(1, weekdataa.length() -1));
                 Map<String,Object> rawObj = (Map<String,Object>) JSON.deserializeUntyped(vacancy.weekDaysTime__c);
                 System.debug(rawObj);
                 for(String st : rawObj.keySet()){
@@ -2040,11 +2038,8 @@ public with sharing class TRS_FilterCandidates {
                     System.debug(tg);
                     String fg = tg.replaceAll('\\\\', '');
                     System.debug(fg);
-                    // fg = fg.substring(1, fg.length() - 1);
                     System.debug(fg);
                     Map<String, Object> temp_map = (Map<String,Object>)JSON.deserializeUntyped(fg);
-                    // Map<String, Object> temp_map = (Map<String,Object>)JSON.deserializeUntyped(fg);
-                    
                     Map<String, String> temp_map_2 = new Map<String,String>();
                     temp_map_2.put('ST', JSON.serialize(temp_map.get('ST')).substring(1, 9));
                     temp_map_2.put('ET', JSON.serialize(temp_map.get('ET')).substring(1, 9));
@@ -2118,6 +2113,8 @@ public with sharing class TRS_FilterCandidates {
 
                     }
                     else{
+
+                        System.debug('test else 51');
                         if(weekData.get(st) != null){
                             Map<String, Object> TimeToken = (Map<String,Object>)weekData.get(st);
                             if(TimeToken.get('ST') == null && TimeToken.get('ET') == null && TimeToken.get('ST') == '--None--' && TimeToken.get('ET') == '--None--'){
@@ -2165,7 +2162,7 @@ public with sharing class TRS_FilterCandidates {
                     Utility.AddErrorMessage('Please populate all the required field. ');
                     return null ;
                 }
-                
+
                 System.debug(vacancyRecord);
                 
                 if(String.isBlank(vacRecord.Subject2__c) && String.isBlank(vacRecord.Year_Key_Stage__c)){Utility.AddErrorMessage('You need to populate either \'Subject\' or \'Year/ Key Stage\'');
@@ -2179,15 +2176,8 @@ public with sharing class TRS_FilterCandidates {
                     return null;
                 }
 
-                // System.debug(weekData);
-                // if(Test.isRunningTest()){
-                //     System.debug('test is running');
-                //     vacRecord.weekDaysTime__c = JSON.serialize(weekData);
-                // }
-                // else{
-                //     System.debug('test is not running');
-                // }
-
+                vacRecord.weekDaysTime__c = JSON.serialize(weekData);
+               
                 System.debug(vacancyRecord);
 
                 insert vacRecord;
@@ -2344,10 +2334,20 @@ public with sharing class TRS_FilterCandidates {
                 return vacSchedulerPage;
                 
             }
-        } catch (Exception e) {
+        }
+        catch (DMLException e) {
+            Utility.AddErrorMessage('' +e.getDmlMessage(0));
+            System.debug(e.getDmlMessage(0));
+            Database.rollback(sp);
+            closingreport.id = null;
+            return null;
+        }
+         catch (Exception e) {
             System.debug('Exception ' + e);
+            System.debug(e.getMessage() + ' at line number '+ e.getLineNumber());
             Database.rollback(sp);
         }
+        
         return null;
     }
     
@@ -2530,35 +2530,25 @@ public with sharing class TRS_FilterCandidates {
         }
         Savepoint sp = Database.setSavepoint();
         try {
-
-            System.debug('111>>>'+Candidate_ava.Candidate__c);
-            System.debug('111>>>'+Candidate_ava.Name);
-            System.debug('112>>>'+Candidate_ava.Status__c);
-            System.debug('113>>>'+Candidate_ava.Shift__c);
-            System.debug('114>>>'+Candidate_ava.Type__c);
-            System.debug('115>>>'+Candidate_ava.Start_Date__c);
-            System.debug('116>>>'+Candidate_ava.End_Date__c);
-            System.debug('117>>>'+Candidate_ava.Applicable_Days__c);
-            System.debug('117>>>'+Candidate_ava.Id);
-            // System.debug('118>>>'+vD2D.Vacancy__r.Start_Time__c);
-            // System.debug('118>>>'+vD2D.Vacancy__r.End_Time__c);
-
-            System.debug('editCreatevacancyRecord>>'+editCreatevacancyRecord);
-
             if(editCreatevacancyRecord){
                 if(!String.isBlank(Candidate_ava.Id) ){
-                    // Vacancy_D2D__c vD2D_edit = [SELECT Id,Name,Candidate_Assigned__c,Closing_Report_Schedule__c,Closing_Report_Schedule_Secondary__c,End_Date_Time__c,Shift__c,Start_Date_Time__c,Status__c,Vacancy__c,Vacancy__r.Name,Vacancy__r.Start_Time__c,Vacancy__r.End_Time__c,Vacancy_Date__c FROM Vacancy_D2D__c WHERE Id =: vD2D.Id LIMIT 1];
-    
-                    // if(!String.isBlank(vD2D.Vacancy__r.Start_Time__c))
-                    //     Candidate_ava.Start_Date_Time__c = formatDateTimefromDate(Candidate_ava.Start_Date__c,vD2D.Vacancy__r.Start_Time__c);
+                    String ST_T = Apexpages.currentPage().getParameters().get('weekdaysTime_ST');
+                    String ET_T = Apexpages.currentPage().getParameters().get('weekdaysTime_ET');
 
-                    // if(!String.isBlank(vD2D.Vacancy__r.End_Time__c))    
-                    //     Candidate_ava.End_Date_Time__c = formatDateTimefromDate(Candidate_ava.Start_Date__c,vD2D.Vacancy__r.End_Time__c);
+                    System.debug(ST_T);
+                    System.debug(ET_T);
+                    if(ET_T != '--None--' && !String.isBlank(ET_T)){
+                        Candidate_ava.End_Date_Time__c = formatDateTimefromDate(Candidate_ava.End_Date__c, ET_T);
+                    }
+                    if(ST_T != '--None--' && !String.isBlank(ST_T)){
+                        Candidate_ava.Start_Date_Time__c = formatDateTimefromDate(Candidate_ava.Start_Date__c, ST_T);
+                    }
+
                     System.debug(Candidate_ava);
-                    update Candidate_ava;
-
                     Utility.AddConfirmMessage('Vacancy edited successfully.'); 
+                    update Candidate_ava;
                     editCreatevacancyRecord = false;
+                    
                 }
             }else{
                 Utility.AddConfirmMessage('Start time and End time are overlaping.'); 
@@ -2582,17 +2572,16 @@ public with sharing class TRS_FilterCandidates {
     }
 
     public PageReference deleteEditVacancyCreation() {
-        // System.debug('112>>>'+vD2D.Id);
-        if(vD2D != null){
-            String Id = vD2D.Id;
-            Vacancy_D2D__c vD2D_edit = [SELECT Id FROM Vacancy_D2D__c WHERE Id =: Id LIMIT 1];
-            delete vD2D_edit;
+        if(Candidate_ava != null){
+            String Id = Candidate_ava.Id;
+
+            if(!String.isBlank(Id)){
+                delete Candidate_ava;
+            }
         }
         
-        Utility.AddConfirmMessage('Vacancy edited successfully.'); 
-        
         editCreatevacancyRecord = false;
-        vD2D = null;
+        Candidate_ava = null;
 
         PageReference vacSchedulerPage = Page.TRS_FilterCandidates; 
         vacSchedulerPage.setRedirect(true);

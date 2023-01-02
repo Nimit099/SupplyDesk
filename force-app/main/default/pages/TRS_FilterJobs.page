@@ -417,6 +417,8 @@
                 .a()
                 .click(function (event) {
                     event.preventDefault();
+
+                    console.log('JQuery running');
                     //editVacancy();
             });
         }
@@ -1671,7 +1673,7 @@
                     <apex:actionFunction name="saveCreateVacancyRecord" action="{!saveCreateVacancyRecord}" status="searchOverlay" rerender="dialogBoxforVacancy,vacancy_dialog_messages,formId" >
                         <apex:param name="weekdaysTime" value="" assignTo="{!enteredText1}" />
                     </apex:actionFunction>
-                    <apex:actionFunction name="cancelVacancyCreation" action="{!cancelVacancyCreation}" status="searchOverlay" rerender="dialogBoxforVacancy"
+                    <apex:actionFunction name="cancelVacancyCreation" action="{!cancelVacancyCreation}" status="searchOverlay" rerender="dialogBoxforVacancy,formId"
                         immediate="true" />
 
                     <div id="createVacancyDiv" style="display:none">

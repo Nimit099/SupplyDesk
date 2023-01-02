@@ -166,7 +166,7 @@ private class TRS_FilterCandidatesTest {
             
             List<SelectOption> listSelectoption1 = new List<SelectOption>();
 
-            // listSelectoption1 = obj.getDeselectedValues;
+            listSelectoption1 = obj.getDeselectedValues();
             
             List<string> weekHeaderlst = new List<string>();
             weekHeaderlst = obj.weekHeader;
@@ -196,7 +196,7 @@ private class TRS_FilterCandidatesTest {
             obj.previouspaginaton();
             obj.nextpaginaton();
             obj.changeListsize();
-            
+            pref.getParameters().put('weekdaysTime', '{"Monday":"{\"ST\":\"12:00 AM\",\"ET\":\"12:30 AM\"}","Tuesday":"{\"ST\":\"12:15 AM\",\"ET\":\"12:45 AM\"}"}');
             obj.saveCreateVacancyRecord();
             obj.refresh();
             obj.openCreateVacancyRecordDialog();
@@ -451,6 +451,8 @@ private class TRS_FilterCandidatesTest {
                 system.debug(sc.optionList);
                 system.debug(sc.shiftDate);
                 system.debug(sc.bookingType);
+                pref.getParameters().put('weekdaysTime', '{"Monday":"{\"ST\":\"12:00 AM\",\"ET\":\"12:30 AM\"}","Tuesday":"{\"ST\":\"12:15 AM\",\"ET\":\"12:45 AM\"}"}');
+                obj.contact1 = testContact.Id;
                 obj.saveClosingReport();
                 obj.saveCreateVacancyRecord();
                 obj.createStringForMultiSelectFields('test;test');
@@ -580,8 +582,8 @@ private class TRS_FilterCandidatesTest {
                                                Booking_Type__c = 'Daily', TR1__Estimated_Start_Date__c=todayDate,
                                                TR1__Estimated_End_Date__c=todayDate.addDays(7),TR1__Minimum_Pay_Rate__c=100,
                                                TR1__Maximum_Bill_Rate__c=100, Year_Key_Stage__c ='KS1', SEN_Experience__c='ADHD',
-                                               TR1__State_Area__c = 'UK', End_Time__c = '07:00 PM', Shift__c = 'Hourly',Job_Title__c = 'cdce',
-                                               School_Type__c = 'College (6th)', TR1__Contact__c = con.Id,
+                                               TR1__State_Area__c = 'UK', End_Time__c = '07:00 PM', Shift__c = 'Hourly',Job_Title__c = 'Cover Supervisor',
+                                               School_Type__c = 'College (6th)', TR1__Contact__c = con.Id,Start_Time__c = '08:00 AM',
                                                TR1__Hiring_Manager__c = con.Id,  TR1__Regional_Area__c='Barnet',
                                                Sector1__c='Junior', Selected_Week_Days__c = true, Applicable_Days__c = 'Monday;Tuesday;');
             
@@ -642,12 +644,19 @@ private class TRS_FilterCandidatesTest {
             temp_t.put('Monday', temp_map);
             temp_t.put('Tuesday', temp_map);
 
-            obj.weekData = temp_t;
+            pref.getParameters().put('weekdaysTime', '{"Monday":"{\"ST\":\"12:00 AM\",\"ET\":\"12:30 AM\"}","Tuesday":"{\"ST\":\"12:15 AM\",\"ET\":\"12:45 AM\"}"}');
 
+            obj.weekData = temp_t;
+            obj.positivedbs = true;
             obj.vacRecord = job11;
+            obj.isMidNight = false;
             obj.clonevacancy = false; 
             // obj.saveEditVacancyRecord(); 
             obj.saveCreateVacancyRecord(); 
+
+            obj.clonevacancy = true; 
+            // obj.saveEditVacancyRecord(); 
+            // obj.saveCreateVacancyRecord(); 
 
 
             TRS_FilterCandidates.DayDetailWrapper obddw = new TRS_FilterCandidates.DayDetailWrapper();

@@ -243,7 +243,10 @@ public without sharing class ts_schedulercontroller {
             WHERE (Start_Date_Time__c <: endDateAvail AND Start_Date_Time__c >=: startDateAvail) AND Candidate__c =: currentUser.ContactId  ORDER BY Start_Date_Time__c ASC];
             
             for (Candidate_Availability__c cal : avabilityList) {
-                String currentDay = cal.Start_Date_Time__c.format('yyyy-MM-dd HH:mm:ss', 'UTC').substring(8,10) + ' ' + cal.Start_Date_Time__c.format('MMMMM');
+
+
+
+                String currentDay = cal.Start_Date_Time__c.format('yyyy-MM-dd HH:mm:ss').substring(8,10) + ' ' + cal.Start_Date_Time__c.format('MMMMM');
                 
                 if (avaibilityMap.containsKey(currentDay)) {
                     avaibilityMap.get(currentDay).add(cal);

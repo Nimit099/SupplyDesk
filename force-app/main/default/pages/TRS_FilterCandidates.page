@@ -2230,7 +2230,7 @@
                                 buttons: {
                                     "Save": function () {
                                         if (true) {
-                                            saveEditVacancyRecord();
+                                            saveEditVacancyRecord(ST_T,ET_T);
                                             j$(this).dialog("destroy");
                                         }
                                     },
@@ -2253,8 +2253,25 @@
                             function applyButtonSet() {
                                 j$("#selectDaysDiv").buttonset();
                             }
+
+                            var ST_T ;
+                            var ET_T ;
+
+                            function vac_changeTime(elTime, el_f){
+                                var x = document.getElementById(elTime);
+                                console.log(x.value);
+                                console.log(el_f);
+                                if(el_f == 'ST'){
+                                    ST_T = x.value;
+                                }else{
+                                    ET_T = x.value;
+                                }
+                            }
                         </script>
-                        <apex:actionFunction name="saveEditVacancyRecord" action="{!saveEditVacancyRecord}" status="searchOverlay" rerender="dialogBoxforeditVacancy,vacancy_dialog_messages,formId" />
+                        <apex:actionFunction name="saveEditVacancyRecord" action="{!saveEditVacancyRecord}" status="searchOverlay" rerender="dialogBoxforeditVacancy,vacancy_dialog_messages,formId" >
+                            <apex:param name="weekdaysTime_ST" value="" assignTo="{!enteredText_ST}" />
+                            <apex:param name="weekdaysTime_ET" value="" assignTo="{!enteredText1_ET}" />
+                        </apex:actionFunction>
                         
                         <apex:actionFunction name="cancelEditVacancyCreation" action="{!cancelEditVacancyCreation}" status="searchOverlay" rerender="dialogBoxforeditVacancy" immediate="true" />
                         <apex:actionFunction name="deleteEditVacancyRecord" action="{!deleteEditVacancyCreation}" status="searchOverlay" rerender="dialogBoxforeditVacancy" immediate="true" />
@@ -2325,7 +2342,9 @@
                                     <apex:outputLabel value="New Start Time" for="start__time" />
                                     <apex:outputPanel styleClass="requiredInput" layout="block" id="thePageBlock3">
                                         <apex:outputPanel styleClass="requiredBlock" layout="block" />
-                                        <apex:inputField value="{!vD2D.Vacancy__r.Start_Time__c}" id="start__time" tabOrderHint="17" />
+                                        <apex:selectList size="1" multiselect="false" Id="id_ss" styleClass="pickList" onchange="vac_changeTime('{!$Component.id_ss}', 'ST');"> 
+                                            <apex:selectOptions value="{!StartTimePicklist}"/>  
+                                        </apex:selectList>
                                     </apex:outputPanel>
                                 </apex:pageBlockSectionItem>
 
@@ -2334,19 +2353,16 @@
                                     <apex:outputLabel value="New End Time" for="end__time" />
                                     <apex:outputPanel styleClass="requiredInput" layout="block" id="thePageBlock3">
                                         <apex:outputPanel styleClass="requiredBlock" layout="block" />
-                                        <apex:inputField value="{!vD2D.Vacancy__r.End_Time__c}" id="end__time" tabOrderHint="17" />
+                                        <apex:selectList size="1" multiselect="false" Id="id1_ee" styleClass="pickList" onchange="vac_changeTime('{!$Component.id1_ee}', 'ET');"> 
+                                            <apex:selectOptions value="{!StartTimePicklist}"/>  
+                                        </apex:selectList>
                                     </apex:outputPanel>
                                 </apex:pageBlockSectionItem>
 
-                                    <!-- <apex:pageBlockSection >
-                                        <apex:outputLabel value="New End Time" for="end__time" />
-                                        <apex:outputPanel > -->
-                                            <!-- <apex:inputField type="date" value="{!Candidate_ava.End_Date_Time__c}" showDatePicker="true" required="true"/> -->
-                                            <!-- <apex:outputLabel value="Start" for="eventstartdate"/> -->
-                                            <!-- <input type ="date" id="eventstartdate" value="{!Candidate_ava.End_Date_Time__c}"/>
-                                            <input type ="time" value="{!Candidate_ava.End_Date_Time__c}"/>
-                                        </apex:outputPanel>
-                                    </apex:pageBlockSection> -->
+                                <apex:pageblockSectionItem >
+                                    <apex:outputLabel value="Description" />
+                                    <apex:inputField value="{!Candidate_ava.Description__c}" />
+                                </apex:pageblockSectionItem>
 
                                 </apex:pageBlockSection>
                                 <br/>
