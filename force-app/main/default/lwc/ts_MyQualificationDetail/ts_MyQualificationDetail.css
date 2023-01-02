@@ -414,7 +414,7 @@
 }
 
 @media screen and (max-width: 767px) {
-    
+
     .mainDiv{
         margin-top: 30px !important;
         margin-left: 0px !important;
@@ -423,7 +423,8 @@
         font-size: 13px;
     }
     .t2{
-        font-size: 21.5px;
+        /* Change by Nimit from font-size: 21.5px; to font-size: 20px;*/
+        font-size: 20px;
     }
     .mbCv{
         width: 95% !important;
@@ -509,4 +510,9 @@
     .l-input{
         margin-left: 2rem !important;
     }
+    /* Added By Nimit */
+    .combobox_new{
+        width: 240px;
+    }
+    /* Nimit */
 }
