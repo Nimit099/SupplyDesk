@@ -336,7 +336,7 @@ export default class FullCalendarJs extends LightningElement {
 
                 //To select the time period : https://fullcalendar.io/docs/v3/select-method
                 select: function (startD, endD) {
-                    console.log('select function');
+                    // console.log('select function');
                     self.stRange = startD;
                     self.edRange = endD;
 
@@ -352,7 +352,7 @@ export default class FullCalendarJs extends LightningElement {
                         var eDate_hr = edate.substring(11, 13) ;
                         var es = eDate_hr.toString().padStart(2, '0');
 
-                        console.log(sDate+'<<>>'+edate);
+                        // console.log(sDate+'<<>>'+edate);
 
                         if (sDate_hr == -1) {
                             var s = "23";
@@ -408,7 +408,7 @@ export default class FullCalendarJs extends LightningElement {
                             self.endDate = '';
                         }
 
-                        console.log(self.startDate+'<<>>'+self.endDate);
+                        // console.log(self.startDate+'<<>>'+self.endDate);
                     } else {
                         self.template.querySelector('c-ts_-tost-notification').showToast('error', 'Cannot create event for date less than today.', 3000);
                     }
@@ -1061,7 +1061,7 @@ export default class FullCalendarJs extends LightningElement {
 
                     for (const res of result) {
 
-                        console.log({res});
+                        // console.log({res});
                         res["startTime"] = res.Start_Date_Time__c.substring(11, 16) + ' - ' + res.End_Date_Time__c.substring(11, 16);
                         var date1 = new Date(res.Start_Date_Time__c);
                         var date2 = new Date(res.End_Date_Time__c);
