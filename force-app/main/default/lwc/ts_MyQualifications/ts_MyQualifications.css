@@ -79,8 +79,18 @@ h1 {
 .textcenterm{
     margin: 0 auto;
 }
-
-
+/* Added by Nimit */
+.heading2{
+    font-weight: 700;
+    font-size: 31.5px;
+    line-height : 37px;
+    font-family: Lato;
+}
+.heading1{
+    font-size: 20px;
+    line-height: 23px;
+}
+/* == */
 @media(max-width: 1024px) {
     .qualifyDiv .slds-page-header {
         padding-left: 0;
@@ -126,7 +136,7 @@ h1 {
     }
     .textd {
         /* font-weight: 550;       Commented by Nimit */
-        font-size: 11px;
+        font-size: 13px;
     }
     .text1 {
         /* font-size: 11px; */
@@ -139,4 +149,12 @@ h1 {
         margin-top: 61px;
         height: calc(100vh - 61px);
     }
+    /* Added By Nimit */
+    .heading2{
+        font-size: 20px;
+    }
+    .heading1{
+        font-size: 13px;
+    }
+    /* == */
 }
