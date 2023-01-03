@@ -34,7 +34,7 @@
                             <div class="slds-col slds-size_1-of-2">
                                 <div class="input-field f-name">
                                     <img src={fname_icon} class="f-name-img" />
-                                    <lightning-input name="FirstName" class="input_cls" autocomplete="FirstName"
+                                    <lightning-input name="FirstName" class="input_cls input_text" autocomplete="FirstName"
                                         onchange={handleChange} placeholder="FirstName" onfocusout={onblurvalue}>
                                     </lightning-input>
                                 </div>
@@ -42,7 +42,7 @@
                             <div class=" slds-col slds-size_1-of-2">
                                 <div class="input-field lname">
                                     <img src={fname_icon} class="f-name-img" />
-                                    <lightning-input name="LastName" class="input_cls" autocomplete="LastName"
+                                    <lightning-input name="LastName" class="input_cls input_text" autocomplete="LastName"
                                         onfocusout={onblurvalue} onchange={handleChange} placeholder="LastName">
                                     </lightning-input>
                                 </div>
@@ -51,7 +51,7 @@
 
                         <div class="input-field e-mail">
                             <img src={email_icon} class="mail" />
-                            <lightning-input name="Email" class="input_cls" autocomplete="Email"
+                            <lightning-input name="Email" class="input_cls input_text" autocomplete="Email"
                                 data-id="user-email-fld" onfocusout={onblurvalue} placeholder="Email Id"
                                 onchange={handleChange}></lightning-input>
                         </div>
@@ -75,7 +75,7 @@
                         <div class="input-field urnCode">
                             <img src={testimg2} class="Icon postcode" />
 
-                            <lightning-input name="URNCode" class="input_cls" autocomplete="URNCode"
+                            <lightning-input name="URNCode" class="input_cls input_text" autocomplete="URNCode"
                                 onchange={handleChange} placeholder="URN (Unique Reference Number)"></lightning-input>
                             <lightning-helptext
                                 content="URN is the 6 digit Unique Reference Number of your school as supplied by the Department for Education. If you do not have a URN please visit the government website to obtain your URN">
@@ -86,7 +86,7 @@
                             <div class="slds-col slds-size_1-of-2">
                                 <div class="input-field mobile">
                                     <img src={mob_icon} class="mobile-img" />
-                                    <lightning-input name="Mobile" class="input_cls" autocomplete="Mobile"
+                                    <lightning-input name="Mobile" class="input_cls input_text" autocomplete="Mobile"
                                         onchange={handleChange} placeholder="Mobile no."></lightning-input>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@
                                 <div class="input-field Phone">
 
                                     <img src={phone_icon} class="phone-img" />
-                                    <lightning-input name="Phone" class="input_cls" autocomplete="Phone"
+                                    <lightning-input name="Phone" class="input_cls input_text" autocomplete="Phone"
                                         onchange={handleChange} placeholder="Phone no."></lightning-input>
                                 </div>
                             </div>

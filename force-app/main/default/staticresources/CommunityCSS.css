@@ -78,3 +78,12 @@
 input[name^="password"]::-ms-reveal{
     display: none;
 }
+
+/* Added by Nimit */
+@media (max-width: 414px) {
+    .input_text .slds-input {
+        font-size: 14px;
+        padding-right: 0px;
+    }
+       /* == */
+}
